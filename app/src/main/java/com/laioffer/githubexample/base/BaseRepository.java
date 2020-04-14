@@ -1,4 +1,9 @@
 package com.laioffer.githubexample.base;
 
-public class BaseRepository {
+import android.util.Log;
+
+import androidx.lifecycle.LiveData;
+
+public abstract class BaseRepository {
+
 }
