@@ -1,4 +1,7 @@
 package com.laioffer.githubexample.ui.HomeMap;
 
-public class HomeMapViewModel {
+import androidx.lifecycle.ViewModel;
+
+public class HomeMapViewModel extends ViewModel {
+    // TODO: Implement the ViewModel
 }
