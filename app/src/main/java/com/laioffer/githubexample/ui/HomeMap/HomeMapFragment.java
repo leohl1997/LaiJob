@@ -11,8 +11,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.laioffer.githubexample.R;
+import com.laioffer.githubexample.ui.HomeList.HomeListFragment;
 
 public class HomeMapFragment extends Fragment {
 
@@ -25,7 +27,19 @@ public class HomeMapFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.home_map_fragment, container, false);
+        View view = inflater.inflate(R.layout.home_map_fragment, container, false);
+        Button button = view.findViewById(R.id.ListView);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_home_list, new HomeListFragment(), null)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+        return view;
     }
 
     @Override
