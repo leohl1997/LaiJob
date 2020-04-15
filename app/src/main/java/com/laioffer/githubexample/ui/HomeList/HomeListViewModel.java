@@ -1,4 +1,7 @@
 package com.laioffer.githubexample.ui.HomeList;
 
-public class HomeListViewModel {
+import androidx.lifecycle.ViewModel;
+
+public class HomeListViewModel extends ViewModel {
+    // TODO: Implement the ViewModel
 }
