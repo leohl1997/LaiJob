@@ -11,8 +11,13 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.laioffer.githubexample.R;
+import com.laioffer.githubexample.ui.HomeMap.HomeMapFragment;
+import com.laioffer.githubexample.ui.favorite.FavoriteJobFragment;
+
+import java.util.Objects;
 
 public class UserInfoFragment extends Fragment {
 
@@ -25,7 +30,19 @@ public class UserInfoFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.user_info_fragment, container, false);
+        View view = inflater.inflate(R.layout.user_info_fragment, container, false);
+        Button button = view.findViewById(R.id.Favorite);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Objects.requireNonNull(getActivity()).getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_home_list, new FavoriteJobFragment(), null)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+        return view;
     }
 
     @Override
