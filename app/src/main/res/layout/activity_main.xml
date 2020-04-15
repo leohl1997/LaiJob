@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,16 +9,16 @@
 
 
     <Button
-        android:id="@+id/signup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="40dp"
-        android:text="Jump to HomeListFragment"
-        android:textColor="@android:color/white"
-        android:orientation="vertical"
-        tools:ignore="MissingConstraints" />
+    android:id="@+id/signup"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginLeft="40dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginRight="40dp"
+    android:text="Jump to HomeListFragment"
+    android:textColor="@android:color/white"
+    android:orientation="vertical" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>
