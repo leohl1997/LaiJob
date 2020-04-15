@@ -2,6 +2,7 @@ package com.laioffer.githubexample.ui.userInfo;
 
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.laioffer.githubexample.MainActivity;
+import com.laioffer.githubexample.OnBoardingActivity;
 import com.laioffer.githubexample.R;
 import com.laioffer.githubexample.ui.HomeMap.HomeMapFragment;
 import com.laioffer.githubexample.ui.favorite.FavoriteJobFragment;
@@ -40,6 +43,13 @@ public class UserInfoFragment extends Fragment {
                         .replace(R.id.fragment_home_list, new FavoriteJobFragment(), null)
                         .addToBackStack(null)
                         .commit();
+            }
+        });
+        Button button1 = view.findViewById(R.id.SignOut);
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
         return view;
