@@ -1,5 +1,6 @@
 package com.laioffer.githubexample.ui.jobInfo;
 
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
@@ -13,8 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.laioffer.githubexample.R;
+import com.laioffer.githubexample.base.BaseFragment;
+import com.laioffer.githubexample.base.BaseRepository;
+import com.laioffer.githubexample.base.BaseViewModel;
 
-public class JobInfoFragment extends Fragment {
+public class JobInfoFragment extends BaseFragment {
 
     private JobInfoViewModel mViewModel;
 
@@ -35,4 +39,18 @@ public class JobInfoFragment extends Fragment {
         // TODO: Use the ViewModel
     }
 
+    @Override
+    protected BaseViewModel getViewModel() {
+        return null;
+    }
+
+    @Override
+    protected ViewModelProvider.Factory getFactory() {
+        return null;
+    }
+
+    @Override
+    protected BaseRepository getRepository() {
+        return null;
+    }
 }
