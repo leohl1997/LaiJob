@@ -1,28 +1,27 @@
 package com.laioffer.githubexample.ui.userInfo;
 
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.laioffer.githubexample.MainActivity;
-import com.laioffer.githubexample.OnBoardingActivity;
 import com.laioffer.githubexample.R;
-import com.laioffer.githubexample.ui.HomeMap.HomeMapFragment;
+import com.laioffer.githubexample.base.BaseFragment;
+import com.laioffer.githubexample.base.BaseRepository;
+import com.laioffer.githubexample.base.BaseViewModel;
+import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.ui.favorite.FavoriteJobFragment;
 
-import java.util.Objects;
-
-public class UserInfoFragment extends Fragment {
+public class UserInfoFragment extends BaseFragment {
 
     private UserInfoViewModel mViewModel;
 
@@ -30,6 +29,12 @@ public class UserInfoFragment extends Fragment {
         return new UserInfoFragment();
     }
 
+    private NavigationManager navigationManager;
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        navigationManager = (NavigationManager) context;
+    }
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -38,11 +43,7 @@ public class UserInfoFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Objects.requireNonNull(getActivity()).getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_home_list, new FavoriteJobFragment(), null)
-                        .addToBackStack(null)
-                        .commit();
+                navigationManager.navigateTo(new FavoriteJobFragment());
             }
         });
         Button button1 = view.findViewById(R.id.SignOut);
@@ -62,4 +63,18 @@ public class UserInfoFragment extends Fragment {
         // TODO: Use the ViewModel
     }
 
+    @Override
+    protected BaseViewModel getViewModel() {
+        return null;
+    }
+
+    @Override
+    protected ViewModelProvider.Factory getFactory() {
+        return null;
+    }
+
+    @Override
+    protected BaseRepository getRepository() {
+        return null;
+    }
 }
