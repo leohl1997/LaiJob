@@ -1,7 +1,9 @@
 package com.laioffer.githubexample.ui.HomeList;
 
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,17 +13,27 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 
 import com.laioffer.githubexample.R;
+import com.laioffer.githubexample.base.BaseFragment;
+import com.laioffer.githubexample.base.BaseRepository;
+import com.laioffer.githubexample.base.BaseViewModel;
 import com.laioffer.githubexample.ui.HomeMap.HomeMapFragment;
+import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.ui.jobInfo.JobInfoFragment;
 import com.laioffer.githubexample.ui.search.SearchFragment;
 import com.laioffer.githubexample.ui.userInfo.UserInfoFragment;
 
-public class HomeListFragment extends Fragment {
-
+public class HomeListFragment extends BaseFragment {
     private HomeListViewModel mViewModel;
+    NavigationManager navigationManager;
+
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        navigationManager = (NavigationManager) context;
+    }
 
     public static HomeListFragment newInstance() {
         return new HomeListFragment();
@@ -35,44 +47,28 @@ public class HomeListFragment extends Fragment {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_home_list, new SearchFragment(), null)
-                        .addToBackStack(null)
-                        .commit();
+                navigationManager.navigateTo(new SearchFragment());
             }
         });
         Button button2 = view.findViewById(R.id.JobInfo);
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_home_list, new JobInfoFragment(), null)
-                        .addToBackStack(null)
-                        .commit();
+                navigationManager.navigateTo(new JobInfoFragment());
             }
         });
         Button button3 = view.findViewById(R.id.HomeMap);
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_home_list, new HomeMapFragment(), null)
-                        .addToBackStack(null)
-                        .commit();
+                navigationManager.navigateTo(new HomeMapFragment());
             }
         });
         Button button4 = view.findViewById(R.id.UserInfo);
         button4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_home_list, new UserInfoFragment(), null)
-                        .addToBackStack(null)
-                        .commit();
+                navigationManager.navigateTo(new UserInfoFragment());
             }
         });
         return view;
@@ -83,5 +79,22 @@ public class HomeListFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(HomeListViewModel.class);
         // TODO: Use the ViewModel
+    }
+
+
+
+    @Override
+    protected BaseViewModel getViewModel() {
+        return null;
+    }
+
+    @Override
+    protected ViewModelProvider.Factory getFactory() {
+        return null;
+    }
+
+    @Override
+    protected BaseRepository getRepository() {
+        return null;
     }
 }
