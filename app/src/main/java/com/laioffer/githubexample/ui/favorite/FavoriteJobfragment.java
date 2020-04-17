@@ -35,7 +35,7 @@ public class FavoriteJobFragment extends Fragment {
             public void onClick(View v) {
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.fragment_home_list, new JobInfoFragment(), null)
+                        .replace(R.id.first_fragment, new JobInfoFragment(), null)
                         .addToBackStack(null)
                         .commit();
             }
