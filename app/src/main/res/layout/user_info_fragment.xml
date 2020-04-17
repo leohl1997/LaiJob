@@ -7,24 +7,26 @@
     android:orientation="vertical">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="This is the User Info Page" />
 
     <Button
+        android:layout_marginTop="50dp"
         android:id="@+id/Favorite"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Jump to Favorite Job"
-        android:textColor="@android:color/white"
-        android:layout_height="wrap_content" />
+        android:text="Jump to FavoriteJob"
+        android:textColor="@android:color/white" />
 
     <Button
+        android:layout_marginTop="50dp"
         android:id="@+id/SignOut"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Back To Sign"
-        android:textColor="@android:color/white"
-        android:layout_height="wrap_content" />
+        android:text="back to sign"
+        android:textColor="@android:color/white" />
 
 </LinearLayout>
