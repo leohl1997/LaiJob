@@ -1,7 +1,9 @@
 package com.laioffer.githubexample.ui.HomeMap;
 
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,9 +16,34 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.laioffer.githubexample.R;
+import com.laioffer.githubexample.base.BaseFragment;
+import com.laioffer.githubexample.base.BaseRepository;
+import com.laioffer.githubexample.base.BaseViewModel;
 import com.laioffer.githubexample.ui.HomeList.HomeListFragment;
+import com.laioffer.githubexample.ui.NavigationManager;
 
-public class HomeMapFragment extends Fragment {
+public class HomeMapFragment extends BaseFragment {
+    private NavigationManager navigationManager;
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        navigationManager = (NavigationManager) context;
+    }
+
+    @Override
+    protected BaseViewModel getViewModel() {
+        return null;
+    }
+
+    @Override
+    protected ViewModelProvider.Factory getFactory() {
+        return null;
+    }
+
+    @Override
+    protected BaseRepository getRepository() {
+        return null;
+    }
 
     private HomeMapViewModel mViewModel;
 
@@ -32,11 +59,14 @@ public class HomeMapFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_home_list, new HomeListFragment(), null)
-                        .addToBackStack(null)
-                        .commit();
+                navigationManager.navigateTo(new HomeListFragment());
+//                getActivity().getSupportFragmentManager()
+//                        .beginTransaction()
+//                        .replace(R.id.fragment_home_list, new HomeListFragment(), null)
+//                        .addToBackStack(null)
+//                        .commit();
+//                getActivity().onBackPressed();
+                //getActivity().getSupportFragmentManager().popBackStack();
             }
         });
         return view;
