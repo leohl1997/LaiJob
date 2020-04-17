@@ -1,5 +1,6 @@
 package com.laioffer.githubexample.ui.search;
 
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
@@ -13,14 +14,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.laioffer.githubexample.R;
+import com.laioffer.githubexample.base.BaseFragment;
+import com.laioffer.githubexample.base.BaseRepository;
+import com.laioffer.githubexample.base.BaseViewModel;
 
-public class SearchFragment extends Fragment {
+public class SearchFragment extends BaseFragment {
 
     private SearchViewModel mViewModel;
 
     public static SearchFragment newInstance() {
         return new SearchFragment();
     }
+
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -35,4 +41,18 @@ public class SearchFragment extends Fragment {
         // TODO: Use the ViewModel
     }
 
+    @Override
+    protected BaseViewModel getViewModel() {
+        return null;
+    }
+
+    @Override
+    protected ViewModelProvider.Factory getFactory() {
+        return null;
+    }
+
+    @Override
+    protected BaseRepository getRepository() {
+        return null;
+    }
 }
