@@ -19,14 +19,14 @@ public class MainActivity extends AppCompatActivity implements NavigationManager
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        navigateTo(new LoginFragment());
+        navigateTo(new OnBoardingBaseFragment());
     }
 
     @Override
     public void navigateTo(Fragment fragment) {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.first_fragment, fragment, null)
+                .replace(R.id.on_boarding_base_fragment, fragment, null)
                 .addToBackStack(null)
                 .commit();
     }

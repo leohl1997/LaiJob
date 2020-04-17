@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">GitHubExample</string>
+    <string name="swipe_left_for_register">Swipe Left for Register</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="user_id">User ID</string>
+    <string name="tag">Help you to find best Job around.</string>
+    <string name="swipe_right_for_login">Swipe Right for Login</string>
+    <string name="register">Register</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+
 </resources>

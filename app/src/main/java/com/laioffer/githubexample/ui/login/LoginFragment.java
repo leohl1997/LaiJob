@@ -20,6 +20,7 @@ import com.laioffer.githubexample.R;
 import com.laioffer.githubexample.base.BaseFragment;
 import com.laioffer.githubexample.base.BaseRepository;
 import com.laioffer.githubexample.base.BaseViewModel;
+import com.laioffer.githubexample.databinding.LoginFragmentBinding;
 import com.laioffer.githubexample.ui.HomeList.HomeListFragment;
 import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.ui.register.RegisterFragment;
@@ -27,45 +28,23 @@ import com.laioffer.githubexample.ui.search.SearchFragment;
 
 public class LoginFragment extends BaseFragment<LoginViewModel, LoginRepository> {
 
-    private LoginViewModel mViewModel;
+    private LoginFragmentBinding binding;
 
-    public static LoginFragment newInstance() {
-        return new LoginFragment();
-    }
-    NavigationManager navigationManager;
 
     public void onAttach(Context context) {
         super.onAttach(context);
-        navigationManager = (NavigationManager) context;
     }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.login_fragment, container, false);
-        Button button1 = view.findViewById(R.id.first_button);
-        button1.setText("Login");
-        button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navigationManager.navigateTo(new HomeListFragment());
-            }
-        });
-        Button button2 = view.findViewById(R.id.second_button);
-        button2.setText("Regist");
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navigationManager.navigateTo(new RegisterFragment());
-            }
-        });
-        return view;
+        binding = LoginFragmentBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
-        // TODO: Use the ViewModel
     }
 
     @Override

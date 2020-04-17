@@ -5,4 +5,6 @@
     <color name="white">#ffffff</color>
     <color name="blue">#0000ff</color>
     <color name="red">#ff0033</color>
+
+    <color name="arrow_red">#DF574B</color>
 </resources>

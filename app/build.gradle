@@ -5,6 +5,17 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
 
+    // set compile options to make retrofit work properly
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    // set for MVVM pattern
+    viewBinding {
+        enabled = true
+    }
+
     defaultConfig {
         applicationId "com.laioffer.githubexample"
         minSdkVersion 21
