@@ -7,37 +7,41 @@
     tools:context=".ui.HomeList.HomeListFragment">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="This is Home List Page" />
 
     <Button
+        android:layout_marginTop="50dp"
         android:id="@+id/search"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="Jump to Search"
         android:textColor="@android:color/white" />
 
     <Button
+        android:layout_marginTop="10dp"
         android:id="@+id/JobInfo"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_gravity="center"
         android:text="Jump to JobInfo"
         android:textColor="@android:color/white"
         android:layout_height="wrap_content" />
 
     <Button
+        android:layout_marginTop="10dp"
         android:id="@+id/HomeMap"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_gravity="center"
         android:text="Jump to HomeMap"
         android:textColor="@android:color/white"
         android:layout_height="wrap_content" />
 
     <Button
+        android:layout_marginTop="10dp"
         android:id="@+id/UserInfo"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_gravity="center"
         android:text="Jump to UserInfo"
         android:textColor="@android:color/white"
