@@ -1,5 +1,6 @@
 package com.laioffer.githubexample.ui.login;
 
+import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -24,7 +25,7 @@ import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.ui.register.RegisterFragment;
 import com.laioffer.githubexample.ui.search.SearchFragment;
 
-public class LoginFragment extends BaseFragment {
+public class LoginFragment extends BaseFragment<LoginViewModel, LoginRepository> {
 
     private LoginViewModel mViewModel;
 
@@ -68,17 +69,23 @@ public class LoginFragment extends BaseFragment {
     }
 
     @Override
-    protected BaseViewModel getViewModel() {
-        return null;
+    protected LoginViewModel getViewModel() {
+        return new ViewModelProvider(requireActivity(), getFactory()).get(LoginViewModel.class);
     }
 
     @Override
     protected ViewModelProvider.Factory getFactory() {
-        return null;
+        return new ViewModelProvider.Factory() {
+            @NonNull
+            @Override
+            public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
+                return (T) new LoginViewModel(getRepository());
+            }
+        };
     }
 
     @Override
-    protected BaseRepository getRepository() {
-        return null;
+    protected LoginRepository getRepository() {
+        return new LoginRepository();
     }
 }
