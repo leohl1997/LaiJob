@@ -45,6 +45,10 @@ public class LoginFragment extends BaseFragment<LoginViewModel, LoginRepository>
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        binding.btnLogin.setOnClickListener( v -> {
+            viewModel.login(binding.etUserId.getText().toString(),
+                    binding.etPassword.getText().toString());
+        });
     }
 
     @Override

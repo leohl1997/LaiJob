@@ -35,7 +35,8 @@ public class FavoriteJobFragment extends Fragment {
             public void onClick(View v) {
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.first_fragment, new JobInfoFragment(), null)
+                        // modified. change the base view to onboarding base fragment.
+                        .replace(R.id.on_boarding_base_fragment, new JobInfoFragment(), null)
                         .addToBackStack(null)
                         .commit();
             }

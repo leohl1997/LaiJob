@@ -7,9 +7,9 @@
     tools:context=".MainActivity">
 
 
-
+<!--     i have change the view here to the login base fragment-->
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/first_fragment"
+        android:id="@+id/on_boarding_base_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:ignore="MissingConstraints" />

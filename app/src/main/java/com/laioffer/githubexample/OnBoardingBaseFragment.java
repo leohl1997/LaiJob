@@ -50,8 +50,8 @@ public class OnBoardingBaseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.onboarding_base_fragment, container, false);
-        ViewPager viewPager = binding.viewPager;
-        OnBoardingPagerAdapter pagerAdapter = new OnBoardingPagerAdapter(getActivity().getSupportFragmentManager());
+        ViewPager viewPager = view.findViewById(R.id.viewPager);
+        OnBoardingPagerAdapter pagerAdapter = new OnBoardingPagerAdapter(getChildFragmentManager());
         pagerAdapter.addFragment(new LoginFragment());
         pagerAdapter.addFragment(new RegisterFragment());
         viewPager.setAdapter(pagerAdapter);

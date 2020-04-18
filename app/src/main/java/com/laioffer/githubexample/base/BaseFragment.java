@@ -11,7 +11,7 @@ import com.laioffer.githubexample.ui.NavigationManager;
 
 public abstract class BaseFragment <VM extends BaseViewModel<R>, R extends BaseRepository>
         extends Fragment{
-    private VM viewModel;
+    protected VM viewModel;
 
 
     @Override

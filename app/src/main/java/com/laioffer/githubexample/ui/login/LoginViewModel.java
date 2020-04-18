@@ -5,8 +5,12 @@ import androidx.lifecycle.ViewModel;
 import com.laioffer.githubexample.base.BaseViewModel;
 
 public class LoginViewModel extends BaseViewModel<LoginRepository> {
-    protected LoginViewModel(LoginRepository baseRepository) {
+    public LoginViewModel(LoginRepository baseRepository) {
         super(baseRepository);
     }
-    // TODO: Implement the ViewModel
+
+    public void login(String userId, String password) {
+
+    }
+
 }
