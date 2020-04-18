@@ -1,35 +1,30 @@
 package com.laioffer.githubexample.ui.login;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
-import com.laioffer.githubexample.R;
 import com.laioffer.githubexample.base.BaseFragment;
-import com.laioffer.githubexample.base.BaseRepository;
-import com.laioffer.githubexample.base.BaseViewModel;
 import com.laioffer.githubexample.databinding.LoginFragmentBinding;
-import com.laioffer.githubexample.ui.HomeList.HomeListFragment;
-import com.laioffer.githubexample.ui.NavigationManager;
-import com.laioffer.githubexample.ui.register.RegisterFragment;
-import com.laioffer.githubexample.ui.search.SearchFragment;
+import com.laioffer.githubexample.remote.RemoteResponseListener;
+import com.laioffer.githubexample.remote.response.RemoteResponse;
+import com.laioffer.githubexample.remote.response.UserInfo;
+import com.laioffer.githubexample.util.Utils;
 
-public class LoginFragment extends BaseFragment<LoginViewModel, LoginRepository> {
+public class LoginFragment extends BaseFragment<LoginViewModel, LoginRepository>
+        implements RemoteResponseListener<UserInfo> {
 
     private LoginFragmentBinding binding;
-
 
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -45,6 +40,7 @@ public class LoginFragment extends BaseFragment<LoginViewModel, LoginRepository>
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        viewModel.setResponseListener(this);
         binding.btnLogin.setOnClickListener( v -> {
             viewModel.login(binding.etUserId.getText().toString(),
                     binding.etPassword.getText().toString());
@@ -70,5 +66,24 @@ public class LoginFragment extends BaseFragment<LoginViewModel, LoginRepository>
     @Override
     protected LoginRepository getRepository() {
         return new LoginRepository();
+    }
+
+    @Override
+    public void onSuccess(LiveData<RemoteResponse<UserInfo>> response) {
+        response.observe(this, it -> {
+            if (it != null && it.status.equals("OK")) {
+                Utils.constructToast(getContext(), "Login success!").show();
+                UserInfo info = it.response;
+                Utils.constructToast(getContext(), info.name);
+                // start other fragment
+            } else {
+                Utils.constructToast(getContext(), it == null ? "Error !" : it.status).show();
+            }
+        });
+    }
+
+    @Override
+    public void onFailure(String msg) {
+        Utils.constructToast(getContext(), msg).show();
     }
 }

@@ -1,5 +1,6 @@
 package com.laioffer.githubexample.ui.register;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
@@ -21,13 +22,18 @@ import com.laioffer.githubexample.base.BaseFragment;
 import com.laioffer.githubexample.base.BaseRepository;
 import com.laioffer.githubexample.base.BaseViewModel;
 import com.laioffer.githubexample.databinding.RegisterFragmentBinding;
+import com.laioffer.githubexample.remote.RemoteResponseListener;
+import com.laioffer.githubexample.remote.response.RemoteResponse;
+import com.laioffer.githubexample.remote.response.UserInfo;
 import com.laioffer.githubexample.ui.HomeList.HomeListFragment;
 import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.ui.login.LoginFragment;
 import com.laioffer.githubexample.ui.login.LoginRepository;
 import com.laioffer.githubexample.ui.login.LoginViewModel;
+import com.laioffer.githubexample.util.Utils;
 
-public class RegisterFragment extends BaseFragment {
+public class RegisterFragment extends BaseFragment<RegisterViewModel, RegisterRepository>
+        implements RemoteResponseListener<UserInfo> {
 
     RegisterFragmentBinding binding;
 
@@ -45,7 +51,13 @@ public class RegisterFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
+        viewModel.setResponseListener(this);
+        binding.btnRegister.setOnClickListener( v -> {
+            viewModel.register(binding.etUserId.getText().toString(),
+                    binding.etPassword.getText().toString(),
+                    binding.etFirstName.getText().toString(),
+                    binding.etLastName.getText().toString());
+        });
     }
 
     @Override
@@ -67,5 +79,21 @@ public class RegisterFragment extends BaseFragment {
     @Override
     protected RegisterRepository getRepository() {
         return new RegisterRepository();
+    }
+
+    @Override
+    public void onSuccess(LiveData<RemoteResponse<UserInfo>> response) {
+        response.observe(this, it -> {
+            if (it == null) {
+                Utils.constructToast(getContext(), "Error! empty response body!").show();
+            } else {
+                Utils.constructToast(getContext(), it.status).show();
+            }
+        });
+    }
+
+    @Override
+    public void onFailure(String msg) {
+        Utils.constructToast(getContext(), msg).show();
     }
 }
