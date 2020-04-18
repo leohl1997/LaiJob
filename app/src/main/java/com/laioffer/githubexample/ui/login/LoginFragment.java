@@ -74,7 +74,7 @@ public class LoginFragment extends BaseFragment<LoginViewModel, LoginRepository>
             if (it != null && it.status.equals("OK")) {
                 Utils.constructToast(getContext(), "Login success!").show();
                 UserInfo info = it.response;
-                Utils.constructToast(getContext(), info.name);
+                Utils.constructToast(getContext(), info.name).show();
                 // start other fragment
             } else {
                 Utils.constructToast(getContext(), it == null ? "Error !" : it.status).show();
