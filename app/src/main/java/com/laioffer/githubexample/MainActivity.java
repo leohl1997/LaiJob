@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements NavigationManager
     public void navigateTo(Fragment fragment) {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.on_boarding_base_fragment, fragment, null)
+                .replace(R.id.first_fragment, fragment, null)
                 .addToBackStack(null)
                 .commit();
     }
