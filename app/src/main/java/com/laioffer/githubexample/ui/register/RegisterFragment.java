@@ -35,9 +35,9 @@ import com.laioffer.githubexample.util.Utils;
 public class RegisterFragment extends BaseFragment<RegisterViewModel, RegisterRepository>
         implements RemoteResponseListener<UserInfo> {
 
-    RegisterFragmentBinding binding;
+    private RegisterFragmentBinding binding;
 
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
 
     }
@@ -88,6 +88,7 @@ public class RegisterFragment extends BaseFragment<RegisterViewModel, RegisterRe
                 Utils.constructToast(getContext(), "Error! empty response body!").show();
             } else {
                 Utils.constructToast(getContext(), it.status).show();
+                // do we need to redirect to the userInfo fragment?
             }
         });
     }

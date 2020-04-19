@@ -19,22 +19,27 @@ import com.laioffer.githubexample.databinding.LoginFragmentBinding;
 import com.laioffer.githubexample.remote.RemoteResponseListener;
 import com.laioffer.githubexample.remote.response.RemoteResponse;
 import com.laioffer.githubexample.remote.response.UserInfo;
+import com.laioffer.githubexample.ui.HomeList.HomeListFragment;
+import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.util.Utils;
 
 public class LoginFragment extends BaseFragment<LoginViewModel, LoginRepository>
         implements RemoteResponseListener<UserInfo> {
 
     private LoginFragmentBinding binding;
-
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-    }
+    private NavigationManager navigationManager;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = LoginFragmentBinding.inflate(inflater, container, false);
         return binding.getRoot();
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        navigationManager = (NavigationManager) context;
     }
 
     @Override
@@ -76,6 +81,7 @@ public class LoginFragment extends BaseFragment<LoginViewModel, LoginRepository>
                 UserInfo info = it.response;
                 Utils.constructToast(getContext(), info.name).show();
                 // start other fragment
+                navigationManager.navigateTo(new HomeListFragment());
             } else {
                 Utils.constructToast(getContext(), it == null ? "Error !" : it.status).show();
             }
