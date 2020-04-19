@@ -26,7 +26,7 @@ public class LoginFragment extends BaseFragment<LoginViewModel, LoginRepository>
 
     private LoginFragmentBinding binding;
 
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
     }
 
