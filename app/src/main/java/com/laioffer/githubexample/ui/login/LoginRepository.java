@@ -12,9 +12,9 @@ import retrofit2.Response;
 import retrofit2.internal.EverythingIsNonNull;
 
 public class LoginRepository extends BaseRepository {
-    public MutableLiveData<RemoteResponse<UserInfo>> login(String userId, String password) {
+    public MutableLiveData<RemoteResponse<UserInfo>> login(LoginEvent loginEvent) {
         MutableLiveData<RemoteResponse<UserInfo>> responseMutableLiveData = new MutableLiveData<>();
-        Call<RemoteResponse<UserInfo>> call = apiService.login(userId, password);
+        Call<RemoteResponse<UserInfo>> call = apiService.login(loginEvent);
         call.enqueue(new Callback<RemoteResponse<UserInfo>>() {
             @EverythingIsNonNull
             @Override
@@ -26,11 +26,13 @@ public class LoginRepository extends BaseRepository {
             @EverythingIsNonNull
             @Override
             public void onFailure(Call<RemoteResponse<UserInfo>> call, Throwable t) {
-                RemoteResponse<UserInfo> errResponse = new RemoteResponse<UserInfo>();
+                RemoteResponse<UserInfo> errResponse = new RemoteResponse<>();
                 errResponse.status = t.getMessage();
                 responseMutableLiveData.setValue(errResponse);
             }
         });
         return responseMutableLiveData;
     }
+
+
 }

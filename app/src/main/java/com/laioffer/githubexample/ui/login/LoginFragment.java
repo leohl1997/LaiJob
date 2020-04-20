@@ -16,15 +16,12 @@ import android.view.ViewGroup;
 
 import com.laioffer.githubexample.base.BaseFragment;
 import com.laioffer.githubexample.databinding.LoginFragmentBinding;
-import com.laioffer.githubexample.remote.RemoteResponseListener;
-import com.laioffer.githubexample.remote.response.RemoteResponse;
 import com.laioffer.githubexample.remote.response.UserInfo;
 import com.laioffer.githubexample.ui.HomeList.HomeListFragment;
 import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.util.Utils;
 
-public class LoginFragment extends BaseFragment<LoginViewModel, LoginRepository>
-        implements RemoteResponseListener<UserInfo> {
+public class LoginFragment extends BaseFragment<LoginViewModel, LoginRepository> {
 
     private LoginFragmentBinding binding;
     private NavigationManager navigationManager;
@@ -45,10 +42,21 @@ public class LoginFragment extends BaseFragment<LoginViewModel, LoginRepository>
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        viewModel.setResponseListener(this);
         binding.btnLogin.setOnClickListener( v -> {
-            viewModel.login(binding.etUserId.getText().toString(),
-                    binding.etPassword.getText().toString());
+            viewModel.login(new LoginEvent(binding.etUserId.getText().toString(),
+                    "3229c1097c00d497a0fd282d586be050"));  // faker user info
+        });
+        viewModel.getRemoteResponseMutableLiveData().observe(getViewLifecycleOwner(), it -> {
+            if (it != null && it.status.equals("OK")) {
+                Utils.constructToast(getContext(), "Login success!").show();
+                // set up user information
+                navigationManager.navigateTo(new HomeListFragment());
+            } else {
+                Utils.constructToast(getContext(), it == null ? "Error !" : it.status).show();
+            }
+        });
+        viewModel.getErrMsgMutableLiveData().observe(getViewLifecycleOwner(), it -> {
+            Utils.constructToast(getContext(), it).show();
         });
     }
 
@@ -73,23 +81,4 @@ public class LoginFragment extends BaseFragment<LoginViewModel, LoginRepository>
         return new LoginRepository();
     }
 
-    @Override
-    public void onSuccess(LiveData<RemoteResponse<UserInfo>> response) {
-        response.observe(this, it -> {
-            if (it != null && it.status.equals("OK")) {
-                Utils.constructToast(getContext(), "Login success!").show();
-                UserInfo info = it.response;
-                Utils.constructToast(getContext(), info.name).show();
-                // start other fragment
-                navigationManager.navigateTo(new HomeListFragment());
-            } else {
-                Utils.constructToast(getContext(), it == null ? "Error !" : it.status).show();
-            }
-        });
-    }
-
-    @Override
-    public void onFailure(String msg) {
-        Utils.constructToast(getContext(), msg).show();
-    }
 }

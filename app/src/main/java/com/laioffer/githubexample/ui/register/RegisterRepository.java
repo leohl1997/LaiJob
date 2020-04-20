@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.laioffer.githubexample.base.BaseRepository;
 import com.laioffer.githubexample.remote.response.RemoteResponse;
 import com.laioffer.githubexample.remote.response.UserInfo;
+import com.laioffer.githubexample.ui.login.LoginEvent;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -12,11 +13,10 @@ import retrofit2.Response;
 import retrofit2.internal.EverythingIsNonNull;
 
 public class RegisterRepository extends BaseRepository {
-    public MutableLiveData<RemoteResponse<UserInfo>> register
-            (String userId, String password, String firstName, String lastName) {
+    public MutableLiveData<RemoteResponse<UserInfo>> register(RegisterEvent registerEvent) {
         MutableLiveData<RemoteResponse<UserInfo>> responseMutableLiveData = new MutableLiveData<>();
         Call<RemoteResponse<UserInfo>> call =
-                apiService.register(userId, password, firstName, lastName);
+                apiService.register(registerEvent);
         call.enqueue(new Callback<RemoteResponse<UserInfo>>() {
             @EverythingIsNonNull
             @Override

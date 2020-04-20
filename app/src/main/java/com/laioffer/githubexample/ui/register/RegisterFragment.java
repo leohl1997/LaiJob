@@ -32,8 +32,7 @@ import com.laioffer.githubexample.ui.login.LoginRepository;
 import com.laioffer.githubexample.ui.login.LoginViewModel;
 import com.laioffer.githubexample.util.Utils;
 
-public class RegisterFragment extends BaseFragment<RegisterViewModel, RegisterRepository>
-        implements RemoteResponseListener<UserInfo> {
+public class RegisterFragment extends BaseFragment<RegisterViewModel, RegisterRepository> {
 
     private RegisterFragmentBinding binding;
 
@@ -51,12 +50,22 @@ public class RegisterFragment extends BaseFragment<RegisterViewModel, RegisterRe
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        viewModel.setResponseListener(this);
         binding.btnRegister.setOnClickListener( v -> {
-            viewModel.register(binding.etUserId.getText().toString(),
+            viewModel.register(new RegisterEvent(binding.etUserId.getText().toString(),
                     binding.etPassword.getText().toString(),
                     binding.etFirstName.getText().toString(),
-                    binding.etLastName.getText().toString());
+                    binding.etLastName.getText().toString()));
+        });
+        viewModel.getErrMsgMutableLiveData().observe(getViewLifecycleOwner(), errMsg -> {
+            Utils.constructToast(getContext(), errMsg).show();
+        });
+        viewModel.getRemoteResponseLiveData().observe(getViewLifecycleOwner(), it -> {
+            if (it == null) {
+                Utils.constructToast(getContext(), "Error! empty response body!").show();
+            } else {
+                Utils.constructToast(getContext(), it.status).show();
+                // do we need to redirect to the userInfo fragment?
+            }
         });
     }
 
@@ -81,20 +90,4 @@ public class RegisterFragment extends BaseFragment<RegisterViewModel, RegisterRe
         return new RegisterRepository();
     }
 
-    @Override
-    public void onSuccess(LiveData<RemoteResponse<UserInfo>> response) {
-        response.observe(this, it -> {
-            if (it == null) {
-                Utils.constructToast(getContext(), "Error! empty response body!").show();
-            } else {
-                Utils.constructToast(getContext(), it.status).show();
-                // do we need to redirect to the userInfo fragment?
-            }
-        });
-    }
-
-    @Override
-    public void onFailure(String msg) {
-        Utils.constructToast(getContext(), msg).show();
-    }
 }
