@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements NavigationManager
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        navigateTo(new LoginFragment());
+        navigateTo(new OnBoardingBaseFragment());
     }
 
     @Override

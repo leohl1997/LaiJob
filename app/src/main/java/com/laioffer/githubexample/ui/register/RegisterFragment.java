@@ -1,5 +1,7 @@
 package com.laioffer.githubexample.ui.register;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -19,65 +21,73 @@ import com.laioffer.githubexample.R;
 import com.laioffer.githubexample.base.BaseFragment;
 import com.laioffer.githubexample.base.BaseRepository;
 import com.laioffer.githubexample.base.BaseViewModel;
+import com.laioffer.githubexample.databinding.RegisterFragmentBinding;
+import com.laioffer.githubexample.remote.RemoteResponseListener;
+import com.laioffer.githubexample.remote.response.RemoteResponse;
+import com.laioffer.githubexample.remote.response.UserInfo;
 import com.laioffer.githubexample.ui.HomeList.HomeListFragment;
 import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.ui.login.LoginFragment;
+import com.laioffer.githubexample.ui.login.LoginRepository;
+import com.laioffer.githubexample.ui.login.LoginViewModel;
+import com.laioffer.githubexample.util.Utils;
 
-public class RegisterFragment extends BaseFragment {
+public class RegisterFragment extends BaseFragment<RegisterViewModel, RegisterRepository> {
 
-    private RegisterViewModel mViewModel;
+    private RegisterFragmentBinding binding;
 
-    public static RegisterFragment newInstance() {
-        return new RegisterFragment();
-    }
-    NavigationManager navigationManager;
-
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        navigationManager = (NavigationManager) context;
+
     }
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.login_fragment, container, false);
-        Button button1 = view.findViewById(R.id.first_button);
-        button1.setText("Submit");
-        button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //navigationManager.navigateTo(new HomeListFragment());
-            }
-        });
-        Button button2 = view.findViewById(R.id.second_button);
-        button2.setText("Back Login");
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navigationManager.navigateTo(new LoginFragment());
-            }
-        });
-        return view;
+       binding = RegisterFragmentBinding.inflate(inflater, container, false);
+       return binding.getRoot();
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(RegisterViewModel.class);
-        // TODO: Use the ViewModel
+        binding.btnRegister.setOnClickListener( v -> {
+            viewModel.register(new RegisterEvent(binding.etUserId.getText().toString(),
+                    binding.etPassword.getText().toString(),
+                    binding.etFirstName.getText().toString(),
+                    binding.etLastName.getText().toString()));
+        });
+        viewModel.getErrMsgMutableLiveData().observe(getViewLifecycleOwner(), errMsg -> {
+            Utils.constructToast(getContext(), errMsg).show();
+        });
+        viewModel.getRemoteResponseLiveData().observe(getViewLifecycleOwner(), it -> {
+            if (it == null) {
+                Utils.constructToast(getContext(), "Error! empty response body!").show();
+            } else {
+                Utils.constructToast(getContext(), it.status).show();
+                // do we need to redirect to the userInfo fragment?
+            }
+        });
     }
 
     @Override
-    protected BaseViewModel getViewModel() {
-        return null;
+    protected RegisterViewModel getViewModel() {
+        return new ViewModelProvider(requireActivity(), getFactory()).get(RegisterViewModel.class);
     }
 
     @Override
     protected ViewModelProvider.Factory getFactory() {
-        return null;
+        return new ViewModelProvider.Factory() {
+            @NonNull
+            @Override
+            public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
+                return (T) new RegisterViewModel(getRepository());
+            }
+        };
     }
 
     @Override
-    protected BaseRepository getRepository() {
-        return null;
+    protected RegisterRepository getRepository() {
+        return new RegisterRepository();
     }
+
 }
