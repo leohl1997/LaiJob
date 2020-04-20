@@ -53,4 +53,6 @@ dependencies {
     // MD5 encrption
     implementation 'commons-codec:commons-codec:1.10'
 
+    implementation'de.hdodenhof:circleimageview:2.1.0'
+
 }
