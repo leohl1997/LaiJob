@@ -5,38 +5,38 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 import com.laioffer.githubexample.R;
 import com.laioffer.githubexample.base.BaseFragment;
-import com.laioffer.githubexample.base.BaseRepository;
-import com.laioffer.githubexample.base.BaseViewModel;
+import com.laioffer.githubexample.remote.response.UserInfo;
 import com.laioffer.githubexample.ui.HomeMap.HomeMapFragment;
 import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.ui.favorite.FavoriteJobFragment;
 import com.laioffer.githubexample.ui.jobInfo.JobInfoFragment;
+import com.laioffer.githubexample.ui.login.LoginViewModel;
 import com.laioffer.githubexample.ui.search.SearchFragment;
 import com.laioffer.githubexample.ui.userInfo.UserInfoFragment;
 import com.laioffer.githubexample.util.Config;
 
-public class HomeListFragment extends BaseFragment {
+public class HomeListFragment extends BaseFragment<HomeListViewModel, HomeListRepository> {
     private HomeListViewModel mViewModel;
     private NavigationManager navigationManager;
     private DrawerLayout drawerLayout;
@@ -108,6 +108,7 @@ public class HomeListFragment extends BaseFragment {
 
                     }
 
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onDrawerOpened(@NonNull View drawerView) {
                         final TextView user_textview = (TextView) drawerView.findViewById(R.id.user_name);
@@ -118,11 +119,12 @@ public class HomeListFragment extends BaseFragment {
 //                        final double longitude = mLocationTracker.getLongitude();
 //                        final double latitude = mLocationTracker.getLatitude();
 
-                        if (Config.username == null) {
+                        if (UserInfo.userId == null) {
                             user_textview.setText("");
                             location_textview.setText("");
                         } else {
-                            user_textview.setText(Config.username);
+                            //LoginEvent event = new LoginEvent();
+                            user_textview.setText(UserInfo.userId);
 //                            location_textview.setText("Lat=" + new DecimalFormat(".##").
 //                                    format(latitude) + ",Lon=" + new DecimalFormat(".##").
 //                                    format(longitude));
@@ -175,7 +177,7 @@ public class HomeListFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(HomeListViewModel.class);
+        //mViewModel = ViewModelProviders.of(this).get(HomeListViewModel.class);
         // TODO: Use the ViewModel
     }
 
@@ -190,17 +192,23 @@ public class HomeListFragment extends BaseFragment {
     }
 
     @Override
-    protected BaseViewModel getViewModel() {
-        return null;
+    protected HomeListViewModel getViewModel() {
+        return new ViewModelProvider(requireActivity(), getFactory()).get(HomeListViewModel.class);
     }
 
     @Override
     protected ViewModelProvider.Factory getFactory() {
-        return null;
+        return new ViewModelProvider.Factory() {
+            @NonNull
+            @Override
+            public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
+                return (T) new HomeListViewModel(getRepository());
+            }
+        };
     }
 
     @Override
-    protected BaseRepository getRepository() {
-        return null;
+    protected HomeListRepository getRepository() {
+        return new HomeListRepository();
     }
 }
