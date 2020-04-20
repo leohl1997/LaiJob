@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">LaiJob</string>
-    <string name="app_name">GitHubExample</string>
     <string name="swipe_left_for_register">Swipe Left for Register</string>
     <string name="login">Login</string>
     <string name="password">Password</string>
