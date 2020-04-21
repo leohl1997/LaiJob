@@ -27,12 +27,16 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.laioffer.githubexample.R;
 import com.laioffer.githubexample.base.BaseFragment;
+import com.laioffer.githubexample.databinding.CustomMapInfoWindowBinding;
 import com.laioffer.githubexample.databinding.MapFragmentBinding;
 import com.laioffer.githubexample.remote.response.Job;
 import com.laioffer.githubexample.ui.HomeList.HomeListFragment;
 import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.util.Config;
 import com.laioffer.githubexample.util.Utils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
         implements OnMapReadyCallback {
@@ -72,20 +76,29 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
             googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         });
         viewModel.getListMutableLiveData().observe(getViewLifecycleOwner(), list -> {
+            ArrayList<Marker> markerList = new ArrayList<>();
             if (list == null) {
                 Utils.constructToast(getContext(), "Null List!").show();
                 return;
             }
             for (Job job : list) {
                 LatLng position = new LatLng(job.location.latitude, job.location.longitude);
-                MarkerOptions markerOptions = new MarkerOptions().position(position).title(job.name);
-                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                MarkerOptions markerOptions = new MarkerOptions()
+                        .position(position)
+                        .title(job.name)
+                        .snippet(job.company)
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
                 googleMap.addMarker(markerOptions);
-//                Marker marker = googleMap.addMarker(markerOptions);
-//                googleMap.setOnMapClickListener(mark -> {
-//                    Utils.constructToast(getContext(), "marker clicked").show();
-//                });
+                Marker marker = googleMap.addMarker(markerOptions);
+                markerList.add(marker);
             }
+            googleMap.setOnInfoWindowClickListener(marker -> {
+                for (int i = 0; i < markerList.size(); i++) {
+                    if (marker.getTitle().equals(markerList.get(i).getTitle())) {
+                        Utils.constructToast(getContext(), list.get(i).address).show();
+                    }
+                }
+            });
         });
     }
 
@@ -134,11 +147,7 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
         googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         MarkerOptions markerOptions = new MarkerOptions().position(position).title("Me");
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-        Marker marker = googleMap.addMarker(markerOptions);
-        googleMap.setOnMapClickListener(mark -> {
-            Utils.constructToast(getContext(), "marker clicked").show();
-        });
-
+        googleMap.addMarker(markerOptions);
     }
 
     @Override
