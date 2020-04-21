@@ -67,7 +67,8 @@ public class MainActivity extends AppCompatActivity implements NavigationManager
     public void onLocationChanged(Location location) {
         Config.lat = location.getLatitude();
         Config.lon = location.getLongitude();
-        Utils.constructToast(MainActivity.this, String.valueOf(Config.lat)).show();
+        String msg = "Latitude: " + Config.lat + ", Longitude: " + Config.lon;
+        Utils.constructToast(MainActivity.this, msg).show();
     }
 
     @Override

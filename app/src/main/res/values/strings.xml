@@ -9,5 +9,6 @@
     <string name="register">Register</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
-
+    <string name="bt_return">Return</string>
+    <string name="bt_center">Center</string>
 </resources>
