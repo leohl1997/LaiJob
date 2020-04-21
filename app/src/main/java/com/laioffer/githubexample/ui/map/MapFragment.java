@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -34,6 +37,7 @@ import com.laioffer.githubexample.ui.HomeList.HomeListFragment;
 import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.util.Config;
 import com.laioffer.githubexample.util.Utils;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,6 +50,11 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
     class CustomInfoPageAdapter implements GoogleMap.InfoWindowAdapter, GoogleMap.OnInfoWindowClickListener {
 
         private Map<Marker, Job> map = new HashMap<>();
+        private Context fragment;
+
+        public CustomInfoPageAdapter(Context fragment) {
+            this.fragment = fragment;
+        }
 
         public void addMarker(Marker marker, Job job) {
             map.put(marker, job);
@@ -56,7 +65,7 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
                 return map.get(marker);
             } else {
                 for (Marker savedMaker : map.keySet()) {
-                    if (savedMaker.getPosition().equals(marker.getPosition())) {
+                    if (savedMaker.getSnippet().equals(marker.getSnippet())) {
                         return map.get(savedMaker);
                     }
                 }
@@ -70,11 +79,25 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
             if (currJob == null) {
                 return null;
             }
-            CustomMapInfoWindowBinding binding = CustomMapInfoWindowBinding.inflate(getLayoutInflater());
-            binding.tvTitle.setText(currJob.name);
-            binding.tvCompanyName.setText(currJob.company);
-            binding.tvLocation.setText(currJob.address);
-            return binding.getRoot();
+            View view = getLayoutInflater().inflate(R.layout.custom_map_info_window, null);
+            TextView textView = (TextView) view.findViewById(R.id.tv_title);
+            textView.setText(currJob.name);
+            textView =  (TextView) view.findViewById(R.id.tv_company_name);
+            textView.setText(currJob.company);
+            textView =  (TextView) view.findViewById(R.id.tv_location);
+            textView.setText(currJob.address);
+            ImageView imageView = (ImageView) view.findViewById(R.id.img_info);
+//            CustomMapInfoWindowBinding binding = CustomMapInfoWindowBinding.inflate(getLayoutInflater());
+//            binding.tvTitle.setText(currJob.name);
+//            binding.tvCompanyName.setText(currJob.company);
+//            binding.tvLocation.setText(currJob.address);
+            if (!currJob.imageUrl.isEmpty()) {
+                Picasso.get().setLoggingEnabled(true);
+                Picasso.get().load(currJob.imageUrl).placeholder(R.drawable.ic_center).resize(100,100) .into(imageView);
+                //Glide.with(view).load(currJob.imageUrl).into(imageView);
+            }
+//            return binding.getRoot();
+            return view;
         }
 
         @Override
@@ -132,13 +155,13 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
                 Utils.constructToast(getContext(), "Null List!").show();
                 return;
             }
-            CustomInfoPageAdapter adapter = new CustomInfoPageAdapter();
+            CustomInfoPageAdapter adapter = new CustomInfoPageAdapter(getContext());
             for (Job job : list) {
                 LatLng position = new LatLng(job.location.latitude, job.location.longitude);
                 MarkerOptions markerOptions = new MarkerOptions()
                         .position(position)
                         .title(job.name)
-                        .snippet(job.company)
+                        .snippet(job.itemId)
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
                 googleMap.addMarker(markerOptions);
                 Marker marker = googleMap.addMarker(markerOptions);

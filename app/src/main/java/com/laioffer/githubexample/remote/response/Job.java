@@ -1,6 +1,6 @@
 package com.laioffer.githubexample.remote.response;
-
 import com.google.gson.annotations.SerializedName;
+import com.laioffer.githubexample.R;
 
 import java.util.List;
 
@@ -35,9 +35,13 @@ public class Job {
     @SerializedName("location")
     public Location location;
 
-//    @SerializedName("lat")
+    @SerializedName("image_url")
+    public String imageUrl;
+
+    //    @SerializedName("lat")
 //    public double lat;
 //
 //    @SerializedName("lon")
 //    public double lon;
+
 }
