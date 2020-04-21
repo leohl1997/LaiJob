@@ -27,7 +27,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.laioffer.githubexample.R;
 import com.laioffer.githubexample.base.BaseFragment;
 import com.laioffer.githubexample.remote.response.UserInfo;
-import com.laioffer.githubexample.ui.HomeMap.HomeMapFragment;
+import com.laioffer.githubexample.ui.map.MapFragment;
 import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.ui.favorite.FavoriteJobFragment;
 import com.laioffer.githubexample.ui.jobInfo.JobInfoFragment;
@@ -160,7 +160,7 @@ public class HomeListFragment extends BaseFragment<HomeListViewModel, HomeListRe
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navigationManager.navigateTo(new HomeMapFragment());
+                navigationManager.navigateTo(new MapFragment());
             }
         });
         Button button4 = view.findViewById(R.id.UserInfo);

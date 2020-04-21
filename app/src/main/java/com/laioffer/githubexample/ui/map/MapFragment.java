@@ -5,17 +5,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.bumptech.glide.Glide;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -39,81 +34,12 @@ import com.laioffer.githubexample.util.Config;
 import com.laioffer.githubexample.util.Utils;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Objects;
 
 public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
-        implements OnMapReadyCallback {
-
-    class CustomInfoPageAdapter implements GoogleMap.InfoWindowAdapter, GoogleMap.OnInfoWindowClickListener {
-
-        private Map<Marker, Job> map = new HashMap<>();
-        private Context fragment;
-
-        public CustomInfoPageAdapter(Context fragment) {
-            this.fragment = fragment;
-        }
-
-        public void addMarker(Marker marker, Job job) {
-            map.put(marker, job);
-        }
-
-        private Job getJob(Marker marker) {
-            if (map.get(marker) != null) {
-                return map.get(marker);
-            } else {
-                for (Marker savedMaker : map.keySet()) {
-                    if (savedMaker.getSnippet().equals(marker.getSnippet())) {
-                        return map.get(savedMaker);
-                    }
-                }
-            }
-            return null;
-        }
-
-        @Override
-        public View getInfoWindow(Marker marker) {
-            Job currJob = getJob(marker);
-            if (currJob == null) {
-                return null;
-            }
-            View view = getLayoutInflater().inflate(R.layout.custom_map_info_window, null);
-            TextView textView = (TextView) view.findViewById(R.id.tv_title);
-            textView.setText(currJob.name);
-            textView =  (TextView) view.findViewById(R.id.tv_company_name);
-            textView.setText(currJob.company);
-            textView =  (TextView) view.findViewById(R.id.tv_location);
-            textView.setText(currJob.address);
-            ImageView imageView = (ImageView) view.findViewById(R.id.img_info);
-//            CustomMapInfoWindowBinding binding = CustomMapInfoWindowBinding.inflate(getLayoutInflater());
-//            binding.tvTitle.setText(currJob.name);
-//            binding.tvCompanyName.setText(currJob.company);
-//            binding.tvLocation.setText(currJob.address);
-            if (!currJob.imageUrl.isEmpty()) {
-                Picasso.get().setLoggingEnabled(true);
-                Picasso.get().load(currJob.imageUrl).placeholder(R.drawable.ic_center).resize(100,100) .into(imageView);
-                //Glide.with(view).load(currJob.imageUrl).into(imageView);
-            }
-//            return binding.getRoot();
-            return view;
-        }
-
-        @Override
-        public View getInfoContents(Marker marker) {
-            return null;
-        }
-
-        @Override
-        public void onInfoWindowClick(Marker marker) {
-            Job currJob = getJob(marker);
-            if (currJob == null) {
-                return;
-            }
-            Utils.constructToast(getContext(), currJob.name).show();
-        }
-    }
+        implements OnMapReadyCallback, GoogleMap.InfoWindowAdapter,
+        GoogleMap.OnInfoWindowClickListener {
 
     private MapFragmentBinding binding;
     private MapView mapView;
@@ -150,33 +76,9 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
             googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         });
         viewModel.getListMutableLiveData().observe(getViewLifecycleOwner(), list -> {
-//            ArrayList<Marker> markerList = new ArrayList<>();
-            if (list == null) {
-                Utils.constructToast(getContext(), "Null List!").show();
-                return;
+            if (list != null) {
+                addJobToMap(list);
             }
-            CustomInfoPageAdapter adapter = new CustomInfoPageAdapter(getContext());
-            for (Job job : list) {
-                LatLng position = new LatLng(job.location.latitude, job.location.longitude);
-                MarkerOptions markerOptions = new MarkerOptions()
-                        .position(position)
-                        .title(job.name)
-                        .snippet(job.itemId)
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-                googleMap.addMarker(markerOptions);
-                Marker marker = googleMap.addMarker(markerOptions);
-                adapter.addMarker(marker, job);
-                //markerList.add(marker);
-            }
-            googleMap.setInfoWindowAdapter(adapter);
-            googleMap.setOnInfoWindowClickListener(adapter);
-//            googleMap.setOnInfoWindowClickListener(marker -> {
-//                for (int i = 0; i < markerList.size(); i++) {
-//                    if (marker.getTitle().equals(markerList.get(i).getTitle())) {
-//                        Utils.constructToast(getContext(), list.get(i).address).show();
-//                    }
-//                }
-//            });
         });
     }
 
@@ -212,9 +114,10 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        MapsInitializer.initialize(getContext());
+        MapsInitializer.initialize(Objects.requireNonNull(getContext()));
         this.googleMap = googleMap;
-        this.googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(getActivity(), R.raw.style_json));
+        this.googleMap.setMapStyle(MapStyleOptions
+                .loadRawResourceStyle(Objects.requireNonNull(getActivity()), R.raw.style_json));
 
         LatLng position = new LatLng(Config.lat, Config.lon);
         CameraPosition cameraPosition = new CameraPosition.Builder()
@@ -226,6 +129,8 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
         MarkerOptions markerOptions = new MarkerOptions().position(position).title("Me");
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
         googleMap.addMarker(markerOptions);
+        googleMap.setInfoWindowAdapter(this);
+        googleMap.setOnInfoWindowClickListener(this);
     }
 
     @Override
@@ -247,6 +152,66 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
     @Override
     protected MapRepository getRepository() {
         return new MapRepository();
+    }
+
+    private void addJobToMap(List<Job> jobs) {
+        if (jobs == null) {
+            Utils.constructToast(getContext(), "Null List!").show();
+            return;
+        }
+
+        for (Job job : jobs) {
+            LatLng position = new LatLng(job.location.latitude, job.location.longitude);
+            MarkerOptions markerOptions = new MarkerOptions()
+                    .position(position)
+                    .title(job.name)
+                    .snippet(job.itemId)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+            googleMap.addMarker(markerOptions);
+            Marker marker = googleMap.addMarker(markerOptions);
+            marker.setTag(job);
+        }
+
+    }
+
+    @Override
+    public View getInfoWindow(Marker marker) {
+        if (!(marker.getTag() instanceof Job)) {
+            return null;
+        }
+        Job currJob = (Job) marker.getTag();
+        if (currJob == null) {
+            return null;
+        }
+        CustomMapInfoWindowBinding binding = CustomMapInfoWindowBinding.inflate(getLayoutInflater());
+        binding.tvTitle.setText(currJob.name);
+        binding.tvCompanyName.setText(currJob.company);
+        binding.tvLocation.setText(currJob.address);
+        if (!currJob.imageUrl.isEmpty()) {
+            Picasso.get().setLoggingEnabled(true);
+            Picasso.get().load(currJob.imageUrl).placeholder(R.drawable.ic_center)
+                    .resize(100,100)
+                    .into(binding.imgInfo);
+
+        }
+        return binding.getRoot();
+    }
+
+    @Override
+    public View getInfoContents(Marker marker) {
+        return null;
+    }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        if (!(marker.getTag() instanceof Job)) {
+            return;
+        }
+        Job currJob = (Job) marker.getTag();
+        if (currJob == null) {
+            return;
+        }
+        Utils.constructToast(getContext(), currJob.name).show();
     }
 
 }
