@@ -28,6 +28,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.laioffer.githubexample.R;
 import com.laioffer.githubexample.base.BaseFragment;
 import com.laioffer.githubexample.databinding.MapFragmentBinding;
+import com.laioffer.githubexample.remote.response.Job;
 import com.laioffer.githubexample.ui.HomeList.HomeListFragment;
 import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.util.Config;
@@ -69,6 +70,22 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
                     .build();
 
             googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        });
+        viewModel.getListMutableLiveData().observe(getViewLifecycleOwner(), list -> {
+            if (list == null) {
+                Utils.constructToast(getContext(), "Null List!").show();
+                return;
+            }
+            for (Job job : list) {
+                LatLng position = new LatLng(job.lat, job.lon);
+                MarkerOptions markerOptions = new MarkerOptions().position(position).title(job.name);
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                googleMap.addMarker(markerOptions);
+//                Marker marker = googleMap.addMarker(markerOptions);
+//                googleMap.setOnMapClickListener(mark -> {
+//                    Utils.constructToast(getContext(), "marker clicked").show();
+//                });
+            }
         });
     }
 

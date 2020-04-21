@@ -19,6 +19,7 @@ import com.laioffer.githubexample.databinding.LoginFragmentBinding;
 import com.laioffer.githubexample.remote.response.UserInfo;
 import com.laioffer.githubexample.ui.HomeList.HomeListFragment;
 import com.laioffer.githubexample.ui.NavigationManager;
+import com.laioffer.githubexample.ui.map.MapFragment;
 import com.laioffer.githubexample.util.Utils;
 
 public class LoginFragment extends BaseFragment<LoginViewModel, LoginRepository> {
@@ -51,7 +52,7 @@ public class LoginFragment extends BaseFragment<LoginViewModel, LoginRepository>
             if (it != null && it.status.equals("OK")) {
                 Utils.constructToast(getContext(), "Login success!").show();
                 // set up user information
-                navigationManager.navigateTo(new HomeListFragment());
+                navigationManager.navigateTo(new MapFragment());
             } else {
                 Utils.constructToast(getContext(), it == null ? "Error !" : it.status).show();
             }
