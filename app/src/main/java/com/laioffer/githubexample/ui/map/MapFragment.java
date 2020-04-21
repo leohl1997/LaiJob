@@ -36,10 +36,61 @@ import com.laioffer.githubexample.util.Config;
 import com.laioffer.githubexample.util.Utils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
         implements OnMapReadyCallback {
+
+    class CustomInfoPageAdapter implements GoogleMap.InfoWindowAdapter, GoogleMap.OnInfoWindowClickListener {
+
+        private Map<Marker, Job> map = new HashMap<>();
+
+        public void addMarker(Marker marker, Job job) {
+            map.put(marker, job);
+        }
+
+        private Job getJob(Marker marker) {
+            if (map.get(marker) != null) {
+                return map.get(marker);
+            } else {
+                for (Marker savedMaker : map.keySet()) {
+                    if (savedMaker.getPosition().equals(marker.getPosition())) {
+                        return map.get(savedMaker);
+                    }
+                }
+            }
+            return null;
+        }
+
+        @Override
+        public View getInfoWindow(Marker marker) {
+            Job currJob = getJob(marker);
+            if (currJob == null) {
+                return null;
+            }
+            CustomMapInfoWindowBinding binding = CustomMapInfoWindowBinding.inflate(getLayoutInflater());
+            binding.tvTitle.setText(currJob.name);
+            binding.tvCompanyName.setText(currJob.company);
+            binding.tvLocation.setText(currJob.address);
+            return binding.getRoot();
+        }
+
+        @Override
+        public View getInfoContents(Marker marker) {
+            return null;
+        }
+
+        @Override
+        public void onInfoWindowClick(Marker marker) {
+            Job currJob = getJob(marker);
+            if (currJob == null) {
+                return;
+            }
+            Utils.constructToast(getContext(), currJob.name).show();
+        }
+    }
 
     private MapFragmentBinding binding;
     private MapView mapView;
@@ -76,11 +127,12 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
             googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         });
         viewModel.getListMutableLiveData().observe(getViewLifecycleOwner(), list -> {
-            ArrayList<Marker> markerList = new ArrayList<>();
+//            ArrayList<Marker> markerList = new ArrayList<>();
             if (list == null) {
                 Utils.constructToast(getContext(), "Null List!").show();
                 return;
             }
+            CustomInfoPageAdapter adapter = new CustomInfoPageAdapter();
             for (Job job : list) {
                 LatLng position = new LatLng(job.location.latitude, job.location.longitude);
                 MarkerOptions markerOptions = new MarkerOptions()
@@ -90,15 +142,18 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
                 googleMap.addMarker(markerOptions);
                 Marker marker = googleMap.addMarker(markerOptions);
-                markerList.add(marker);
+                adapter.addMarker(marker, job);
+                //markerList.add(marker);
             }
-            googleMap.setOnInfoWindowClickListener(marker -> {
-                for (int i = 0; i < markerList.size(); i++) {
-                    if (marker.getTitle().equals(markerList.get(i).getTitle())) {
-                        Utils.constructToast(getContext(), list.get(i).address).show();
-                    }
-                }
-            });
+            googleMap.setInfoWindowAdapter(adapter);
+            googleMap.setOnInfoWindowClickListener(adapter);
+//            googleMap.setOnInfoWindowClickListener(marker -> {
+//                for (int i = 0; i < markerList.size(); i++) {
+//                    if (marker.getTitle().equals(markerList.get(i).getTitle())) {
+//                        Utils.constructToast(getContext(), list.get(i).address).show();
+//                    }
+//                }
+//            });
         });
     }
 
