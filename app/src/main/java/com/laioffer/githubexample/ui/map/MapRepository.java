@@ -23,6 +23,7 @@ public class MapRepository extends BaseRepository {
             @Override
             public void onResponse(Call<RemoteResponse<List<Job>>> call, Response<RemoteResponse<List<Job>>> response) {
                 if (response.code() == 200) {
+                    RemoteResponse<List<Job>> list = response.body();
                     listMutableLiveData.postValue(response.body().response);
                 } else {
                     listMutableLiveData.postValue(null);

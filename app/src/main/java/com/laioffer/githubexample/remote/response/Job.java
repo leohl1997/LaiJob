@@ -32,12 +32,12 @@ public class Job {
     @SerializedName("favorite")
     public boolean favorite;
 
-//    @SerializedName("")
-//    public Location location;
+    @SerializedName("location")
+    public Location location;
 
-    @SerializedName("lat")
-    public double lat;
-
-    @SerializedName("lon")
-    public double lon;
+//    @SerializedName("lat")
+//    public double lat;
+//
+//    @SerializedName("lon")
+//    public double lon;
 }

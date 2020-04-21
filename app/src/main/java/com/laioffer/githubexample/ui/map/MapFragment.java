@@ -66,7 +66,7 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
         returnFab.setOnClickListener( v -> {
             CameraPosition cameraPosition = new CameraPosition.Builder()
                     .target(new LatLng(Config.lat, Config.lon))
-                    .zoom(12)
+                    .zoom(10)
                     .build();
 
             googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
@@ -77,7 +77,7 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
                 return;
             }
             for (Job job : list) {
-                LatLng position = new LatLng(job.lat, job.lon);
+                LatLng position = new LatLng(job.location.latitude, job.location.longitude);
                 MarkerOptions markerOptions = new MarkerOptions().position(position).title(job.name);
                 markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
                 googleMap.addMarker(markerOptions);
@@ -128,7 +128,7 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
         LatLng position = new LatLng(Config.lat, Config.lon);
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(position)
-                .zoom(12)
+                .zoom(10)
                 .build();
 
         googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
