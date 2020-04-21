@@ -22,6 +22,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.laioffer.githubexample.R;
@@ -30,6 +31,7 @@ import com.laioffer.githubexample.databinding.MapFragmentBinding;
 import com.laioffer.githubexample.ui.HomeList.HomeListFragment;
 import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.util.Config;
+import com.laioffer.githubexample.util.Utils;
 
 public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
         implements OnMapReadyCallback {
@@ -113,9 +115,13 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
                 .build();
 
         googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-        MarkerOptions marker = new MarkerOptions().position(position).title("Me");
-        marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-        googleMap.addMarker(marker);
+        MarkerOptions markerOptions = new MarkerOptions().position(position).title("Me");
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+        Marker marker = googleMap.addMarker(markerOptions);
+        googleMap.setOnMapClickListener(mark -> {
+            Utils.constructToast(getContext(), "marker clicked").show();
+        });
+
     }
 
     @Override
