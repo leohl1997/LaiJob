@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--item layout of the listview -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView android:id="@+id/job_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_weight="1"/>
+
+    <RelativeLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:layout_gravity="center"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView android:id="@+id/job_title"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:textStyle="bold"
+            android:textSize="18sp"/>
+
+        <TextView android:id="@+id/company"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/job_title"
+            android:textSize="13sp"/>
+
+        <TextView android:id="@+id/location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/company"
+            android:textSize="13sp"/>
+
+        <TextView android:id="@+id/post_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/location"
+            android:textSize="13sp"/>
+
+
+    </RelativeLayout>
+</LinearLayout>
+

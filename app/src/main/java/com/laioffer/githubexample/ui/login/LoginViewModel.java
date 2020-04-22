@@ -14,8 +14,7 @@ import com.laioffer.githubexample.util.Utils;
 public class LoginViewModel extends BaseViewModel<LoginRepository> {
 
     private final MutableLiveData<LoginEvent> loginEventMutableLiveData = new MutableLiveData<>();
-    private final LiveData<RemoteResponse<UserInfo>> remoteResponseMutableLiveData =
-            Transformations.switchMap(loginEventMutableLiveData, repository::login);
+    private final LiveData<RemoteResponse<UserInfo>> remoteResponseMutableLiveData = Transformations.switchMap(loginEventMutableLiveData, repository::login);
     private final MutableLiveData<String> errMsgMutableLiveData = new MutableLiveData<>();
 
     LoginViewModel(LoginRepository baseRepository) {
