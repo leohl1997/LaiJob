@@ -52,7 +52,7 @@ public class LoginFragment extends BaseFragment<LoginViewModel, LoginRepository>
             if (it != null && it.status.equals("OK")) {
                 Utils.constructToast(getContext(), "Login success!").show();
                 // set up user information
-                navigationManager.navigateTo(new MapFragment());
+                navigationManager.navigateTo(new HomeListFragment());
             } else {
                 Utils.constructToast(getContext(), it == null ? "Error !" : it.status).show();
             }
