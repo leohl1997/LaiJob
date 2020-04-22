@@ -33,6 +33,7 @@ import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.util.Config;
 import com.laioffer.githubexample.util.Utils;
 import com.squareup.picasso.Picasso;
+import com.wanderingcan.persistentsearch.PersistentSearchView;
 
 import java.util.List;
 import java.util.Objects;
@@ -76,8 +77,41 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
             googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         });
         viewModel.getListMutableLiveData().observe(getViewLifecycleOwner(), list -> {
+            viewModel.getSavedJob().clear();
             if (list != null) {
                 addJobToMap(list);
+                viewModel.getSavedJob().addAll(list);
+            }
+        });
+        viewModel.getMsg().observe(getViewLifecycleOwner(), msg -> {
+            Utils.constructToast(getContext(), msg).show();
+        });
+        binding.searchBar.setOnSearchListener(new PersistentSearchView.OnSearchListener() {
+            @Override
+            public void onSearchOpened() {
+
+            }
+
+            @Override
+            public void onSearchClosed() {
+
+            }
+
+            @Override
+            public void onSearchCleared() {
+
+            }
+
+            @Override
+            public void onSearchTermChanged(CharSequence term) {
+
+            }
+
+            @Override
+            public void onSearch(CharSequence text) {
+                googleMap.clear();
+                setMarkerAtCurrentPosition();
+                viewModel.setSearchEvent(text.toString());
             }
         });
     }
@@ -92,6 +126,7 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
     public void onResume() {
         super.onResume();
         mapView.onResume();
+
     }
 
     @Override
@@ -119,18 +154,14 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
         this.googleMap.setMapStyle(MapStyleOptions
                 .loadRawResourceStyle(Objects.requireNonNull(getActivity()), R.raw.style_json));
 
-        LatLng position = new LatLng(Config.lat, Config.lon);
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(position)
-                .zoom(10)
-                .build();
-
-        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-        MarkerOptions markerOptions = new MarkerOptions().position(position).title("Me");
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-        googleMap.addMarker(markerOptions);
+        setMarkerAtCurrentPosition();
         googleMap.setInfoWindowAdapter(this);
         googleMap.setOnInfoWindowClickListener(this);
+        if (viewModel.getSavedJob().isEmpty()) {
+            viewModel.setSearchEvent("");
+        } else {
+            addJobToMap(viewModel.getSavedJob());
+        }
     }
 
     @Override
@@ -154,7 +185,26 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
         return new MapRepository();
     }
 
+    private void setMarkerAtCurrentPosition() {
+        if (googleMap == null) {
+            return;
+        }
+        LatLng position = new LatLng(Config.lat, Config.lon);
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(position)
+                .zoom(10)
+                .build();
+
+        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        MarkerOptions markerOptions = new MarkerOptions().position(position).title("Me");
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+        googleMap.addMarker(markerOptions);
+    }
+
     private void addJobToMap(List<Job> jobs) {
+        if (googleMap == null) {
+            return;
+        }
         if (jobs == null) {
             Utils.constructToast(getContext(), "Null List!").show();
             return;
