@@ -2,9 +2,10 @@ package com.laioffer.githubexample.remote.response;
 import com.google.gson.annotations.SerializedName;
 import com.laioffer.githubexample.R;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Job {
+public class Job implements Serializable {
     @SerializedName("address")
     public String address;
 

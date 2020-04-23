@@ -78,10 +78,20 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
 
         viewModel.getListMutableLiveData().observe(getViewLifecycleOwner(), list -> {
             viewModel.getSavedJob().clear();
-            if (list != null) {
+            if (list != null && !list.isEmpty()) {
                 addJobToMap(list);
                 viewModel.getSavedJob().addAll(list);
+
+                CardFragmentPagerAdapter pagerAdapter = new CardFragmentPagerAdapter(getChildFragmentManager(), Utils.dpToPixels(2, getContext()), list);
+                ShadowTransformer shadowTransformer = new ShadowTransformer(binding.mapViewPager, pagerAdapter);
+
+                binding.mapViewPager.setAdapter(pagerAdapter);
+                binding.mapViewPager.setPageMargin(100);
+                binding.mapViewPager.setPageTransformer(false ,shadowTransformer);
+                binding.mapViewPager.setOffscreenPageLimit(3);
+                shadowTransformer.enableScaling(true);
             }
+
         });
 
         viewModel.getMsg().observe(getViewLifecycleOwner(), msg ->

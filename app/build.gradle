@@ -66,5 +66,8 @@ dependencies {
     // persistence search
     implementation 'com.wanderingcan.widget:persistentsearch:1.2.2'
 
+    // cardview
+    implementation "androidx.cardview:cardview:1.0.0"
+
 
 }
