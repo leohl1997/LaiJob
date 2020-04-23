@@ -13,12 +13,11 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.laioffer.githubexample.R;
-import com.laioffer.githubexample.databinding.MapCardBinding;
 import com.laioffer.githubexample.remote.response.Job;
 import com.laioffer.githubexample.util.Utils;
 import com.squareup.picasso.Picasso;
 
-public class CardFragment extends Fragment implements View.OnClickListener {
+public class CardFragment extends Fragment {
     private CardView cardView;
 
     public static CardFragment getInstance(Job job) {
@@ -44,9 +43,11 @@ public class CardFragment extends Fragment implements View.OnClickListener {
         companyName.setText(job.company);
         TextView location = view.findViewById(R.id.cv_location);
         location.setText(job.address);
+        cardView.setOnClickListener( v -> {
+            Utils.constructToast(getContext(), title.getText().toString()).show();
+        });
 
         ImageView imageView = view.findViewById(R.id.cvImg_info);
-
         if (!job.imageUrl.isEmpty()) {
             Picasso.get().setLoggingEnabled(true);
             Picasso.get().load(job.imageUrl).placeholder(R.drawable.ic_center)
@@ -61,10 +62,4 @@ public class CardFragment extends Fragment implements View.OnClickListener {
         return cardView;
     }
 
-    @Override
-    public void onClick(View v) {
-        Bundle args = getArguments();
-        Job job = (Job) args.getSerializable("job");
-        Utils.constructToast(getContext(), job.name).show();
-    }
 }
