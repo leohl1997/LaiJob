@@ -39,19 +39,19 @@
         android:id="@+id/fab_return"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="start|center"
+        android:layout_gravity="start|bottom"
         android:layout_margin="16dp"
         android:layout_marginBottom="120dp"
         android:contentDescription="@string/bt_return"
         android:src="@drawable/ic_arrow_left_black"
-        app:backgroundTint="@color/grey"
+        app:backgroundTint="@color/black"
         app:maxImageSize="50dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end|center"
+        android:layout_gravity="end|bottom"
         android:layout_marginBottom="120dp"
         android:src="@drawable/ic_center"
         android:contentDescription="@string/bt_center"

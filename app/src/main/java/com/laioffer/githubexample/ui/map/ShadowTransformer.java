@@ -32,8 +32,8 @@ public class ShadowTransformer implements ViewPager.OnPageChangeListener, ViewPa
             CardView currentCard = cardAdapter.getCardViewAt(viewPager.getCurrentItem());
             if (currentCard != null) {
                 //enlarge the current item
-                currentCard.animate().scaleY(1.1f);
-                currentCard.animate().scaleX(1.1f);
+                currentCard.animate().scaleY(1.15f);
+                currentCard.animate().scaleX(1.15f);
             }
         }
         scalingEnabled = enable;
@@ -76,8 +76,8 @@ public class ShadowTransformer implements ViewPager.OnPageChangeListener, ViewPa
         // and the views weren't created yet
         if (currentCard != null) {
             if (scalingEnabled) {
-                currentCard.setScaleX((float) (1 + 0.1 * (1 - realOffset)));
-                currentCard.setScaleY((float) (1 + 0.1 * (1 - realOffset)));
+                currentCard.setScaleX((float) (1 + 0.15 * (1 - realOffset)));
+                currentCard.setScaleY((float) (1 + 0.15 * (1 - realOffset)));
             }
             currentCard.setCardElevation((baseElevation + baseElevation
                     * (CardAdapter.MAX_ELEVATION_FACTOR - 1) * (1 - realOffset)));
@@ -89,8 +89,8 @@ public class ShadowTransformer implements ViewPager.OnPageChangeListener, ViewPa
         // was already destroyed or a fragment might not have been created yet
         if (nextCard != null) {
             if (scalingEnabled) {
-                nextCard.setScaleX((float) (1 + 0.1 * (realOffset)));
-                nextCard.setScaleY((float) (1 + 0.1 * (realOffset)));
+                nextCard.setScaleX((float) (1 + 0.15 * (realOffset)));
+                nextCard.setScaleY((float) (1 + 0.15 * (realOffset)));
             }
             nextCard.setCardElevation((baseElevation + baseElevation
                     * (CardAdapter.MAX_ELEVATION_FACTOR - 1) * (realOffset)));

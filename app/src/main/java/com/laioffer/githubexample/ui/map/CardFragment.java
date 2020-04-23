@@ -15,9 +15,10 @@ import androidx.fragment.app.Fragment;
 import com.laioffer.githubexample.R;
 import com.laioffer.githubexample.databinding.MapCardBinding;
 import com.laioffer.githubexample.remote.response.Job;
+import com.laioffer.githubexample.util.Utils;
 import com.squareup.picasso.Picasso;
 
-public class CardFragment extends Fragment {
+public class CardFragment extends Fragment implements View.OnClickListener {
     private CardView cardView;
 
     public static CardFragment getInstance(Job job) {
@@ -35,6 +36,7 @@ public class CardFragment extends Fragment {
         cardView = view.findViewById(R.id.map_card_view);
         cardView.setMaxCardElevation(cardView.getCardElevation() *
                 CardAdapter.MAX_ELEVATION_FACTOR);
+
         Job job = (Job) getArguments().getSerializable("job");
         TextView title = view.findViewById(R.id.cv_title);
         title.setText(job.name);
@@ -57,5 +59,12 @@ public class CardFragment extends Fragment {
 
     public CardView getCardView() {
         return cardView;
+    }
+
+    @Override
+    public void onClick(View v) {
+        Bundle args = getArguments();
+        Job job = (Job) args.getSerializable("job");
+        Utils.constructToast(getContext(), job.name).show();
     }
 }

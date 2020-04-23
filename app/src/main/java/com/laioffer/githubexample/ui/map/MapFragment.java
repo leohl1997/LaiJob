@@ -86,7 +86,7 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
                 ShadowTransformer shadowTransformer = new ShadowTransformer(binding.mapViewPager, pagerAdapter);
 
                 binding.mapViewPager.setAdapter(pagerAdapter);
-                binding.mapViewPager.setPageMargin(100);
+                binding.mapViewPager.setPageMargin(120);
                 binding.mapViewPager.setPageTransformer(false ,shadowTransformer);
                 binding.mapViewPager.setOffscreenPageLimit(3);
                 shadowTransformer.enableScaling(true);
