@@ -22,42 +22,56 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/mapViewPager"
+    <FrameLayout
         android:layout_width="wrap_content"
-        android:layout_height="150dp"
-        android:layout_gravity="bottom"
-        android:clipToPadding="false"
-        android:overScrollMode="never"
-        android:paddingStart="60dp"
-        android:paddingLeft="60dp"
-        android:paddingEnd="60dp"
-        android:paddingRight="60dp"
-        android:paddingBottom="30dp" />
+        android:layout_height="240dp"
+        android:layout_gravity="bottom">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_return"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start|bottom"
-        android:layout_margin="16dp"
-        android:layout_marginBottom="120dp"
-        android:contentDescription="@string/bt_return"
-        android:src="@drawable/ic_arrow_left_black"
-        app:backgroundTint="@color/black"
-        app:maxImageSize="50dp" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_return"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_marginBottom="120dp"
-        android:src="@drawable/ic_center"
-        android:contentDescription="@string/bt_center"
-        app:backgroundTint="@color/grey"
-        app:maxImageSize="59dp"
-        android:layout_margin="16dp" />
+            android:layout_gravity="start|top"
+            android:layout_margin="16dp"
+            android:layout_marginBottom="120dp"
+            android:contentDescription="@string/bt_return"
+            android:src="@drawable/ic_arrow_left_black"
+            app:backgroundTint="@color/black"
+            app:maxImageSize="50dp" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_gravity="end|top"
+            android:layout_marginBottom="120dp"
+            android:src="@drawable/ic_center"
+            android:contentDescription="@string/bt_center"
+            app:backgroundTint="@color/grey"
+            app:maxImageSize="59dp"
+            android:layout_margin="16dp" />
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/mapViewPager"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:layout_gravity="bottom"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:paddingStart="60dp"
+            android:paddingLeft="60dp"
+            android:paddingEnd="60dp"
+            android:paddingRight="60dp"
+            android:paddingBottom="30dp" />
+
+
+    </FrameLayout>
+
+
+
+
 
 
 </FrameLayout>
