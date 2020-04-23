@@ -63,19 +63,19 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
             mapView.onResume();
             mapView.getMapAsync(this);
         }
+
         FloatingActionButton fab = view.findViewById(R.id.fab_return);
-        fab.setOnClickListener( v -> {
-            navigationManager.navigateTo(new HomeListFragment());
-        });
+        fab.setOnClickListener( v -> navigationManager.navigateTo(new HomeListFragment()));
+
         FloatingActionButton returnFab = view.findViewById(R.id.fab_center);
         returnFab.setOnClickListener( v -> {
             CameraPosition cameraPosition = new CameraPosition.Builder()
                     .target(new LatLng(Config.lat, Config.lon))
                     .zoom(10)
                     .build();
-
             googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         });
+
         viewModel.getListMutableLiveData().observe(getViewLifecycleOwner(), list -> {
             viewModel.getSavedJob().clear();
             if (list != null) {
@@ -83,9 +83,10 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
                 viewModel.getSavedJob().addAll(list);
             }
         });
-        viewModel.getMsg().observe(getViewLifecycleOwner(), msg -> {
-            Utils.constructToast(getContext(), msg).show();
-        });
+
+        viewModel.getMsg().observe(getViewLifecycleOwner(), msg ->
+                Utils.constructToast(getContext(), msg).show());
+
         binding.searchBar.setOnSearchListener(new PersistentSearchView.OnSearchListener() {
             @Override
             public void onSearchOpened() {
@@ -199,6 +200,10 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
         MarkerOptions markerOptions = new MarkerOptions().position(position).title("Me");
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
         googleMap.addMarker(markerOptions);
+        googleMap.setOnMarkerClickListener(marker -> {
+            marker.showInfoWindow();
+            return true;
+        });
     }
 
     private void addJobToMap(List<Job> jobs) {
@@ -214,8 +219,6 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
             LatLng position = new LatLng(job.location.latitude, job.location.longitude);
             MarkerOptions markerOptions = new MarkerOptions()
                     .position(position)
-                    .title(job.name)
-                    .snippet(job.itemId)
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
             googleMap.addMarker(markerOptions);
             Marker marker = googleMap.addMarker(markerOptions);
