@@ -40,7 +40,7 @@ public class ShadowTransformer implements ViewPager.OnPageChangeListener, ViewPa
     }
 
     @Override
-    public void transformPage(View page, float position) {
+    public void transformPage(@NonNull View page, float position) {
 
     }
 
