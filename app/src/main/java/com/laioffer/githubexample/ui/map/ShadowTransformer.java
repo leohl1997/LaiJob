@@ -13,13 +13,13 @@ public class ShadowTransformer implements ViewPager.OnPageChangeListener, ViewPa
     private float lastOffset;
     private boolean scalingEnabled;
 
-    public ShadowTransformer(ViewPager viewPager, CardAdapter adapter) {
+    ShadowTransformer(ViewPager viewPager, CardAdapter adapter) {
         this.viewPager = viewPager;
         viewPager.addOnPageChangeListener(this);
         cardAdapter = adapter;
     }
 
-    public void enableScaling(boolean enable) {
+    void enableScaling(boolean enable) {
         if (scalingEnabled && !enable) {
             // shrink main card
             CardView currentCard = cardAdapter.getCardViewAt(viewPager.getCurrentItem());

@@ -24,7 +24,7 @@
 
     <FrameLayout
         android:layout_width="wrap_content"
-        android:layout_height="240dp"
+        android:layout_height="220dp"
         android:layout_gravity="bottom">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -60,11 +60,13 @@
             android:layout_gravity="bottom"
             android:clipToPadding="false"
             android:overScrollMode="never"
+            android:layout_marginBottom="5dp"
+            android:paddingTop="10dp"
             android:paddingStart="60dp"
             android:paddingLeft="60dp"
             android:paddingEnd="60dp"
             android:paddingRight="60dp"
-            android:paddingBottom="30dp" />
+            android:paddingBottom="20dp" />
 
 
     </FrameLayout>
