@@ -253,7 +253,7 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
         if (!currJob.imageUrl.isEmpty()) {
             Picasso.get().setLoggingEnabled(true);
             Picasso.get().load(currJob.imageUrl).placeholder(R.drawable.ic_center)
-                    .resize(100,100)
+                    .resize(70,70)
                     .into(binding.imgInfo);
 
         }
