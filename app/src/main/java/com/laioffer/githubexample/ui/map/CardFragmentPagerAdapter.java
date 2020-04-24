@@ -25,7 +25,7 @@ public class CardFragmentPagerAdapter extends FragmentStatePagerAdapter implemen
         this.baseElevation = baseElevation;
 
         for(Job job : jobList){
-            addCardFragment(CardFragment.getInstance(job));
+            addCardFragment(new CardFragment());
         }
     }
 

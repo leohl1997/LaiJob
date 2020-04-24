@@ -82,6 +82,8 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
                 addJobToMap(list);
                 viewModel.getSavedJob().addAll(list);
 
+                //this should happen for recommend item.
+
                 CardFragmentPagerAdapter pagerAdapter = new CardFragmentPagerAdapter(getChildFragmentManager(), Utils.dpToPixels(2, getContext()), list);
                 ShadowTransformer shadowTransformer = new ShadowTransformer(binding.mapViewPager, pagerAdapter);
 
