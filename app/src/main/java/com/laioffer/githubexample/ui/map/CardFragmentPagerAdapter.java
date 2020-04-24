@@ -2,6 +2,7 @@ package com.laioffer.githubexample.ui.map;
 
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -18,7 +19,7 @@ public class CardFragmentPagerAdapter extends FragmentStatePagerAdapter implemen
     private List<Job> jobList;
     private float baseElevation;
 
-    public CardFragmentPagerAdapter(FragmentManager fm, float baseElevation, List<Job> jobList) {
+    CardFragmentPagerAdapter(FragmentManager fm, float baseElevation, List<Job> jobList) {
         super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         fragments = new ArrayList<>();
         this.jobList = jobList;
@@ -44,13 +45,15 @@ public class CardFragmentPagerAdapter extends FragmentStatePagerAdapter implemen
         return fragments.size();
     }
 
+    @NonNull
     @Override
     public Fragment getItem(int position) {
         return CardFragment.getInstance(jobList.get(position));
     }
 
+    @NonNull
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
+    public Object instantiateItem(@NonNull ViewGroup container, int position) {
         Object fragment = super.instantiateItem(container, position);
         fragments.set(position, (CardFragment) fragment);
         return fragment;
