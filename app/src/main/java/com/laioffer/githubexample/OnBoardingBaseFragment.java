@@ -15,9 +15,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.laioffer.githubexample.databinding.LoginFragmentBinding;
 import com.laioffer.githubexample.ui.login.LoginFragment;
 import com.laioffer.githubexample.ui.register.RegisterFragment;
+import com.laioffer.githubexample.util.Utils;
 
 import java.util.ArrayList;
 
@@ -85,6 +85,9 @@ public class OnBoardingBaseFragment extends Fragment {
                     subLogin.setTranslationX((float)(-(position) * pageWidth));
                     loginBtn.setTranslationX((float)(-(position) * pageWidth));
                     loginBtn.setTranslationY((float)(-(position) * pageHeight * 0.1695));
+                    // position from 0 to -1, color, from 0xff
+                    // ff ffffff -> ff 000000
+                    loginBtn.setTextColor(Utils.whiteToBlack((int)(-position * 10)));
                     swipeRight.setTranslationX((float) ((position) * 1.2 * pageWidth));
                 }
 
@@ -95,6 +98,7 @@ public class OnBoardingBaseFragment extends Fragment {
                     sub.setTranslationX((float)(-(position) * pageWidth));
                     registerBtn.setTranslationX((float)(-(position) * pageWidth));
                     registerBtn.setTranslationY((float)(-(position) * pageHeight * 0.1695));
+                    registerBtn.setTextColor(Utils.whiteToBlack((int)(position * 10)));
                 }
 
                 EditText firstName = page.findViewById(R.id.et_first_name);
