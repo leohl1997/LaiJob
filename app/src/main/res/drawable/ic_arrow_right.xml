@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <vector android:height="24dp"
-    android:tint="@color/arrow_red"
+    android:tint="@color/light_green"
     android:viewportHeight="24.0"
     android:viewportWidth="24.0"
     android:width="24dp"
