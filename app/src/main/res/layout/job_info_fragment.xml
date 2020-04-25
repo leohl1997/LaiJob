@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.jobInfo.JobInfoFragment">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="This is Job Info Page" />
+
+    <TextView
+        android:id="@+id/job_title"
+        style="@style/TextAppearance.AppCompat.Medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        tools:text="Software Developer" />
+
+    <TextView
+        android:id="@+id/company"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_marginTop="70dp"
+        tools:text="Amazon" />
+
+    <TextView
+        android:id="@+id/location"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_marginTop="90dp"
+        tools:text="New York" />
+
+    <TextView
+        android:id="@+id/post_time"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_marginTop="110dp"
+        tools:text="*****" />
+
+    <ImageView
+        android:id="@+id/job_image"
+        android:layout_width="30dp"
+        android:layout_height="24dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:tint="@color/white" />
+
+    <TextView
+        android:id="@+id/job_description"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_marginTop="450dp"
+        tools:text="*****" />
+
+    <androidx.appcompat.widget.AppCompatRadioButton
+        android:id="@+id/checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginVertical="5dp"
+        android:buttonTint="@color/white" />
+
+    <Button
+        android:layout_marginTop="300dp"
+        android:id="@+id/apply"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:text="apply"
+        android:textColor="@android:color/white" />
+
+    <Button
+        android:layout_marginTop="650dp"
+        android:id="@+id/save"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:text="save"
+        android:textColor="@android:color/white" />
+
+
+</FrameLayout>

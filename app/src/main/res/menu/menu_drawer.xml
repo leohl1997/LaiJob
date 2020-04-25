@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/drawer_home"
+            android:checked="true"
+            android:icon="@drawable/baseline_home_black_18dp"
+            android:title="Home" />
+
+        <item
+            android:id="@+id/user_info"
+            android:checked="false"
+            android:icon="@drawable/baseline_account_box_black_18dp"
+            android:title="Profile" />
+        <item
+            android:id="@+id/favorite"
+            android:checked="false"
+            android:icon="@drawable/baseline_favorite_black_18dp"
+            android:title="Favorite" />
+        <item
+            android:id="@+id/search"
+            android:checked="false"
+            android:icon="@drawable/baseline_search_black_18dp"
+            android:title="Search" />
+        <item
+        android:id="@+id/drawer_setting"
+        android:checked="false"
+        android:icon="@drawable/baseline_settings_black_18dp"
+        android:title="Setting" />
+        <item
+            android:id="@+id/drawer_logout"
+            android:checked="false"
+            android:icon="@drawable/baseline_input_black_18dp"
+            android:title="Logout" />
+    </group>
+</menu>
