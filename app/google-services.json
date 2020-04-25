@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "156178538748",
+    "firebase_url": "https://laijob.firebaseio.com",
+    "project_id": "laijob",
+    "storage_bucket": "laijob.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:156178538748:android:1f37aec17479bb460ef779",
+        "android_client_info": {
+          "package_name": "com.laioffer.githubexample"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "156178538748-hbgcr541jb680vt8hq5utvr92885667j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmdcYzW8gnmhkAl43mxxWLk-WRtCsUtSA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "156178538748-hbgcr541jb680vt8hq5utvr92885667j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

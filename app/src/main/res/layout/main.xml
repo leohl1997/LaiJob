@@ -8,7 +8,7 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/first_fragment"
-            android:background="@color/dark_blue"
+            android:background="@color/main"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:ignore="MissingConstraints" />

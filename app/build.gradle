@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'androidx.navigation.safeargs'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 29
@@ -71,6 +72,10 @@ dependencies {
 
     // lottie animation dependency
     implementation 'com.airbnb.android:lottie:3.4.0'
+
+    // google analytics
+    implementation 'com.google.firebase:firebase-core:17.3.0'
+    implementation 'com.google.firebase:firebase-crash:16.2.1'
 
 
 }

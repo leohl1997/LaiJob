@@ -22,6 +22,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.crash.FirebaseCrash;
 import com.laioffer.githubexample.ui.HomeList.HomeListFragment;
 import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.ui.login.LoginFragment;
@@ -34,11 +36,12 @@ import java.text.DecimalFormat;
 
 public class MainActivity extends AppCompatActivity implements NavigationManager, LocationListener {
     private DrawerLayout drawerLayout;
+    private FirebaseAnalytics firebaseAnalytics;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        getLocation();
         navigateTo(new OnBoardingSplashFragment());
 //        navigateTo(new OnBoardingBaseFragment());
     }
