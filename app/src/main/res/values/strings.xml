@@ -16,4 +16,6 @@
     <string name="Back">Back</string>
     <string name="Rating">Tap a Star to Rate</string>
     <string name="comment_hint">Write Your Comments Here</string>
+    <string name="more">More</string>
+    <string name="less">Less</string>
 </resources>
