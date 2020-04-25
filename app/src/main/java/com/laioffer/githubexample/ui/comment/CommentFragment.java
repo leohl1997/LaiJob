@@ -14,6 +14,10 @@ import com.laioffer.githubexample.R;
 import com.laioffer.githubexample.base.BaseFragment;
 import com.laioffer.githubexample.databinding.CommentFragmentBinding;
 import com.laioffer.githubexample.remote.response.Job;
+import com.laioffer.githubexample.util.Config;
+import com.laioffer.githubexample.util.Utils;
+
+import java.util.Calendar;
 
 public class CommentFragment extends BaseFragment<CommentViewModel, CommentRepository> {
 
@@ -75,7 +79,24 @@ public class CommentFragment extends BaseFragment<CommentViewModel, CommentRepos
             rating = 5;
         });
         binding.btnComment.setOnClickListener(v -> {
-
+            Bundle args = getArguments();
+            Job currJob = (Job) args.getSerializable("job");
+            if (currJob == null) {
+                return;
+            }
+            CommentEvent commentEvent = new CommentEvent();
+            commentEvent.userId = Config.username;
+            commentEvent.itemId = currJob.itemId;
+            commentEvent.rating = rating;
+            commentEvent.commentText = binding.commentBody.getText().toString();
+            commentEvent.currentTime = Calendar.getInstance().getTime();
+            viewModel.setCommentEventMutableLiveData(commentEvent);
+        });
+        viewModel.getMsgMutableLiveData().observe(getViewLifecycleOwner(), msg -> {
+            Utils.constructToast(getContext(), msg).show();
+        });
+        viewModel.getResponseLiveData().observe(getViewLifecycleOwner(), msg -> {
+            Utils.constructToast(getContext(), msg).show();
         });
     }
 

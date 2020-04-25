@@ -3,6 +3,7 @@ package com.laioffer.githubexample.remote;
 import com.laioffer.githubexample.remote.response.Job;
 import com.laioffer.githubexample.remote.response.RemoteResponse;
 import com.laioffer.githubexample.remote.response.UserInfo;
+import com.laioffer.githubexample.ui.comment.CommentEvent;
 import com.laioffer.githubexample.ui.login.LoginEvent;
 import com.laioffer.githubexample.ui.register.RegisterEvent;
 
@@ -26,5 +27,8 @@ public interface ApiService {
 
     @GET("jobsearch/search")
     Call<RemoteResponse<List<Job>>> search(@Query("lat") double lat, @Query("lon") double lon);
+
+    @POST("jobsearch/comment")
+    Call<RemoteResponse<CommentEvent>> sendComment(@Body CommentEvent commentEvent);
 
 }
