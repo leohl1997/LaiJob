@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.laioffer.githubexample.ui.NavigationManager;
+import com.laioffer.githubexample.ui.comment.CommentFragment;
 import com.laioffer.githubexample.util.Config;
 import com.laioffer.githubexample.util.Utils;
 
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements NavigationManager
                 Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         getLocation();
 
-        navigateTo(new OnBoardingSplashFragment());
+        navigateTo(new CommentFragment());
 //        navigateTo(new OnBoardingBaseFragment());
     }
 
