@@ -15,8 +15,7 @@ import retrofit2.internal.EverythingIsNonNull;
 public class RegisterRepository extends BaseRepository {
     public MutableLiveData<RemoteResponse<UserInfo>> register(RegisterEvent registerEvent) {
         MutableLiveData<RemoteResponse<UserInfo>> responseMutableLiveData = new MutableLiveData<>();
-        Call<RemoteResponse<UserInfo>> call =
-                apiService.register(registerEvent);
+        Call<RemoteResponse<UserInfo>> call = apiService.register(registerEvent);
         call.enqueue(new Callback<RemoteResponse<UserInfo>>() {
             @EverythingIsNonNull
             @Override
