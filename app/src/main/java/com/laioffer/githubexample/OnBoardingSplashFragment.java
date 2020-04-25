@@ -35,7 +35,7 @@ public class OnBoardingSplashFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         new Handler().postDelayed(() -> navigationManager
-                .navigateTo(new OnBoardingBaseFragment()), SPLASH_TIMEOUT);
+                .navigateToWithAnimation(new OnBoardingBaseFragment()), SPLASH_TIMEOUT);
     }
 
 }

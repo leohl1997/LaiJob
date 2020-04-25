@@ -52,6 +52,17 @@ public class MainActivity extends AppCompatActivity implements NavigationManager
                 .commit();
     }
 
+    @Override
+    public void navigateToWithAnimation(Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(R.anim.enter_to_right, R.anim.exit_to_right,
+                        R.anim.enter_to_right, R.anim.exit_to_right)
+                .replace(R.id.first_fragment, fragment, null)
+                .addToBackStack(null)
+                .commit();
+    }
+
     void getLocation() {
         try {
             ActivityCompat.requestPermissions(this, new String[]{
