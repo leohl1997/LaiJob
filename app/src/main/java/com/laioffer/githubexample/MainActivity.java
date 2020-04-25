@@ -39,7 +39,8 @@ public class MainActivity extends AppCompatActivity implements NavigationManager
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         getLocation();
-        navigateTo(new OnBoardingBaseFragment());
+        navigateTo(new OnBoardingSplashFragment());
+//        navigateTo(new OnBoardingBaseFragment());
     }
 
     @Override
