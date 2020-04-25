@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.map.MapFragment">
+
+    <com.wanderingcan.persistentsearch.PersistentSearchView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:id="@+id/search_bar"
+        app:hint="Locations or descriptions"
+        app:hintAlwaysActive="true"
+        app:showMenu="false"/>
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/event_map_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="220dp"
+        android:layout_gravity="bottom">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_return"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_gravity="start|top"
+            android:layout_margin="16dp"
+            android:layout_marginBottom="120dp"
+            android:contentDescription="@string/bt_return"
+            android:src="@drawable/ic_arrow_left_black"
+            app:backgroundTint="@color/black"
+            app:maxImageSize="50dp" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_gravity="end|top"
+            android:layout_marginBottom="120dp"
+            android:src="@drawable/ic_center"
+            android:contentDescription="@string/bt_center"
+            app:backgroundTint="@color/grey"
+            app:maxImageSize="59dp"
+            android:layout_margin="16dp" />
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/mapViewPager"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:layout_gravity="bottom"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:layout_marginBottom="5dp"
+            android:paddingTop="10dp"
+            android:paddingStart="60dp"
+            android:paddingLeft="60dp"
+            android:paddingEnd="60dp"
+            android:paddingRight="60dp"
+            android:paddingBottom="20dp" />
+
+
+    </FrameLayout>
+
+
+
+
+
+
+</FrameLayout>

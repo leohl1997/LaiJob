@@ -33,4 +33,20 @@ public class Utils {
         }
         return result;
     }
+    public static float dpToPixels(int dp, Context context) {
+        return dp * (context.getResources().getDisplayMetrics().density);
+    }
+    public static int whiteToBlack(int pos) {
+        if (pos == 0) {
+            return 0xffffffff;
+        } else if (pos == 1) {
+            return 0xffcccccc;
+        } else if (pos == 2) {
+            return 0xff777777;
+        } else if (pos == 3) {
+            return 0xff333333;
+        } else {
+            return 0xff000000;
+        }
+    }
 }

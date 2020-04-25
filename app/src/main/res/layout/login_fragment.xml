@@ -3,22 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey"
+    android:background="@color/main"
     tools:context=".ui.login.LoginFragment">
 
     <ImageView
-        android:id="@+id/icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/tv_subtitle"
+        android:id="@+id/icon_login"
+        android:layout_width="361dp"
+        android:layout_height="84dp"
+        android:layout_above="@id/tv_subtitle_login"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="1dp"
+        android:layout_marginStart="27dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginBottom="0dp"
         android:src="@drawable/icon" />
 
     <TextView
-        android:id="@+id/tv_subtitle"
+        android:id="@+id/tv_subtitle_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/tag"
@@ -28,10 +29,10 @@
         android:layout_marginBottom="30dp"
         android:layout_centerHorizontal="true"
         android:textColor="@color/white"
-        android:layout_above="@id/et_user_id"/>
+        android:layout_above="@id/et_user_id_login"/>
 
     <EditText
-        android:id="@+id/et_user_id"
+        android:id="@+id/et_user_id_login"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="@string/user_id"
@@ -39,12 +40,12 @@
         android:layout_marginRight="20dp"
         android:padding="15dp"
         android:inputType="text"
-        android:layout_above="@id/et_password"
+        android:layout_above="@id/et_password_login"
         android:background="@drawable/et_custom"
         android:textSize="15sp" />
 
     <EditText
-        android:id="@+id/et_password"
+        android:id="@+id/et_password_login"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="@string/password"
@@ -61,7 +62,7 @@
         android:id="@+id/btn_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/et_password"
+        android:layout_below="@id/et_password_login"
         android:background="@drawable/btn_custom"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"

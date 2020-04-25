@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.laioffer.githubexample.R;
-import com.laioffer.githubexample.ui.HomeMap.HomeMapFragment;
+import com.laioffer.githubexample.ui.map.MapFragment;
 import com.laioffer.githubexample.ui.jobInfo.JobInfoFragment;
 
 public class FavoriteJobFragment extends Fragment {

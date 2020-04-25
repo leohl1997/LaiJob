@@ -9,5 +9,11 @@
     <string name="register">Register</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
-
+    <string name="bt_return">Return</string>
+    <string name="bt_center">Center</string>
+    <string name="Comment">Comment</string>
+    <string name="Submit">Submit</string>
+    <string name="Back">Back</string>
+    <string name="Rating">Tap a Star to Rate</string>
+    <string name="comment_hint">Write Your Comments Here</string>
 </resources>

@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'androidx.navigation.safeargs'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 29
@@ -54,5 +55,27 @@ dependencies {
     implementation 'commons-codec:commons-codec:1.10'
 
     implementation'de.hdodenhof:circleimageview:2.1.0'
+    //location
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+
+    //floating btn
+    implementation 'com.google.android.material:material:1.2.0-alpha06'
+    // glide for image
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+    // persistence search
+    implementation 'com.wanderingcan.widget:persistentsearch:1.2.2'
+
+    // cardview
+    implementation "androidx.cardview:cardview:1.0.0"
+
+    // lottie animation dependency
+    implementation 'com.airbnb.android:lottie:3.4.0'
+
+    // google analytics
+    implementation 'com.google.firebase:firebase-core:17.3.0'
+    implementation 'com.google.firebase:firebase-crash:16.2.1'
+
 
 }

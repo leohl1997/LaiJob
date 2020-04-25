@@ -7,4 +7,8 @@
     <color name="red">#ff0033</color>
 
     <color name="arrow_red">#DF574B</color>
+
+    <color name="main">#3d70b2</color>
+    <color name="side">#5596e6</color>
+    <color name="light">#41d6c3</color>
 </resources>
