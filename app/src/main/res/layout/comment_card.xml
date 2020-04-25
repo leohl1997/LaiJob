@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="10dp"
+            android:id="@+id/cmt_thumbnail"
+            android:src="@drawable/thumbnail"/>
+
+        <LinearLayout
+            android:layout_margin="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/comment_user_name"
+                android:text="@string/user_id"
+                android:textStyle="bold|italic"
+                android:textSize="20sp"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/rating_star_dimen"
+                    android:layout_height="@dimen/rating_star_dimen"
+                    android:id="@+id/cmt_star_one"
+                    android:src="@drawable/star_hollow"/>
+
+                <ImageView
+                    android:layout_width="@dimen/rating_star_dimen"
+                    android:layout_height="@dimen/rating_star_dimen"
+                    android:id="@+id/cmt_star_two"
+                    android:src="@drawable/star_hollow"/>
+
+                <ImageView
+                    android:layout_width="@dimen/rating_star_dimen"
+                    android:layout_height="@dimen/rating_star_dimen"
+                    android:id="@+id/cmt_star_three"
+                    android:src="@drawable/star_hollow"/>
+
+                <ImageView
+                    android:layout_width="@dimen/rating_star_dimen"
+                    android:layout_height="@dimen/rating_star_dimen"
+                    android:id="@+id/cmt_star_four"
+                    android:src="@drawable/star_hollow"/>
+
+                <ImageView
+                    android:layout_width="@dimen/rating_star_dimen"
+                    android:layout_height="@dimen/rating_star_dimen"
+                    android:id="@+id/cmt_star_five"
+                    android:src="@drawable/star_hollow"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cmt_time"
+            android:layout_margin="5dp"
+            android:gravity="end|bottom"
+            android:layout_gravity="end|bottom"
+            android:text="Time"/>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

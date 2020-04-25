@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements NavigationManager
                 Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         getLocation();
 
-        navigateTo(new CommentFragment());
+        navigateTo(new OnBoardingSplashFragment());
 //        navigateTo(new OnBoardingBaseFragment());
     }
 
