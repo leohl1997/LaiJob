@@ -1,5 +1,6 @@
 package com.laioffer.githubexample.ui.jobInfo;
 
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -14,11 +15,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.laioffer.githubexample.R;
 import com.laioffer.githubexample.base.BaseFragment;
 import com.laioffer.githubexample.databinding.JobInfoFragmentBinding;
 import com.laioffer.githubexample.remote.response.Job;
+import com.laioffer.githubexample.ui.HomeList.HomeListFragment;
 import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.util.Config;
 import com.laioffer.githubexample.util.Utils;
@@ -29,6 +32,7 @@ public class JobInfoFragment extends BaseFragment<JobInfoViewModel, JobInfoRepos
     private NavigationManager navigationManager;
     private JobInfoFragmentBinding binding;
     private JobInfoRecyclerViewAdapter adapter;
+    private LinearLayoutManager linearLayoutManager;
 
     public static JobInfoFragment newInstance(Job job) {
 
@@ -61,32 +65,35 @@ public class JobInfoFragment extends BaseFragment<JobInfoViewModel, JobInfoRepos
         }
         adapter = new JobInfoRecyclerViewAdapter(currentJob, this);
         // maybe change
-        binding.rvMain.setLayoutManager(new LinearLayoutManager(getContext()));
+        linearLayoutManager = new LinearLayoutManager(getContext());
+        binding.rvMain.setLayoutManager(linearLayoutManager);
         binding.rvMain.setAdapter(adapter);
         viewModel.setJobIdLiveData(currentJob.itemId);
         viewModel.getCommentLiveData().observe(getViewLifecycleOwner(), list -> {
-            Utils.constructToast(getContext(), adapter.getAvgRating().getText().toString()).show();
+            //Utils.constructToast(getContext(), adapter.getAvgRating().getText().toString()).show();
             if (list == null) {
                 return;
             }
             adapter.addAll(list);
             adapter.notifyDataSetChanged();
-            Utils.constructToast(getContext(), adapter.getAvgRating().toString()).show();
+            //Utils.constructToast(getContext(), adapter.getAvgRating().toString()).show();
         });
         viewModel.getSaveResponse().observe(getViewLifecycleOwner(), msg -> {
+            Button button = linearLayoutManager.findViewByPosition(0).findViewById(R.id.save);
             if (msg.equals("Save Success!")) {
-                adapter.getSaveButton().setBackground(getView()
+                button.setBackground(getView()
                         .getResources()
                         .getDrawable(R.drawable.btn_custom_selected));
+                ((Job) getArguments().getSerializable("job")).favorite = true;
                 adapter.getSaveButton().setText(R.string.saved);
             } else if (msg.equals("Unsave Success!")) {
-                adapter.getSaveButton().setBackground(getView()
+                button.setBackground(getView()
                         .getResources()
                         .getDrawable(R.drawable.btn_custom));
                 adapter.getSaveButton().setText(R.string.save);
-            } else {
-                Utils.constructToast(getContext(), "Error!").show();
+                ((Job) getArguments().getSerializable("job")).favorite = false;
             }
+            Utils.constructToast(getContext(), msg).show();
         });
     }
 
@@ -118,5 +125,10 @@ public class JobInfoFragment extends BaseFragment<JobInfoViewModel, JobInfoRepos
         saveEvent.userId = Config.username;
         saveEvent.job = currentJob;
         viewModel.setSaveEvent(saveEvent);
+    }
+
+    @Override
+    public void onBackClicked() {
+        navigationManager.navigateWithFragmentDestroy(new HomeListFragment(), this);
     }
 }

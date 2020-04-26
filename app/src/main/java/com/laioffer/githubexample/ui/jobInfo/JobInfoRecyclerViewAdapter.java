@@ -171,10 +171,15 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             saveButton.setOnClickListener(v -> {
                 listener.onSaveClicked(saveButton);
             });
+            Button button = itemView.findViewById(R.id.btn_back);
+            button.setOnClickListener(v -> {
+                saveItemListener.onBackClicked();
+            });
         }
     }
 
     public interface SaveItemListener {
-        public void onSaveClicked(Button button);
+        void onSaveClicked(Button button);
+        void onBackClicked();
     }
 }

@@ -81,6 +81,17 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                 .commit();
     }
 
+    @Override
+    public void navigateWithFragmentDestroy(Fragment target, Fragment current) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.first_fragment, target, null)
+                .addToBackStack(null)
+                .remove(current)
+                .commit();
+    }
+
+
     void getLocation() {
         try {
             LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
