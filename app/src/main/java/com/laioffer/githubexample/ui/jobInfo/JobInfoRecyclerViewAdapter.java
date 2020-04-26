@@ -1,9 +1,10 @@
-package com.laioffer.githubexample.ui.comment;
+package com.laioffer.githubexample.ui.jobInfo;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.laioffer.githubexample.R;
 import com.laioffer.githubexample.remote.response.Job;
 
+import com.laioffer.githubexample.ui.comment.CommentEvent;
+import com.laioffer.githubexample.ui.comment.Item;
 import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Comment;
@@ -30,8 +33,10 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     private ArrayList<Item> itemArrayList;
     private TextView commentNumber = null;
     private TextView avgRating = null;
+    private SaveItemListener saveItemListener;
 
-    public JobInfoRecyclerViewAdapter(Job job) {
+    public JobInfoRecyclerViewAdapter(Job job, SaveItemListener saveItemListener) {
+        this.saveItemListener = saveItemListener;
         itemArrayList = new ArrayList<>();
         itemArrayList.add(job);
         notifyDataSetChanged();
@@ -43,7 +48,7 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         context = parent.getContext();
         if (viewType == TYPE_JOB_INFO) {
             View itemView = LayoutInflater.from(context).inflate(R.layout.job_info_card, parent, false);
-            return new InfoViewHolder(itemView);
+            return new InfoViewHolder(itemView, saveItemListener);
         } else if (viewType == TYPE_COMMENT){
             View itemView = LayoutInflater.from(context).inflate(R.layout.comment_card, parent, false);
             return new CommentViewHolder(itemView);
@@ -66,13 +71,18 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             ((InfoViewHolder) holder).location.setText(currJob.address);
             ((InfoViewHolder) holder).title.setText(currJob.name);
             ((InfoViewHolder) holder).postTime.setText(currJob.time);
+            if (currJob.favorite) {
+                ((InfoViewHolder) holder).saveButton.setBackground(context.getResources()
+                        .getDrawable(R.drawable.btn_custom_selected));
+                ((InfoViewHolder) holder).saveButton.setText(R.string.saved);
+            }
             this.commentNumber = ((InfoViewHolder) holder).commentNumber;
             this.avgRating = ((InfoViewHolder) holder).avgRating;
         } else if (holder instanceof CommentViewHolder) {
             CommentEvent currentComment = (CommentEvent) itemArrayList.get(position);
             ((CommentViewHolder) holder).userId.setText(currentComment.userId);
             ((CommentViewHolder) holder).comment.setText(currentComment.commentText);
-            ((CommentViewHolder) holder).time.setText(currentComment.currentTime.toString());
+            ((CommentViewHolder) holder).time.setText(currentComment.currentTime);
             for (int i = 0; i < currentComment.rating; i++) {
                 ((CommentViewHolder) holder).stars.get(i).setImageResource(R.drawable.star_solid);
             }
@@ -139,7 +149,9 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         private TextView postTime;
         private TextView commentNumber;
         private TextView avgRating;
-        public InfoViewHolder(@NonNull View itemView) {
+        private Button saveButton;
+
+        public InfoViewHolder(@NonNull View itemView, SaveItemListener listener) {
             super(itemView);
             title = itemView.findViewById(R.id.job_title);
             company = itemView.findViewById(R.id.company);
@@ -149,6 +161,14 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             postTime = itemView.findViewById(R.id.post_time);
             commentNumber = itemView.findViewById(R.id.comment_number);
             avgRating = itemView.findViewById(R.id.average_rating);
+            saveButton = itemView.findViewById(R.id.save);
+            saveButton.setOnClickListener(v -> {
+                listener.onSaveClicked(saveButton);
+            });
         }
+    }
+
+    public interface SaveItemListener {
+        public void onSaveClicked(Button button);
     }
 }

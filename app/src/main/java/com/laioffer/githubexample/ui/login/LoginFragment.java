@@ -20,6 +20,7 @@ import com.laioffer.githubexample.remote.response.UserInfo;
 import com.laioffer.githubexample.ui.HomeList.HomeListFragment;
 import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.ui.map.MapFragment;
+import com.laioffer.githubexample.util.Config;
 import com.laioffer.githubexample.util.Utils;
 
 public class LoginFragment extends BaseFragment<LoginViewModel, LoginRepository> {
@@ -44,14 +45,14 @@ public class LoginFragment extends BaseFragment<LoginViewModel, LoginRepository>
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         binding.btnLogin.setOnClickListener( v -> {
-            UserInfo.userId = binding.etUserIdLogin.getText().toString();
             viewModel.login(new LoginEvent(binding.etUserIdLogin.getText().toString(),
                     Utils.md5Encryption(binding.etPasswordLogin.getText().toString())));  // faker user info
         });
         viewModel.getRemoteResponseMutableLiveData().observe(getViewLifecycleOwner(), it -> {
             if (it != null && it.status.equals("OK")) {
                 Utils.constructToast(getContext(), "Login success!").show();
-                // set up user information
+                Config.userId = it.response.userId;
+                Config.name = it.response.name;
                 navigationManager.navigateTo(new HomeListFragment());
             } else {
                 Utils.constructToast(getContext(), it == null ? "Error !" : it.status).show();

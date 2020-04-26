@@ -2,34 +2,28 @@ package com.laioffer.githubexample.ui.jobInfo;
 
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
-import com.laioffer.githubexample.R;
 import com.laioffer.githubexample.base.BaseFragment;
-import com.laioffer.githubexample.base.BaseRepository;
-import com.laioffer.githubexample.base.BaseViewModel;
 import com.laioffer.githubexample.databinding.JobInfoFragmentBinding;
 import com.laioffer.githubexample.remote.response.Job;
-import com.laioffer.githubexample.remote.response.UserInfo;
-import com.laioffer.githubexample.ui.HomeList.HomeListFragment;
 import com.laioffer.githubexample.ui.NavigationManager;
-import com.laioffer.githubexample.ui.comment.JobInfoRecyclerViewAdapter;
-import com.laioffer.githubexample.ui.login.LoginEvent;
+import com.laioffer.githubexample.util.Config;
 import com.laioffer.githubexample.util.Utils;
 
-public class JobInfoFragment extends BaseFragment<JobInfoViewModel, JobInfoRepository> {
+public class JobInfoFragment extends BaseFragment<JobInfoViewModel, JobInfoRepository>
+    implements JobInfoRecyclerViewAdapter.SaveItemListener {
 
     private NavigationManager navigationManager;
     private JobInfoFragmentBinding binding;
@@ -64,7 +58,7 @@ public class JobInfoFragment extends BaseFragment<JobInfoViewModel, JobInfoRepos
         if (currentJob == null) {
             return;
         }
-        adapter = new JobInfoRecyclerViewAdapter(currentJob);
+        adapter = new JobInfoRecyclerViewAdapter(currentJob, this);
         // maybe change
         binding.rvMain.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.rvMain.setAdapter(adapter);
@@ -100,5 +94,14 @@ public class JobInfoFragment extends BaseFragment<JobInfoViewModel, JobInfoRepos
     @Override
     protected JobInfoRepository getRepository() {
         return new JobInfoRepository();
+    }
+
+    @Override
+    public void onSaveClicked(Button button) {
+        Job currentJob = (Job) getArguments().getSerializable("job");
+        SaveEvent saveEvent = new SaveEvent();
+        saveEvent.userId = Config.username;
+        saveEvent.job = currentJob;
+        viewModel.setSaveEvent(saveEvent);
     }
 }

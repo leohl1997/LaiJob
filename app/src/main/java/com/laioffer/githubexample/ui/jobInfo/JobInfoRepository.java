@@ -37,4 +37,16 @@ public class JobInfoRepository extends BaseRepository {
         });
         return responseLiveData;
     }
+
+    public MutableLiveData<String> save(SaveEvent saveEvent) {
+        return null;
+    }
+
+    private MutableLiveData<String> favorite(SaveEvent saveEvent) {
+        return null;
+    }
+
+    private MutableLiveData<String> unfavorite(SaveEvent saveEvent) {
+        return null;
+    }
 }

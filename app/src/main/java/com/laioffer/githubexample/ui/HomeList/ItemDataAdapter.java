@@ -1,10 +1,8 @@
 package com.laioffer.githubexample.ui.HomeList;
 import android.content.Context;
-import android.graphics.drawable.Icon;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,9 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.laioffer.githubexample.R;
 import com.laioffer.githubexample.remote.response.Job;
 import com.laioffer.githubexample.ui.NavigationManager;
-import com.laioffer.githubexample.ui.comment.JobInfoRecyclerViewAdapter;
-import com.laioffer.githubexample.ui.search.SearchFragment;
-import com.laioffer.githubexample.ui.userInfo.UserInfoFragment;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
