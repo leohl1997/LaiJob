@@ -28,6 +28,8 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     private static final int TYPE_JOB_INFO = 0;
     private static final int TYPE_COMMENT = 1;
     private ArrayList<Item> itemArrayList;
+    private TextView commentNumber = null;
+    private TextView avgRating = null;
 
     public JobInfoRecyclerViewAdapter(Job job) {
         itemArrayList = new ArrayList<>();
@@ -64,6 +66,8 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             ((InfoViewHolder) holder).location.setText(currJob.address);
             ((InfoViewHolder) holder).title.setText(currJob.name);
             ((InfoViewHolder) holder).postTime.setText(currJob.time);
+            this.commentNumber = ((InfoViewHolder) holder).commentNumber;
+            this.avgRating = ((InfoViewHolder) holder).avgRating;
         } else if (holder instanceof CommentViewHolder) {
             CommentEvent currentComment = (CommentEvent) itemArrayList.get(position);
             ((CommentViewHolder) holder).userId.setText(currentComment.userId);
@@ -91,6 +95,14 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             return TYPE_JOB_INFO;
         }
         return TYPE_COMMENT;
+    }
+
+    public TextView getCommentNumber() {
+        return commentNumber;
+    }
+
+    public TextView getAvgRating() {
+        return avgRating;
     }
 
     // comment view holder
@@ -125,6 +137,8 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         private ImageView image;
         private TextView description;
         private TextView postTime;
+        private TextView commentNumber;
+        private TextView avgRating;
         public InfoViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.job_title);
@@ -133,6 +147,8 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             image = itemView.findViewById(R.id.job_image);
             description = itemView.findViewById(R.id.job_description);
             postTime = itemView.findViewById(R.id.post_time);
+            commentNumber = itemView.findViewById(R.id.comment_number);
+            avgRating = itemView.findViewById(R.id.average_rating);
         }
     }
 }

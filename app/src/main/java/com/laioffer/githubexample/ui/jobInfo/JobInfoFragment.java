@@ -70,11 +70,13 @@ public class JobInfoFragment extends BaseFragment<JobInfoViewModel, JobInfoRepos
         binding.rvMain.setAdapter(adapter);
         viewModel.setJobIdLiveData(currentJob.itemId);
         viewModel.getCommentLiveData().observe(getViewLifecycleOwner(), list -> {
+            Utils.constructToast(getContext(), adapter.getAvgRating().getText().toString()).show();
             if (list == null) {
                 return;
             }
             adapter.addAll(list);
             adapter.notifyDataSetChanged();
+            Utils.constructToast(getContext(), adapter.getAvgRating().toString()).show();
         });
 
     }
