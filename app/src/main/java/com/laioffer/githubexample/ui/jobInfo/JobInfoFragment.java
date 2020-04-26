@@ -34,9 +34,9 @@ public class JobInfoFragment extends BaseFragment {
     public static JobInfoFragment newInstance() {
         JobInfoFragment fragment =  new JobInfoFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable("Job", job);
+        bundle.putSerializable("Job", Job);
         fragment.setArguments(bundle);
-        fragment.job = job;
+        fragment.job = Job;
         return fragment;
         ;
     }
@@ -54,37 +54,39 @@ public class JobInfoFragment extends BaseFragment {
 
         setContentView(R.layout.job_info_fragment);
 
-        TextView textElement = (TextView) View.findViewById(R.id.job_title);
-        String newText;
-        newText = getResources().getString(R,string.jobTittle);
-        textElement.setText(newText);
+        TextView textElement1 = (TextView) View.findViewById(R.id.job_title);
+        String newText1;
+        newText1 = getResources().getString(R,string.jobTittle);
+        textElement1.setText(newText1);
 
 
+        TextView textElement2 = (TextView) View.findViewById(R.id.company);
+        String newText2;
+        newText2 = getResources().getString(R,string.company);
+        textElement2.setText(newText2);
 
 
-
-        TextView textElement = (TextView) findViewById(R.id.company);
-        String newText;
-        newText = getResources().getString(R,string.company);
-        textElement.setText(newText);
-
-
-        TextView textElement = (TextView) findViewById(R.id.location);
-        String newText;
-        newText = getResources().getString(R,string.laction);
-        textElement.setText(newText);
+        TextView textElement3 = (TextView) View.findViewById(R.id.location);
+        String newText3;
+        newText3 = getResources().getString(R,string.laction);
+        textElement3.setText(newText3);
 
 
-        TextView textElement = (TextView) findViewById(R.id.post_time);
-        String newText;
-        newText = getResources().getString(R,string.postTime);
-        textElement.setText(newText);
+        TextView textElement4 = (TextView) View.findViewById(R.id.post_time);
+        String newText4;
+        newText4 = getResources().getString(R,string.postTime);
+        textElement4.setText(newText4);
 
 
-        TextView textElement = (TextView) findViewById(R.id.job_description);
-        String newText;
-        newText = getResources().getString(R,string.jobDescription);
-        textElement.setText(newText);
+        TextView textElement5 = (TextView) View.findViewById(R.id.job_description);
+        String newText5;
+        newText5 = getResources().getString(R,string.jobDescription);
+        textElement5.setText(newText5);
+
+        TextView textElement6= (TextView) View.findViewById(R.id.job_image);
+        String newText6;
+        newText6 = getResources().getString(R,string.job_image);
+        textElement6.setText(newText6);
 
     }// TODO: Use the ViewModel
     }
