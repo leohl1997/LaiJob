@@ -70,6 +70,7 @@ public class JobInfoFragment extends BaseFragment<JobInfoViewModel, JobInfoRepos
         binding.rvMain.setAdapter(adapter);
         viewModel.setJobIdLiveData(currentJob.itemId);
         viewModel.getCommentLiveData().observe(getViewLifecycleOwner(), list -> {
+
             //Utils.constructToast(getContext(), adapter.getAvgRating().getText().toString()).show();
             if (list == null) {
                 return;
@@ -79,6 +80,9 @@ public class JobInfoFragment extends BaseFragment<JobInfoViewModel, JobInfoRepos
             //Utils.constructToast(getContext(), adapter.getAvgRating().toString()).show();
         });
         viewModel.getSaveResponse().observe(getViewLifecycleOwner(), msg -> {
+            if (msg.equals("Save Success") && !currentJob.favorite) {
+                return;
+            }
             Button button = linearLayoutManager.findViewByPosition(0).findViewById(R.id.save);
             if (msg.equals("Save Success!")) {
                 button.setBackground(getView()
