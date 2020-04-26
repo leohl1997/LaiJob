@@ -169,17 +169,20 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             avgRating = itemView.findViewById(R.id.average_rating);
             saveButton = itemView.findViewById(R.id.save);
             saveButton.setOnClickListener(v -> {
-                listener.onSaveClicked(saveButton);
+                listener.onSaveClicked();
             });
             Button button = itemView.findViewById(R.id.btn_back);
             button.setOnClickListener(v -> {
                 saveItemListener.onBackClicked();
             });
+            itemView.findViewById(R.id.comment).setOnClickListener(
+                    v -> saveItemListener.onCommentClicked());
         }
     }
 
     public interface SaveItemListener {
-        void onSaveClicked(Button button);
+        void onSaveClicked();
         void onBackClicked();
+        void onCommentClicked();
     }
 }

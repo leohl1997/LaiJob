@@ -23,6 +23,7 @@ import com.laioffer.githubexample.databinding.JobInfoFragmentBinding;
 import com.laioffer.githubexample.remote.response.Job;
 import com.laioffer.githubexample.ui.HomeList.HomeListFragment;
 import com.laioffer.githubexample.ui.NavigationManager;
+import com.laioffer.githubexample.ui.comment.CommentFragment;
 import com.laioffer.githubexample.util.Config;
 import com.laioffer.githubexample.util.Utils;
 
@@ -99,6 +100,7 @@ public class JobInfoFragment extends BaseFragment<JobInfoViewModel, JobInfoRepos
             }
             Utils.constructToast(getContext(), msg).show();
         });
+
     }
 
     @Override
@@ -123,7 +125,7 @@ public class JobInfoFragment extends BaseFragment<JobInfoViewModel, JobInfoRepos
     }
 
     @Override
-    public void onSaveClicked(Button button) {
+    public void onSaveClicked() {
         Job currentJob = (Job) getArguments().getSerializable("job");
         SaveEvent saveEvent = new SaveEvent();
         saveEvent.userId = Config.username;
@@ -133,6 +135,13 @@ public class JobInfoFragment extends BaseFragment<JobInfoViewModel, JobInfoRepos
 
     @Override
     public void onBackClicked() {
-        navigationManager.navigateWithFragmentDestroy(new HomeListFragment(), this);
+        navigationManager.goBack();
+    }
+
+    @Override
+    public void onCommentClicked() {
+        Job currentJob = (Job) getArguments().getSerializable("job");
+        CommentFragment commentFragment = CommentFragment.getInstance(currentJob);
+        navigationManager.navigateTo(commentFragment);
     }
 }

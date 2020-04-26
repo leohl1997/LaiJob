@@ -1,5 +1,6 @@
 package com.laioffer.githubexample.ui.comment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.laioffer.githubexample.R;
 import com.laioffer.githubexample.base.BaseFragment;
 import com.laioffer.githubexample.databinding.CommentFragmentBinding;
 import com.laioffer.githubexample.remote.response.Job;
+import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.util.Config;
 import com.laioffer.githubexample.util.Utils;
 
@@ -23,6 +25,7 @@ public class CommentFragment extends BaseFragment<CommentViewModel, CommentRepos
 
     private int rating = 0;
     private CommentFragmentBinding binding;
+    private NavigationManager navigationManager;
 
     public static CommentFragment getInstance(Job job) {
         CommentFragment commentFragment = new CommentFragment();
@@ -38,6 +41,12 @@ public class CommentFragment extends BaseFragment<CommentViewModel, CommentRepos
         binding = CommentFragmentBinding.inflate(getLayoutInflater(), container, false);
         return binding.getRoot();
 
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        navigationManager = (NavigationManager) context;
     }
 
     @Override
@@ -98,6 +107,7 @@ public class CommentFragment extends BaseFragment<CommentViewModel, CommentRepos
         viewModel.getResponseLiveData().observe(getViewLifecycleOwner(), msg -> {
             Utils.constructToast(getContext(), msg).show();
         });
+        binding.btnBack.setOnClickListener(v -> navigationManager.goBack());
     }
 
     @Override

@@ -91,6 +91,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                 .commit();
     }
 
+    @Override
+    public void goBack() {
+        getSupportFragmentManager().popBackStack();
+    }
+
 
     void getLocation() {
         try {
