@@ -14,6 +14,6 @@ public class CommentEvent extends Item {
     @SerializedName("text")
     public String commentText;
     @SerializedName("timestamp")
-    public Date currentTime;
+    public String currentTime;
 
 }

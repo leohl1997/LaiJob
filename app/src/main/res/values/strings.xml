@@ -18,4 +18,5 @@
     <string name="comment_hint">Write Your Comments Here</string>
     <string name="more">More</string>
     <string name="less">Less</string>
+    <string name="save">Save</string>
 </resources>
