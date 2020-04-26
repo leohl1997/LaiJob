@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
-public class CommentEvent {
+public class CommentEvent extends Item {
     @SerializedName("user_id")
     public String userId;
     @SerializedName("item_id")
