@@ -33,6 +33,7 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     private ArrayList<Item> itemArrayList;
     private TextView commentNumber = null;
     private TextView avgRating = null;
+    private Button saveButton = null;
     private SaveItemListener saveItemListener;
 
     public JobInfoRecyclerViewAdapter(Job job, SaveItemListener saveItemListener) {
@@ -78,6 +79,7 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             }
             this.commentNumber = ((InfoViewHolder) holder).commentNumber;
             this.avgRating = ((InfoViewHolder) holder).avgRating;
+            this.saveButton = ((InfoViewHolder) holder).saveButton;
         } else if (holder instanceof CommentViewHolder) {
             CommentEvent currentComment = (CommentEvent) itemArrayList.get(position);
             ((CommentViewHolder) holder).userId.setText(currentComment.userId);
@@ -113,6 +115,10 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
 
     public TextView getAvgRating() {
         return avgRating;
+    }
+
+    public Button getSaveButton() {
+        return saveButton;
     }
 
     // comment view holder

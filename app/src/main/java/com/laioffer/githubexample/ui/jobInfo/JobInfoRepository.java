@@ -39,14 +39,52 @@ public class JobInfoRepository extends BaseRepository {
     }
 
     public MutableLiveData<String> save(SaveEvent saveEvent) {
-        return null;
+        return saveEvent.job.favorite ? unfavorite(saveEvent) : favorite(saveEvent);
     }
 
     private MutableLiveData<String> favorite(SaveEvent saveEvent) {
-        return null;
+        MutableLiveData<String>  responseLiveDate = new MutableLiveData<>();
+        Call<RemoteResponse<SaveEvent>> call = apiService.favorite(saveEvent);
+        call.enqueue(new Callback<RemoteResponse<SaveEvent>>() {
+            @EverythingIsNonNull
+            @Override
+            public void onResponse(Call<RemoteResponse<SaveEvent>> call, Response<RemoteResponse<SaveEvent>> response) {
+                if (response.code() == 200) {
+                    responseLiveDate.postValue("Save Success!");
+                } else {
+                    responseLiveDate.postValue("Error");
+                }
+            }
+
+            @EverythingIsNonNull
+            @Override
+            public void onFailure(Call<RemoteResponse<SaveEvent>> call, Throwable t) {
+                responseLiveDate.postValue("Error");
+            }
+        });
+        return responseLiveDate;
     }
 
     private MutableLiveData<String> unfavorite(SaveEvent saveEvent) {
-        return null;
+        MutableLiveData<String>  responseLiveDate = new MutableLiveData<>();
+        Call<RemoteResponse<SaveEvent>> call = apiService.unfavorite(saveEvent);
+        call.enqueue(new Callback<RemoteResponse<SaveEvent>>() {
+            @EverythingIsNonNull
+            @Override
+            public void onResponse(Call<RemoteResponse<SaveEvent>> call, Response<RemoteResponse<SaveEvent>> response) {
+                if (response.code() == 200) {
+                    responseLiveDate.postValue("Unsave Success!");
+                } else {
+                    responseLiveDate.postValue("Error");
+                }
+            }
+
+            @EverythingIsNonNull
+            @Override
+            public void onFailure(Call<RemoteResponse<SaveEvent>> call, Throwable t) {
+                responseLiveDate.postValue("Error");
+            }
+        });
+        return responseLiveDate;
     }
 }

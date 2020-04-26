@@ -8,4 +8,5 @@ public class SaveEvent {
     public String userId;
     @SerializedName("favorite")
     public Job job;
+
 }

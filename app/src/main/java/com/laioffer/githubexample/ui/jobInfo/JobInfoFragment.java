@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.laioffer.githubexample.R;
 import com.laioffer.githubexample.base.BaseFragment;
 import com.laioffer.githubexample.databinding.JobInfoFragmentBinding;
 import com.laioffer.githubexample.remote.response.Job;
@@ -72,7 +73,21 @@ public class JobInfoFragment extends BaseFragment<JobInfoViewModel, JobInfoRepos
             adapter.notifyDataSetChanged();
             Utils.constructToast(getContext(), adapter.getAvgRating().toString()).show();
         });
-
+        viewModel.getSaveResponse().observe(getViewLifecycleOwner(), msg -> {
+            if (msg.equals("Save Success!")) {
+                adapter.getSaveButton().setBackground(getView()
+                        .getResources()
+                        .getDrawable(R.drawable.btn_custom_selected));
+                adapter.getSaveButton().setText(R.string.saved);
+            } else if (msg.equals("Unsave Success!")) {
+                adapter.getSaveButton().setBackground(getView()
+                        .getResources()
+                        .getDrawable(R.drawable.btn_custom));
+                adapter.getSaveButton().setText(R.string.save);
+            } else {
+                Utils.constructToast(getContext(), "Error!").show();
+            }
+        });
     }
 
     @Override

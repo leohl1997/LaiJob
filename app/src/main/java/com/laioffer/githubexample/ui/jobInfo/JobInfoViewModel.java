@@ -34,4 +34,8 @@ public class JobInfoViewModel extends BaseViewModel<JobInfoRepository> {
         saveEventLiveData.postValue(saveEvent);
     }
 
+    public LiveData<String> getSaveResponse() {
+        return saveResponse;
+    }
+
 }
