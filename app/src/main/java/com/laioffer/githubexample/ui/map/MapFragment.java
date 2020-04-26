@@ -71,7 +71,7 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
         FloatingActionButton returnFab = view.findViewById(R.id.fab_center);
         returnFab.setOnClickListener( v -> {
             CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(new LatLng(Config.lat, Config.lon))
+                    .target(new LatLng(Config.latitude, Config.longitude))
                     .zoom(10)
                     .build();
             googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
@@ -203,7 +203,7 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
         if (googleMap == null) {
             return;
         }
-        LatLng position = new LatLng(Config.lat, Config.lon);
+        LatLng position = new LatLng(Config.latitude, Config.longitude);
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(position)
                 .zoom(10)

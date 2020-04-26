@@ -34,4 +34,5 @@ public interface ApiService {
     @GET("jobsearch/comment")
     Call<RemoteResponse<List<CommentEvent>>> getComment(@Query("item_id") String jobId);
 
+
 }

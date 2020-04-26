@@ -8,19 +8,46 @@ import android.location.LocationManager;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
+
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+
+import android.Manifest;
+import android.content.Context;
+import android.content.Intent;
+import android.location.Location;
+import android.location.LocationManager;
+import android.location.LocationListener;
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
+import com.google.android.material.navigation.NavigationView;
+import com.laioffer.githubexample.ui.HomeList.HomeListFragment;
+
 import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.ui.comment.CommentFragment;
 import com.laioffer.githubexample.util.Config;
 import com.laioffer.githubexample.util.Utils;
+import java.text.DecimalFormat;
 
-public class MainActivity extends AppCompatActivity implements NavigationManager, LocationListener {
+
+public class MainActivity extends AppCompatActivity implements LocationListener,NavigationManager {
+
     private DrawerLayout drawerLayout;
     private FirebaseAnalytics firebaseAnalytics;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +59,6 @@ public class MainActivity extends AppCompatActivity implements NavigationManager
         getLocation();
 
         navigateTo(new OnBoardingSplashFragment());
-//        navigateTo(new OnBoardingBaseFragment());
     }
 
     @Override
@@ -67,9 +93,11 @@ public class MainActivity extends AppCompatActivity implements NavigationManager
 
     @Override
     public void onLocationChanged(Location location) {
-        Config.lat = location.getLatitude();
-        Config.lon = location.getLongitude();
+
+        Config.latitude = location.getLatitude();
+        Config.longitude = location.getLongitude();
     }
+
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -85,4 +113,5 @@ public class MainActivity extends AppCompatActivity implements NavigationManager
     public void onProviderDisabled(String provider) {
         Utils.constructToast(MainActivity.this, "Please Enable GPS and Internet").show();
     }
+
 }
