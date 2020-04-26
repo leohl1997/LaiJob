@@ -30,6 +30,7 @@ import com.laioffer.githubexample.databinding.MapFragmentBinding;
 import com.laioffer.githubexample.remote.response.Job;
 import com.laioffer.githubexample.ui.HomeList.HomeListFragment;
 import com.laioffer.githubexample.ui.NavigationManager;
+import com.laioffer.githubexample.ui.jobInfo.JobInfoFragment;
 import com.laioffer.githubexample.util.Config;
 import com.laioffer.githubexample.util.Utils;
 import com.squareup.picasso.Picasso;
@@ -276,7 +277,8 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
         if (currJob == null) {
             return;
         }
-        Utils.constructToast(getContext(), currJob.name).show();
+        JobInfoFragment fragment = JobInfoFragment.newInstance(currJob);
+        navigationManager.navigateTo(fragment);
     }
 
 }

@@ -40,6 +40,9 @@ public class Job extends Item implements Serializable {
     @SerializedName("image_url")
     public String imageUrl;
 
+    @SerializedName("time")
+    public String time;
+
     //    @SerializedName("lat")
 //    public double lat;
 //

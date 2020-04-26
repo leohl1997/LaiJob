@@ -1,120 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/main"
     tools:context=".ui.jobInfo.JobInfoFragment">
 
-
-    <TextView
-        android:id="@+id/job_title"
-        style="@style/TextAppearance.AppCompat.Medium"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="43dp"
-        tools:text="Software Developer" />
-
-    <Button
-        android:id="@+id/save"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:background="@drawable/btn_custom"
-        android:text="save"
-        android:textColor="@android:color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="655dp" />
+        android:layout_height="match_parent" />
 
-    <TextView
-        android:id="@+id/post_time"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        tools:layout_editor_absoluteX="283dp"
-        tools:layout_editor_absoluteY="523dp"
-        tools:text="*****" />
-
-    <TextView
-        android:id="@+id/company"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/job_title"
-        tools:text="Amazon" />
-
-    <Button
-        android:id="@+id/apply"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_gravity="center"
-        android:text="apply"
-        android:textColor="@android:color/white"
-        tools:layout_editor_absoluteX="81dp"
-        tools:layout_editor_absoluteY="543dp" />
-
-    <com.ms.square.android.expandabletextview.ExpandableTextView
-        android:id="@+id/job_description_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-
-        app:animDuration="200"
-        app:collapseDrawable="@string/less"
-
-        app:expandDrawable="@string/more"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:maxCollapsedLines="3"
-        tools:layout_editor_absoluteY="421dp">
-
-        <TextView
-            android:id="@+id/job_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:textColor="#000000"
-            android:textSize="16sp" />
-
-        <ImageButton
-            android:id="@id/expand_collapse"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom"
-            android:background="@android:color/transparent"
-            android:padding="16dp" />
-    </com.ms.square.android.expandabletextview.ExpandableTextView>
-
-    <ImageView
-        android:id="@+id/job_image"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/thumbnail"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/location" />
-
-    <TextView
-        android:id="@+id/location"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/company"
-        tools:text="New York" />
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

@@ -78,6 +78,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-crash:16.2.1'
 
     // expandable text
-    implementation 'com.ms-square:expandableTextView:0.1.4'
-
+    implementation 'tm.charlie.androidlib:expandable-textview:2.0.2'
 }
+
+

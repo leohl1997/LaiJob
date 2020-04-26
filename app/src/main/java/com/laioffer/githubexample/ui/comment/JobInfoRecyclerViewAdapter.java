@@ -12,12 +12,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.laioffer.githubexample.R;
 import com.laioffer.githubexample.remote.response.Job;
-import com.ms.square.android.expandabletextview.ExpandableTextView;
+
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Comment;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import tm.charlie.expandabletextview.ExpandableTextView;
 
 public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
@@ -36,7 +40,8 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context = parent.getContext();
         if (viewType == TYPE_JOB_INFO) {
-            // job info view
+            View itemView = LayoutInflater.from(context).inflate(R.layout.job_info_card, parent, false);
+            return new InfoViewHolder(itemView);
         } else if (viewType == TYPE_COMMENT){
             View itemView = LayoutInflater.from(context).inflate(R.layout.comment_card, parent, false);
             return new CommentViewHolder(itemView);
@@ -47,7 +52,18 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof InfoViewHolder) {
-            // job info
+            Job currJob = (Job) itemArrayList.get(position);
+            ((InfoViewHolder) holder).company.setText(currJob.company);
+            //((InfoViewHolder) holder).description.setText(currJob.description);
+            if (!currJob.imageUrl.isEmpty()) {
+                Picasso.get().setLoggingEnabled(true);
+                Picasso.get().load(currJob.imageUrl).placeholder(R.drawable.thumbnail)
+                        .resize(100,100)
+                        .into(((InfoViewHolder) holder).image);
+            }
+            ((InfoViewHolder) holder).location.setText(currJob.address);
+            ((InfoViewHolder) holder).title.setText(currJob.name);
+            ((InfoViewHolder) holder).postTime.setText(currJob.time);
         } else if (holder instanceof CommentViewHolder) {
             CommentEvent currentComment = (CommentEvent) itemArrayList.get(position);
             ((CommentViewHolder) holder).userId.setText(currentComment.userId);
@@ -80,13 +96,13 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     // comment view holder
     class CommentViewHolder extends RecyclerView.ViewHolder {
 
-        public ImageView thumbnail;
-        public TextView userId;
-        public ArrayList<ImageView> stars;
-        public TextView time;
-        public ExpandableTextView comment;
+        private ImageView thumbnail;
+        private TextView userId;
+        private ArrayList<ImageView> stars;
+        private TextView time;
+        private TextView comment;
 
-        public CommentViewHolder(@NonNull View itemView) {
+        CommentViewHolder(@NonNull View itemView) {
             super(itemView);
             thumbnail = itemView.findViewById(R.id.cmt_thumbnail);
             userId = itemView.findViewById(R.id.cmt_user_name);
@@ -97,14 +113,26 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             stars.add(itemView.findViewById(R.id.cmt_star_four));
             stars.add(itemView.findViewById(R.id.cmt_star_five));
             time = itemView.findViewById(R.id.cmt_time);
-            comment = itemView.findViewById(R.id.expandable_text);
+            comment = itemView.findViewById(R.id.comment_body);
         }
     }
 
     // info view holder
     class InfoViewHolder extends RecyclerView.ViewHolder {
+        private TextView title;
+        private TextView company;
+        private TextView location;
+        private ImageView image;
+        private TextView description;
+        private TextView postTime;
         public InfoViewHolder(@NonNull View itemView) {
             super(itemView);
+            title = itemView.findViewById(R.id.job_title);
+            company = itemView.findViewById(R.id.company);
+            location = itemView.findViewById(R.id.location);
+            image = itemView.findViewById(R.id.job_image);
+            description = itemView.findViewById(R.id.job_description);
+            postTime = itemView.findViewById(R.id.post_time);
         }
     }
 }

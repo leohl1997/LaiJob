@@ -31,4 +31,7 @@ public interface ApiService {
     @POST("jobsearch/comment")
     Call<RemoteResponse<CommentEvent>> sendComment(@Body CommentEvent commentEvent);
 
+    @GET("jobsearch/comment")
+    Call<RemoteResponse<List<CommentEvent>>> getComment(@Query("item_id") String jobId);
+
 }
