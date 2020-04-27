@@ -1,6 +1,8 @@
 package com.laioffer.githubexample.util;
 
-public class Config {
+import android.graphics.Bitmap;
+
+public class config {
 
     public static String username = "leo";
     public static double lat = 0.0;
