@@ -1,23 +1,46 @@
 package com.laioffer.githubexample.util;
-<<<<<<< HEAD
-
-import android.graphics.Bitmap;
-
-public class config {
-=======
 import android.content.Context;
 import android.location.LocationManager;
 public class Config {
->>>>>>> bc0c1af1071fcf9a78b627c46fc9c842d2395ee1
 
     public static String username = "leo";
-
+    private static Config instance = null;
 
     public static String userId;
-    public static String name;
+    private String firstName;
+    private String lastName;
     public static double latitude;
     public static double longitude;
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public static Config getInstance() {
+        return instance;
+    }
+
+    private Config(String userId, String firstName, String lastName) {
+        this.userId = userId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public static Config getInstance(String userId, String firstName, String lastName) {
+        if (instance == null) {
+            instance = new Config(userId, firstName, lastName);
+        }
+
+        return instance;
+    }
 
 
 }
