@@ -37,7 +37,6 @@ import com.google.android.material.navigation.NavigationView;
 import com.laioffer.githubexample.ui.HomeList.HomeListFragment;
 
 import com.laioffer.githubexample.ui.NavigationManager;
-import com.laioffer.githubexample.ui.comment.CommentFragment;
 import com.laioffer.githubexample.util.Config;
 import com.laioffer.githubexample.util.Utils;
 import java.text.DecimalFormat;
@@ -58,7 +57,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                 Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         getLocation();
 
+
+        //navigateTo(new CommentFragment());
+        navigateTo(new OnBoardingBaseFragment());
+
         navigateTo(new OnBoardingSplashFragment());
+
     }
 
     @Override
@@ -109,7 +113,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 
     @Override
     public void onLocationChanged(Location location) {
-
+//        Config.lat = location.getLatitude();
+//        Config.lon = location.getLongitude();
         Config.latitude = location.getLatitude();
         Config.longitude = location.getLongitude();
     }

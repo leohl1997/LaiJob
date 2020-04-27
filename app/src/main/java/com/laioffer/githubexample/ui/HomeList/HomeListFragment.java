@@ -7,7 +7,6 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -34,7 +33,6 @@ import com.laioffer.githubexample.ui.map.MapFragment;
 import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.ui.favorite.FavoriteJobFragment;
 import com.laioffer.githubexample.ui.jobInfo.JobInfoFragment;
-import com.laioffer.githubexample.ui.login.LoginViewModel;
 import com.laioffer.githubexample.ui.search.SearchFragment;
 import com.laioffer.githubexample.ui.userInfo.UserInfoFragment;
 import com.laioffer.githubexample.util.Config;
@@ -71,7 +69,6 @@ public class HomeListFragment extends BaseFragment<HomeListViewModel, HomeListRe
     }
 
     private void getAllItem() {
-
         viewModel.getListJobMutableLiveData().observe(getViewLifecycleOwner(), list -> {
             adapter.setItems(new ArrayList<>(list));
             adapter.setOnNoteListener(this);

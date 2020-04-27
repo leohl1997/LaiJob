@@ -3,30 +3,121 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.userInfo.UserInfoFragment"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="This is the User Info Page" />
+        android:background="@color/grey">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/pimage"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_centerInParent="true"
+            android:foregroundGravity="center_horizontal"
+            android:src="@drawable/baseline_account_circle_black_48"
+            app:civ_border_color="@color/black"
+            app:civ_border_overlay="true"
+            android:clickable="true"
+            app:civ_border_width="1dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="name"
+            android:layout_below="@+id/pimage"
+            android:layout_centerHorizontal="true"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+
+        <Button
+            android:id="@+id/editProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Edit Profile"
+            android:drawableStart="@drawable/baseline_account_box_black_18dp"
+            android:textColor="@android:color/white" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editProfile">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+        <Button
+            android:id="@+id/editEducation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Edit Education"
+            android:drawableStart="@drawable/baseline_account_balance_black_18dp"
+            android:textColor="@android:color/white" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editEducation">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+        <Button
+            android:id="@+id/editWork"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Edit Work History"
+            android:drawableStart="@drawable/baseline_work_black_18"
+            android:textColor="@android:color/white" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editWork">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </RelativeLayout>
 
     <Button
-        android:layout_marginTop="50dp"
-        android:id="@+id/Favorite"
+        android:id="@+id/saveProfile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Jump to FavoriteJob"
+        android:background="@color/side"
+        android:text="Save"
         android:textColor="@android:color/white" />
 
-    <Button
-        android:layout_marginTop="50dp"
-        android:id="@+id/SignOut"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="back to sign"
-        android:textColor="@android:color/white" />
 
 </LinearLayout>

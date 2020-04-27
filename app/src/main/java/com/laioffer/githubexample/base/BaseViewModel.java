@@ -8,4 +8,5 @@ public abstract class BaseViewModel<R extends BaseRepository> extends ViewModel 
     protected BaseViewModel(R baseRepository) {
         repository = baseRepository;
     }
+
 }

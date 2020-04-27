@@ -1,10 +1,18 @@
 package com.laioffer.githubexample.remote;
 
+import com.laioffer.githubexample.remote.response.Education;
 import com.laioffer.githubexample.remote.response.Job;
 import com.laioffer.githubexample.remote.response.RemoteResponse;
 import com.laioffer.githubexample.remote.response.UserInfo;
 import com.laioffer.githubexample.ui.comment.CommentEvent;
+
+import com.laioffer.githubexample.ui.editEdu.EditEduEvent;
+import com.laioffer.githubexample.ui.editProfile.EditProfileEvent;
+import com.laioffer.githubexample.ui.editWork.EditWorkEvent;
+import com.laioffer.githubexample.ui.editWork.EditWorkFragment;
+
 import com.laioffer.githubexample.ui.jobInfo.SaveEvent;
+
 import com.laioffer.githubexample.ui.login.LoginEvent;
 import com.laioffer.githubexample.ui.register.RegisterEvent;
 
@@ -33,6 +41,16 @@ public interface ApiService {
     @POST("jobsearch/comment")
     Call<RemoteResponse<CommentEvent>> sendComment(@Body CommentEvent commentEvent);
 
+
+    @POST("jobsearch/user")
+    Call<RemoteResponse<EditEduEvent>> editEdu(@Body EditEduEvent editEduEvent);
+
+    @POST("jobsearch/user")
+    Call<RemoteResponse<EditProfileEvent>> editProfile(@Body EditProfileEvent editProfileEvent);
+
+    @POST("jobsearch/user")
+    Call<RemoteResponse<EditWorkEvent>> editWork(@Body EditWorkEvent editWorkEvent);
+
     @GET("jobsearch/comment")
     Call<RemoteResponse<List<CommentEvent>>> getComment(@Query("item_id") String jobId);
 
@@ -41,6 +59,7 @@ public interface ApiService {
 
     @HTTP(method = "DELETE", path = "jobsearch/history", hasBody = true)
     Call<RemoteResponse<SaveEvent>> unfavorite(@Body SaveEvent saveEvent);
+
 
 
 }
