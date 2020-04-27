@@ -1,11 +1,12 @@
 package com.laioffer.githubexample.remote.response;
 import com.google.gson.annotations.SerializedName;
 import com.laioffer.githubexample.R;
+import com.laioffer.githubexample.ui.comment.Item;
 
 import java.io.Serializable;
 import java.util.List;
 
-public class Job implements Serializable {
+public class Job extends Item implements Serializable {
     @SerializedName("address")
     public String address;
 
@@ -38,6 +39,9 @@ public class Job implements Serializable {
 
     @SerializedName("image_url")
     public String imageUrl;
+
+    @SerializedName("time")
+    public String time;
 
     //    @SerializedName("lat")
 //    public double lat;
