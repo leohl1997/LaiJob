@@ -14,6 +14,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -25,6 +27,7 @@ import android.widget.TextView;
 import com.google.android.material.navigation.NavigationView;
 import com.laioffer.githubexample.R;
 import com.laioffer.githubexample.base.BaseFragment;
+import com.laioffer.githubexample.remote.response.Job;
 import com.laioffer.githubexample.remote.response.UserInfo;
 import com.laioffer.githubexample.ui.map.MapFragment;
 import com.laioffer.githubexample.ui.NavigationManager;
@@ -34,11 +37,16 @@ import com.laioffer.githubexample.ui.search.SearchFragment;
 import com.laioffer.githubexample.ui.userInfo.UserInfoFragment;
 import com.laioffer.githubexample.util.config;
 
-public class HomeListFragment extends BaseFragment<HomeListViewModel, HomeListRepository> {
+import java.util.ArrayList;
+
+
+public class HomeListFragment extends BaseFragment<HomeListViewModel, HomeListRepository>
+    implements ItemDataAdapter.OnNoteListener{
     private HomeListViewModel mViewModel;
     private NavigationManager navigationManager;
     private DrawerLayout drawerLayout;
     private AppCompatActivity mactivity;
+    private ItemDataAdapter adapter = new ItemDataAdapter();
 
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -49,12 +57,33 @@ public class HomeListFragment extends BaseFragment<HomeListViewModel, HomeListRe
         return new HomeListFragment();
     }
 
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        //you can set the title for your toolbar here for different fragments different titles
+
+        RecyclerView rv = view.findViewById(R.id.JobInfo);
+        rv.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv.setHasFixedSize(true);
+        rv.setAdapter(adapter);
+        getAllItem();
+    }
+
+    private void getAllItem() {
+
+        viewModel.getListJobMutableLiveData().observe(getViewLifecycleOwner(), list -> {
+            adapter.setItems(new ArrayList<>(list));
+            adapter.setOnNoteListener(this);
+            adapter.notifyDataSetChanged();
+        });
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.home_list_fragment, container, false);
 
+<<<<<<< HEAD
         Toolbar toolbar = view.findViewById(R.id.toolbar);
 
         mactivity = (AppCompatActivity) getActivity();
@@ -140,18 +169,13 @@ public class HomeListFragment extends BaseFragment<HomeListViewModel, HomeListRe
                     }
                 }
         );
+=======
+>>>>>>> bc0c1af1071fcf9a78b627c46fc9c842d2395ee1
         Button button1 = view.findViewById(R.id.search);
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 navigationManager.navigateTo(new SearchFragment());
-            }
-        });
-        Button button2 = view.findViewById(R.id.JobInfo);
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navigationManager.navigateTo(new JobInfoFragment());
             }
         });
         Button button3 = view.findViewById(R.id.HomeMap);
@@ -208,5 +232,12 @@ public class HomeListFragment extends BaseFragment<HomeListViewModel, HomeListRe
     @Override
     protected HomeListRepository getRepository() {
         return new HomeListRepository();
+    }
+
+    @Override
+    public void onNoteClick(int position, ItemDataAdapter adapter) {
+        Job current = adapter.getItem(position);
+        JobInfoFragment fragment = JobInfoFragment.newInstance(current);
+        navigationManager.navigateTo(fragment);
     }
 }
