@@ -35,7 +35,7 @@ import com.laioffer.githubexample.ui.favorite.FavoriteJobFragment;
 import com.laioffer.githubexample.ui.jobInfo.JobInfoFragment;
 import com.laioffer.githubexample.ui.search.SearchFragment;
 import com.laioffer.githubexample.ui.userInfo.UserInfoFragment;
-import com.laioffer.githubexample.util.config;
+import com.laioffer.githubexample.util.Config;
 
 import java.util.ArrayList;
 
@@ -69,7 +69,6 @@ public class HomeListFragment extends BaseFragment<HomeListViewModel, HomeListRe
     }
 
     private void getAllItem() {
-
         viewModel.getListJobMutableLiveData().observe(getViewLifecycleOwner(), list -> {
             adapter.setItems(new ArrayList<>(list));
             adapter.setOnNoteListener(this);
@@ -83,94 +82,6 @@ public class HomeListFragment extends BaseFragment<HomeListViewModel, HomeListRe
         setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.home_list_fragment, container, false);
 
-<<<<<<< HEAD
-        Toolbar toolbar = view.findViewById(R.id.toolbar);
-
-        mactivity = (AppCompatActivity) getActivity();
-        assert mactivity != null;
-        mactivity.setSupportActionBar(toolbar);
-        ActionBar actionbar = mactivity.getSupportActionBar();
-        assert actionbar != null;
-        actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setHomeAsUpIndicator(R.drawable.baseline_home_black_18dp);
-
-
-        drawerLayout = view.findViewById(R.id.drawer_layout);
-
-        NavigationView navigationView = view.findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        // set item as selected to persist highlight
-                        menuItem.setChecked(true);
-                        // close drawer when item is tapped
-                        drawerLayout.closeDrawers();
-                        // Add code here to update the UI based on the item selected
-                        // For example, swap UI fragments here
-                        if (menuItem.getItemId() == R.id.drawer_logout) {
-                            config.username = null;
-                            mactivity.finish();
-                        }
-                        if (menuItem.getItemId() == R.id.user_info) {
-                            config.username = null;
-                            navigationManager.navigateTo(new UserInfoFragment());
-                        }
-                        if (menuItem.getItemId() == R.id.favorite) {
-                            config.username = null;
-                            navigationManager.navigateTo(new FavoriteJobFragment());
-                        }
-                        if (menuItem.getItemId() == R.id.search) {
-                            config.username = null;
-                            navigationManager.navigateTo(new SearchFragment());
-                        }
-                        return true;
-                    }
-                });
-
-        drawerLayout.addDrawerListener(
-                new DrawerLayout.DrawerListener() {
-                    @Override
-                    public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
-
-                    }
-
-                    @SuppressLint("SetTextI18n")
-                    @Override
-                    public void onDrawerOpened(@NonNull View drawerView) {
-                        final TextView user_textview = (TextView) drawerView.findViewById(R.id.user_name);
-                        final TextView location_textview = (TextView) drawerView.findViewById(R.id.user_location);
-
-//                        // Respond when the drawer is opened
-//                        mLocationTracker.getLocation();
-//                        final double longitude = mLocationTracker.getLongitude();
-//                        final double latitude = mLocationTracker.getLatitude();
-//                        UserInfo userInfo = new UserInfo();
-//                        if (userInfo.profile.user_id == null) {
-//                            user_textview.setText("");
-//                            location_textview.setText("");
-//                        } else {
-//                            //LoginEvent event = new LoginEvent();
-//                            //user_textview.setText(new UserInfo().profile.user_id);
-////                            location_textview.setText("Lat=" + new DecimalFormat(".##").
-////                                    format(latitude) + ",Lon=" + new DecimalFormat(".##").
-////                                    format(longitude));
-//                        }
-                    }
-
-                    @Override
-                    public void onDrawerClosed(@NonNull View drawerView) {
-
-                    }
-
-                    @Override
-                    public void onDrawerStateChanged(int newState) {
-
-                    }
-                }
-        );
-=======
->>>>>>> bc0c1af1071fcf9a78b627c46fc9c842d2395ee1
         Button button1 = view.findViewById(R.id.search);
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
