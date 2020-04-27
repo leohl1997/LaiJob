@@ -18,9 +18,9 @@ import com.laioffer.githubexample.databinding.EditWorkFragmentBinding;
 import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.ui.userInfo.UserInfoFragment;
 
-public class EditWorkFragment extends BaseFragment<editWorkViewModel, EditWorkRepository> {
+public class EditWorkFragment extends BaseFragment<EditWorkViewModel, EditWorkRepository> {
     private NavigationManager navigationManager;
-    private editWorkViewModel mViewModel;
+    private EditWorkViewModel mViewModel;
     private EditWorkFragmentBinding binding;
 
     @Override
@@ -51,8 +51,8 @@ public class EditWorkFragment extends BaseFragment<editWorkViewModel, EditWorkRe
     }
 
     @Override
-    protected editWorkViewModel getViewModel() {
-        return new ViewModelProvider(requireActivity(), getFactory()).get(editWorkViewModel.class);
+    protected EditWorkViewModel getViewModel() {
+        return new ViewModelProvider(requireActivity(), getFactory()).get(EditWorkViewModel.class);
     }
 
     @Override
@@ -61,7 +61,7 @@ public class EditWorkFragment extends BaseFragment<editWorkViewModel, EditWorkRe
             @NonNull
             @Override
             public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-                return (T) new editWorkViewModel(getRepository());
+                return (T) new EditWorkViewModel(getRepository());
             }
         };
     }
