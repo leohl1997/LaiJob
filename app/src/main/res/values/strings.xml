@@ -16,14 +16,13 @@
     <string name="Back">Back</string>
     <string name="Rating">Tap a Star to Rate</string>
     <string name="comment_hint">Write Your Comments Here</string>
-<<<<<<< HEAD
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-=======
+
     <string name="more">More</string>
     <string name="less">Less</string>
     <string name="save">Save</string>
     <string name="saved">Saved</string>
->>>>>>> bc0c1af1071fcf9a78b627c46fc9c842d2395ee1
+
 </resources>
