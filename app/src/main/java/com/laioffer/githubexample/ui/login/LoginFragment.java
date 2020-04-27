@@ -44,7 +44,8 @@ public class LoginFragment extends BaseFragment<LoginViewModel, LoginRepository>
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         binding.btnLogin.setOnClickListener( v -> {
-            UserInfo.userId = binding.etUserIdLogin.getText().toString();
+//            UserInfo userInfo = new UserInfo();
+//            userInfo.profile.user_id = binding.etUserIdLogin.getText().toString();
             viewModel.login(new LoginEvent(binding.etUserIdLogin.getText().toString(),
                     Utils.md5Encryption(binding.etPasswordLogin.getText().toString())));  // faker user info
         });
