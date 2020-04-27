@@ -18,7 +18,7 @@
         android:foregroundGravity="center_vertical"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:src="@drawable/baseline_input_black_18dp" />
+        android:src="@drawable/baseline_account_circle_black_48" />
 
     <TextView
         android:id="@+id/user_name"
