@@ -45,6 +45,7 @@ public class Utils {
         }
         return result;
     }
+
     public static float dpToPixels(int dp, Context context) {
         return dp * (context.getResources().getDisplayMetrics().density);
     }
@@ -60,6 +61,7 @@ public class Utils {
         } else {
             return 0xff000000;
         }
+
     }
 
     /**
