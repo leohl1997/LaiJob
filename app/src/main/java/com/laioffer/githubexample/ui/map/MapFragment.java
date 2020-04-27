@@ -121,12 +121,21 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
 
             }
 
+
             @Override
             public void onSearch(CharSequence text) {
                 googleMap.clear();
                 setMarkerAtCurrentPosition();
                 viewModel.setSearchEvent(text.toString());
             }
+        });
+
+        binding.searchBar.getSearchMenu().addSearchMenuItem(0, "All");
+        binding.searchBar.getSearchMenu().addSearchMenuItem(1, "Past 7 days");
+        binding.searchBar.getSearchMenu().addSearchMenuItem(2, "Past 3 days");
+        binding.searchBar.getSearchMenu().addSearchMenuItem(3, "Past 1 day");
+        binding.searchBar.setOnMenuItemClickListener(item -> {
+            Utils.constructToast(getContext(), item.getTitle()).show();
         });
     }
 

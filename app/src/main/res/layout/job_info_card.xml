@@ -30,7 +30,6 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
         android:background="@drawable/btn_custom"
         android:text="save"
         android:textColor="@android:color/white"
@@ -101,7 +100,22 @@
         android:text="@string/Comment"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/apply" />
+
+    <Button
+        android:id="@+id/apply"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/btn_custom"
+        android:text="@string/apply"
+        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/save" />
 
@@ -140,7 +154,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/btn_back"
+        android:id="@+id/btn_back_info"
         android:layout_width="53dp"
         android:layout_height="50dp"
         android:background="@drawable/ic_arrow_left"

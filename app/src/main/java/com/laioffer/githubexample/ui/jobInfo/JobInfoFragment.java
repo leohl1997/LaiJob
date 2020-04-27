@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
@@ -147,5 +148,12 @@ public class JobInfoFragment extends BaseFragment<JobInfoViewModel, JobInfoRepos
         Job currentJob = (Job) getArguments().getSerializable("job");
         CommentFragment commentFragment = CommentFragment.getInstance(currentJob);
         navigationManager.navigateTo(commentFragment);
+    }
+
+    @Override
+    public void onApplyCLicked() {
+        Job currentJob = (Job) getArguments().getSerializable("job");
+        WebFragment webFragment = WebFragment.getInstance(currentJob);
+        navigationManager.navigateTo(webFragment);
     }
 }

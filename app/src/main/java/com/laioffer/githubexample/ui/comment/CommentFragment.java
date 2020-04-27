@@ -107,7 +107,7 @@ public class CommentFragment extends BaseFragment<CommentViewModel, CommentRepos
         viewModel.getResponseLiveData().observe(getViewLifecycleOwner(), msg -> {
             Utils.constructToast(getContext(), msg).show();
         });
-        binding.btnBack.setOnClickListener(v -> navigationManager.goBack());
+        binding.btnBackComment.setOnClickListener(v -> navigationManager.goBack());
     }
 
     @Override

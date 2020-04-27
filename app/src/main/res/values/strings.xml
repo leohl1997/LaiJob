@@ -20,4 +20,5 @@
     <string name="less">Less</string>
     <string name="save">Save</string>
     <string name="saved">Saved</string>
+    <string name="apply">Apply</string>
 </resources>
