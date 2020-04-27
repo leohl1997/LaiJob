@@ -30,7 +30,12 @@ import com.laioffer.githubexample.databinding.MapFragmentBinding;
 import com.laioffer.githubexample.remote.response.Job;
 import com.laioffer.githubexample.ui.HomeList.HomeListFragment;
 import com.laioffer.githubexample.ui.NavigationManager;
+<<<<<<< HEAD
 import com.laioffer.githubexample.util.config;
+=======
+import com.laioffer.githubexample.ui.jobInfo.JobInfoFragment;
+import com.laioffer.githubexample.util.Config;
+>>>>>>> bc0c1af1071fcf9a78b627c46fc9c842d2395ee1
 import com.laioffer.githubexample.util.Utils;
 import com.squareup.picasso.Picasso;
 import com.wanderingcan.persistentsearch.PersistentSearchView;
@@ -70,7 +75,11 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
         FloatingActionButton returnFab = view.findViewById(R.id.fab_center);
         returnFab.setOnClickListener( v -> {
             CameraPosition cameraPosition = new CameraPosition.Builder()
+<<<<<<< HEAD
                     .target(new LatLng(config.lat, config.lon))
+=======
+                    .target(new LatLng(Config.latitude, Config.longitude))
+>>>>>>> bc0c1af1071fcf9a78b627c46fc9c842d2395ee1
                     .zoom(10)
                     .build();
             googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
@@ -202,7 +211,11 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
         if (googleMap == null) {
             return;
         }
+<<<<<<< HEAD
         LatLng position = new LatLng(config.lat, config.lon);
+=======
+        LatLng position = new LatLng(Config.latitude, Config.longitude);
+>>>>>>> bc0c1af1071fcf9a78b627c46fc9c842d2395ee1
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(position)
                 .zoom(10)
@@ -276,7 +289,8 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
         if (currJob == null) {
             return;
         }
-        Utils.constructToast(getContext(), currJob.name).show();
+        JobInfoFragment fragment = JobInfoFragment.newInstance(currJob);
+        navigationManager.navigateTo(fragment);
     }
 
 }
