@@ -4,16 +4,16 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 
-public class CommentEvent {
+public class CommentEvent extends Item {
     @SerializedName("user_id")
     public String userId;
     @SerializedName("item_id")
     public String itemId;
     @SerializedName("rating")
     public int rating;
-    @SerializedName("text")
+    @SerializedName("context")
     public String commentText;
-    @SerializedName("timestamp")
-    public Date currentTime;
+    @SerializedName("time")
+    public String currentTime;
 
 }
