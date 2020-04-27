@@ -14,7 +14,7 @@ import com.laioffer.githubexample.R;
 import com.laioffer.githubexample.base.BaseFragment;
 import com.laioffer.githubexample.databinding.CommentFragmentBinding;
 import com.laioffer.githubexample.remote.response.Job;
-import com.laioffer.githubexample.util.Config;
+import com.laioffer.githubexample.util.config;
 import com.laioffer.githubexample.util.Utils;
 
 import java.util.Calendar;
@@ -85,7 +85,7 @@ public class CommentFragment extends BaseFragment<CommentViewModel, CommentRepos
                 return;
             }
             CommentEvent commentEvent = new CommentEvent();
-            commentEvent.userId = Config.username;
+            commentEvent.userId = config.username;
             commentEvent.itemId = currJob.itemId;
             commentEvent.rating = rating;
             commentEvent.commentText = binding.commentBody.getText().toString();
