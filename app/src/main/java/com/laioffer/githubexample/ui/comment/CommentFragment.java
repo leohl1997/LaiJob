@@ -1,5 +1,6 @@
 package com.laioffer.githubexample.ui.comment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +15,12 @@ import com.laioffer.githubexample.R;
 import com.laioffer.githubexample.base.BaseFragment;
 import com.laioffer.githubexample.databinding.CommentFragmentBinding;
 import com.laioffer.githubexample.remote.response.Job;
+<<<<<<< HEAD
 import com.laioffer.githubexample.util.config;
+=======
+import com.laioffer.githubexample.ui.NavigationManager;
+import com.laioffer.githubexample.util.Config;
+>>>>>>> bc0c1af1071fcf9a78b627c46fc9c842d2395ee1
 import com.laioffer.githubexample.util.Utils;
 
 import java.util.Calendar;
@@ -23,6 +29,7 @@ public class CommentFragment extends BaseFragment<CommentViewModel, CommentRepos
 
     private int rating = 0;
     private CommentFragmentBinding binding;
+    private NavigationManager navigationManager;
 
     public static CommentFragment getInstance(Job job) {
         CommentFragment commentFragment = new CommentFragment();
@@ -38,6 +45,12 @@ public class CommentFragment extends BaseFragment<CommentViewModel, CommentRepos
         binding = CommentFragmentBinding.inflate(getLayoutInflater(), container, false);
         return binding.getRoot();
 
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        navigationManager = (NavigationManager) context;
     }
 
     @Override
@@ -85,11 +98,15 @@ public class CommentFragment extends BaseFragment<CommentViewModel, CommentRepos
                 return;
             }
             CommentEvent commentEvent = new CommentEvent();
+<<<<<<< HEAD
             commentEvent.userId = config.username;
+=======
+            commentEvent.userId = Config.userId;
+>>>>>>> bc0c1af1071fcf9a78b627c46fc9c842d2395ee1
             commentEvent.itemId = currJob.itemId;
             commentEvent.rating = rating;
             commentEvent.commentText = binding.commentBody.getText().toString();
-            commentEvent.currentTime = Calendar.getInstance().getTime();
+            commentEvent.currentTime = Calendar.getInstance().getTime().toString();
             viewModel.setCommentEventMutableLiveData(commentEvent);
         });
         viewModel.getMsgMutableLiveData().observe(getViewLifecycleOwner(), msg -> {
@@ -98,6 +115,7 @@ public class CommentFragment extends BaseFragment<CommentViewModel, CommentRepos
         viewModel.getResponseLiveData().observe(getViewLifecycleOwner(), msg -> {
             Utils.constructToast(getContext(), msg).show();
         });
+        binding.btnBack.setOnClickListener(v -> navigationManager.goBack());
     }
 
     @Override
