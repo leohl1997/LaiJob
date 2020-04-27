@@ -30,7 +30,7 @@ import com.laioffer.githubexample.databinding.MapFragmentBinding;
 import com.laioffer.githubexample.remote.response.Job;
 import com.laioffer.githubexample.ui.HomeList.HomeListFragment;
 import com.laioffer.githubexample.ui.NavigationManager;
-import com.laioffer.githubexample.util.Config;
+import com.laioffer.githubexample.util.config;
 import com.laioffer.githubexample.util.Utils;
 import com.squareup.picasso.Picasso;
 import com.wanderingcan.persistentsearch.PersistentSearchView;
@@ -70,7 +70,7 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
         FloatingActionButton returnFab = view.findViewById(R.id.fab_center);
         returnFab.setOnClickListener( v -> {
             CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(new LatLng(Config.lat, Config.lon))
+                    .target(new LatLng(config.lat, config.lon))
                     .zoom(10)
                     .build();
             googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
@@ -202,7 +202,7 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
         if (googleMap == null) {
             return;
         }
-        LatLng position = new LatLng(Config.lat, Config.lon);
+        LatLng position = new LatLng(config.lat, config.lon);
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(position)
                 .zoom(10)
