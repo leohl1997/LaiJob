@@ -1,5 +1,6 @@
 package com.laioffer.githubexample.ui.map;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,11 +15,14 @@ import androidx.fragment.app.Fragment;
 
 import com.laioffer.githubexample.R;
 import com.laioffer.githubexample.remote.response.Job;
+import com.laioffer.githubexample.ui.NavigationManager;
+import com.laioffer.githubexample.ui.jobInfo.JobInfoFragment;
 import com.laioffer.githubexample.util.Utils;
 import com.squareup.picasso.Picasso;
 
 public class CardFragment extends Fragment {
     private CardView cardView;
+    private NavigationManager navigationManager;
 
     public static CardFragment getInstance(Job job) {
         CardFragment cardFragment = new CardFragment();
@@ -44,9 +48,9 @@ public class CardFragment extends Fragment {
         TextView location = view.findViewById(R.id.cv_location);
         location.setText(job.address);
         cardView.setOnClickListener( v -> {
-            Utils.constructToast(getContext(), title.getText().toString()).show();
+            JobInfoFragment fragment = JobInfoFragment.newInstance(job);
+            navigationManager.navigateTo(fragment);
         });
-
         ImageView imageView = view.findViewById(R.id.cvImg_info);
         if (!job.imageUrl.isEmpty()) {
             Picasso.get().setLoggingEnabled(true);
@@ -56,6 +60,18 @@ public class CardFragment extends Fragment {
 
         }
         return view;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        navigationManager = (NavigationManager) context;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
     }
 
     public CardView getCardView() {
