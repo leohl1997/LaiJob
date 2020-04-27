@@ -62,7 +62,7 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         if (holder instanceof InfoViewHolder) {
             Job currJob = (Job) itemArrayList.get(position);
             ((InfoViewHolder) holder).company.setText(currJob.company);
-            ((InfoViewHolder) holder).description.setText(currJob.description);
+            ((InfoViewHolder) holder).description.setText(currJob.description.replaceAll("<.*?>", ""));
             if (!currJob.imageUrl.isEmpty()) {
                 Picasso.get().setLoggingEnabled(true);
                 Picasso.get().load(currJob.imageUrl).placeholder(R.drawable.thumbnail)
