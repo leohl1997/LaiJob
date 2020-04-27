@@ -7,7 +7,6 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -31,10 +30,9 @@ import com.laioffer.githubexample.ui.map.MapFragment;
 import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.ui.favorite.FavoriteJobFragment;
 import com.laioffer.githubexample.ui.jobInfo.JobInfoFragment;
-import com.laioffer.githubexample.ui.login.LoginViewModel;
 import com.laioffer.githubexample.ui.search.SearchFragment;
 import com.laioffer.githubexample.ui.userInfo.UserInfoFragment;
-import com.laioffer.githubexample.util.Config;
+import com.laioffer.githubexample.util.config;
 
 public class HomeListFragment extends BaseFragment<HomeListViewModel, HomeListRepository> {
     private HomeListViewModel mViewModel;
@@ -82,19 +80,19 @@ public class HomeListFragment extends BaseFragment<HomeListViewModel, HomeListRe
                         // Add code here to update the UI based on the item selected
                         // For example, swap UI fragments here
                         if (menuItem.getItemId() == R.id.drawer_logout) {
-                            Config.username = null;
+                            config.username = null;
                             mactivity.finish();
                         }
                         if (menuItem.getItemId() == R.id.user_info) {
-                            Config.username = null;
+                            config.username = null;
                             navigationManager.navigateTo(new UserInfoFragment());
                         }
                         if (menuItem.getItemId() == R.id.favorite) {
-                            Config.username = null;
+                            config.username = null;
                             navigationManager.navigateTo(new FavoriteJobFragment());
                         }
                         if (menuItem.getItemId() == R.id.search) {
-                            Config.username = null;
+                            config.username = null;
                             navigationManager.navigateTo(new SearchFragment());
                         }
                         return true;
@@ -118,17 +116,17 @@ public class HomeListFragment extends BaseFragment<HomeListViewModel, HomeListRe
 //                        mLocationTracker.getLocation();
 //                        final double longitude = mLocationTracker.getLongitude();
 //                        final double latitude = mLocationTracker.getLatitude();
-
-                        if (UserInfo.userId == null) {
-                            user_textview.setText("");
-                            location_textview.setText("");
-                        } else {
-                            //LoginEvent event = new LoginEvent();
-                            user_textview.setText(UserInfo.userId);
-//                            location_textview.setText("Lat=" + new DecimalFormat(".##").
-//                                    format(latitude) + ",Lon=" + new DecimalFormat(".##").
-//                                    format(longitude));
-                        }
+//                        UserInfo userInfo = new UserInfo();
+//                        if (userInfo.profile.user_id == null) {
+//                            user_textview.setText("");
+//                            location_textview.setText("");
+//                        } else {
+//                            //LoginEvent event = new LoginEvent();
+//                            //user_textview.setText(new UserInfo().profile.user_id);
+////                            location_textview.setText("Lat=" + new DecimalFormat(".##").
+////                                    format(latitude) + ",Lon=" + new DecimalFormat(".##").
+////                                    format(longitude));
+//                        }
                     }
 
                     @Override
