@@ -1,20 +1,30 @@
 package com.laioffer.githubexample.ui.HomeList;
 
+
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 
 import com.laioffer.githubexample.base.BaseViewModel;
+import com.laioffer.githubexample.remote.response.Job;
+import com.laioffer.githubexample.remote.response.RemoteResponse;
+import com.laioffer.githubexample.remote.response.UserInfo;
+import com.laioffer.githubexample.util.Utils;
+
+import java.util.List;
+
 
 public class HomeListViewModel extends BaseViewModel<HomeListRepository> {
-    protected HomeListViewModel(HomeListRepository baseRepository) {
+    private final MutableLiveData<List<Job>> ListJobMutableLiveData = repository.searchNearby();
+
+    HomeListViewModel(HomeListRepository baseRepository) {
         super(baseRepository);
     }
-    private MutableLiveData<String> mUserName;
-    private String getUserName(){
-        if(mUserName == null){
-            mUserName = new MutableLiveData<String>();
-        }
-        return "user";
+    public MutableLiveData<List<Job>> getListJobMutableLiveData(){
+        return ListJobMutableLiveData;
     }
 
-    // TODO: Implement the ViewModel
+
+
 }
+
