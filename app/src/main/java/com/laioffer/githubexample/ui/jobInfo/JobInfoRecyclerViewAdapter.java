@@ -62,7 +62,7 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         if (holder instanceof InfoViewHolder) {
             Job currJob = (Job) itemArrayList.get(position);
             ((InfoViewHolder) holder).company.setText(currJob.company);
-            //((InfoViewHolder) holder).description.setText(currJob.description);
+            ((InfoViewHolder) holder).description.setText(currJob.description);
             if (!currJob.imageUrl.isEmpty()) {
                 Picasso.get().setLoggingEnabled(true);
                 Picasso.get().load(currJob.imageUrl).placeholder(R.drawable.thumbnail)
@@ -93,6 +93,9 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     }
 
     public void addAll(List<CommentEvent> comments) {
+        while (itemArrayList.size() > 1) {
+            itemArrayList.remove(itemArrayList.size() - 1);
+        }
         itemArrayList.addAll(comments);
     }
 
@@ -164,6 +167,13 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             location = itemView.findViewById(R.id.location);
             image = itemView.findViewById(R.id.job_image);
             description = itemView.findViewById(R.id.job_description);
+            description.setOnClickListener(v -> {
+                if (description.getMaxLines() < 1000) {
+                    description.setMaxLines(1000);
+                } else {
+                    description.setMaxLines(10);
+                }
+            });
             postTime = itemView.findViewById(R.id.post_time);
             commentNumber = itemView.findViewById(R.id.comment_number);
             avgRating = itemView.findViewById(R.id.average_rating);

@@ -43,7 +43,7 @@
         android:id="@+id/post_time"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/job_description"
@@ -64,7 +64,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        app:layout_constraintTop_toBottomOf="@+id/job_image"/>
+        android:maxLines="10"
+        app:layout_constraintTop_toBottomOf="@+id/job_image"
+        tools:layout_editor_absoluteX="10dp" />
 
 
     <ImageView
@@ -144,6 +146,15 @@
         android:background="@drawable/ic_arrow_left"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:text="Click text to see more/less"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/job_description" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

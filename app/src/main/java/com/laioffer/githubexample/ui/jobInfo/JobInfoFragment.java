@@ -23,6 +23,7 @@ import com.laioffer.githubexample.databinding.JobInfoFragmentBinding;
 import com.laioffer.githubexample.remote.response.Job;
 import com.laioffer.githubexample.ui.HomeList.HomeListFragment;
 import com.laioffer.githubexample.ui.NavigationManager;
+import com.laioffer.githubexample.ui.comment.CommentEvent;
 import com.laioffer.githubexample.ui.comment.CommentFragment;
 import com.laioffer.githubexample.util.Config;
 import com.laioffer.githubexample.util.Utils;
@@ -71,14 +72,17 @@ public class JobInfoFragment extends BaseFragment<JobInfoViewModel, JobInfoRepos
         binding.rvMain.setAdapter(adapter);
         viewModel.setJobIdLiveData(currentJob.itemId);
         viewModel.getCommentLiveData().observe(getViewLifecycleOwner(), list -> {
-
-            //Utils.constructToast(getContext(), adapter.getAvgRating().getText().toString()).show();
-            if (list == null) {
+            if (list == null || list.size() == 0) {
                 return;
             }
             adapter.addAll(list);
             adapter.notifyDataSetChanged();
-            //Utils.constructToast(getContext(), adapter.getAvgRating().toString()).show();
+            adapter.getCommentNumber().setText(String.format("%d", list.size()));
+            Double avg = list.stream()
+                    .mapToDouble(comment -> comment.rating)
+                    .average()
+                    .orElse(0.0);
+            adapter.getAvgRating().setText(String.format("%.1f", avg));
         });
         viewModel.getSaveResponse().observe(getViewLifecycleOwner(), msg -> {
             if (msg.equals("Save Success") && !currentJob.favorite) {

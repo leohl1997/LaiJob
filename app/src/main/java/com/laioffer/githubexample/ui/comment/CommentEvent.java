@@ -11,9 +11,9 @@ public class CommentEvent extends Item {
     public String itemId;
     @SerializedName("rating")
     public int rating;
-    @SerializedName("text")
+    @SerializedName("context")
     public String commentText;
-    @SerializedName("timestamp")
+    @SerializedName("time")
     public String currentTime;
 
 }
