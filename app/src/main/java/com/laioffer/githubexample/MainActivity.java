@@ -8,38 +8,15 @@ import android.location.LocationManager;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
-
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-
-import android.Manifest;
-import android.content.Context;
-import android.content.Intent;
-import android.location.Location;
-import android.location.LocationManager;
-import android.location.LocationListener;
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-
-import com.google.android.material.navigation.NavigationView;
-import com.laioffer.githubexample.ui.HomeList.HomeListFragment;
-
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.util.Config;
 import com.laioffer.githubexample.util.Utils;
-import java.text.DecimalFormat;
 
 
 public class MainActivity extends AppCompatActivity implements LocationListener,NavigationManager {
@@ -55,11 +32,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 
         ActivityCompat.requestPermissions(this, new String[]{
                 Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this);
         getLocation();
 
-
-        //navigateTo(new CommentFragment());
-        navigateTo(new OnBoardingBaseFragment());
 
         navigateTo(new OnBoardingSplashFragment());
 
