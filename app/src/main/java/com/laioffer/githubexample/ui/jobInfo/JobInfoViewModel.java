@@ -11,31 +11,23 @@ import java.util.List;
 
 public class JobInfoViewModel extends BaseViewModel<JobInfoRepository> {
 
-    private MutableLiveData<String> jobIdLiveData = new MutableLiveData<>();
-    private LiveData<List<CommentEvent>> commentLiveData =
-            Transformations.switchMap(jobIdLiveData, repository::getComment);
-    private MutableLiveData<SaveEvent> saveEventLiveData = new MutableLiveData<>();
-    private LiveData<String> saveResponse =
-            Transformations.switchMap(saveEventLiveData, repository::save);
+    private JobInfoRecyclerViewAdapter.RemoteListener remoteListener;
 
     protected JobInfoViewModel(JobInfoRepository baseRepository) {
         super(baseRepository);
     }
 
-    public LiveData<List<CommentEvent>> getCommentLiveData() {
-        return commentLiveData;
+    public void setRemoteListener(JobInfoRecyclerViewAdapter.RemoteListener remoteListener) {
+        this.remoteListener = remoteListener;
     }
 
     public void setJobIdLiveData(String jobId) {
-        jobIdLiveData.postValue(jobId);
+        remoteListener.onCommentEvent(repository.getComment(jobId));
     }
 
     public void setSaveEvent(SaveEvent saveEvent) {
-        saveEventLiveData.postValue(saveEvent);
+        remoteListener.onSaveEvent(repository.save(saveEvent));
     }
 
-    public LiveData<String> getSaveResponse() {
-        return saveResponse;
-    }
 
 }

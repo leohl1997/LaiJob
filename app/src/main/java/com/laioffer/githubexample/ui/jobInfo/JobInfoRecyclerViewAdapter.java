@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.laioffer.githubexample.R;
@@ -198,5 +200,10 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         void onBackClicked();
         void onCommentClicked();
         void onApplyCLicked();
+    }
+
+    public interface RemoteListener {
+        void onSaveEvent(MutableLiveData<String> responseLiveData);
+        void onCommentEvent(LiveData<List<CommentEvent>> responseLiveData);
     }
 }

@@ -9,6 +9,8 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,12 +20,15 @@ import com.laioffer.githubexample.base.BaseFragment;
 import com.laioffer.githubexample.databinding.JobInfoFragmentBinding;
 import com.laioffer.githubexample.remote.response.Job;
 import com.laioffer.githubexample.ui.NavigationManager;
+import com.laioffer.githubexample.ui.comment.CommentEvent;
 import com.laioffer.githubexample.ui.comment.CommentFragment;
 import com.laioffer.githubexample.util.Config;
 import com.laioffer.githubexample.util.Utils;
 
+import java.util.List;
+
 public class JobInfoFragment extends BaseFragment<JobInfoViewModel, JobInfoRepository>
-    implements JobInfoRecyclerViewAdapter.SaveItemListener {
+    implements JobInfoRecyclerViewAdapter.SaveItemListener, JobInfoRecyclerViewAdapter.RemoteListener {
 
     private NavigationManager navigationManager;
     private JobInfoFragmentBinding binding;
@@ -60,44 +65,13 @@ public class JobInfoFragment extends BaseFragment<JobInfoViewModel, JobInfoRepos
             return;
         }
         adapter = new JobInfoRecyclerViewAdapter(currentJob, this);
+        viewModel.setRemoteListener(this);
         // maybe change
         linearLayoutManager = new LinearLayoutManager(getContext());
         binding.rvMain.setLayoutManager(linearLayoutManager);
         binding.rvMain.setAdapter(adapter);
         viewModel.setJobIdLiveData(currentJob.itemId);
-        viewModel.getCommentLiveData().observe(getViewLifecycleOwner(), list -> {
-            if (list == null || list.size() == 0) {
-                return;
-            }
-            adapter.addAll(list);
-            adapter.notifyDataSetChanged();
-            adapter.getCommentNumber().setText(String.format("%d", list.size()));
-            Double avg = list.stream()
-                    .mapToDouble(comment -> comment.rating)
-                    .average()
-                    .orElse(0.0);
-            adapter.getAvgRating().setText(String.format("%.1f", avg));
-        });
-        viewModel.getSaveResponse().observe(getViewLifecycleOwner(), msg -> {
-            if (msg.equals("Save Success") && !currentJob.favorite) {
-                return;
-            }
-            Button button = linearLayoutManager.findViewByPosition(0).findViewById(R.id.save);
-            if (msg.equals("Save Success!")) {
-                button.setBackground(getView()
-                        .getResources()
-                        .getDrawable(R.drawable.btn_custom_selected));
-                ((Job) getArguments().getSerializable("job")).favorite = true;
-                adapter.getSaveButton().setText(R.string.saved);
-            } else if (msg.equals("Unsave Success!")) {
-                button.setBackground(getView()
-                        .getResources()
-                        .getDrawable(R.drawable.btn_custom));
-                adapter.getSaveButton().setText(R.string.save);
-                ((Job) getArguments().getSerializable("job")).favorite = false;
-            }
-            Utils.constructToast(getContext(), msg).show();
-        });
+
 
     }
 
@@ -148,5 +122,43 @@ public class JobInfoFragment extends BaseFragment<JobInfoViewModel, JobInfoRepos
         Job currentJob = (Job) getArguments().getSerializable("job");
         WebFragment webFragment = WebFragment.getInstance(currentJob);
         navigationManager.navigateTo(webFragment);
+    }
+
+    @Override
+    public void onSaveEvent(MutableLiveData<String> responseLiveData) {
+        responseLiveData.observe(getViewLifecycleOwner(), msg -> {
+            Button button = linearLayoutManager.findViewByPosition(0).findViewById(R.id.save);
+            if (msg.equals("Save Success!")) {
+                button.setBackground(getView()
+                        .getResources()
+                        .getDrawable(R.drawable.btn_custom_selected));
+                ((Job) getArguments().getSerializable("job")).favorite = true;
+                adapter.getSaveButton().setText(R.string.saved);
+            } else if (msg.equals("Unsave Success!")) {
+                button.setBackground(getView()
+                        .getResources()
+                        .getDrawable(R.drawable.btn_custom));
+                adapter.getSaveButton().setText(R.string.save);
+                ((Job) getArguments().getSerializable("job")).favorite = false;
+            }
+            Utils.constructToast(getContext(), msg).show();
+        });
+    }
+
+    @Override
+    public void onCommentEvent(LiveData<List<CommentEvent>> responseLiveData) {
+        responseLiveData.observe(getViewLifecycleOwner(), list -> {
+            if (list == null || list.size() == 0) {
+                return;
+            }
+            adapter.addAll(list);
+            adapter.notifyDataSetChanged();
+            adapter.getCommentNumber().setText(String.format("%d", list.size()));
+            Double avg = list.stream()
+                    .mapToDouble(comment -> comment.rating)
+                    .average()
+                    .orElse(0.0);
+            adapter.getAvgRating().setText(String.format("%.1f", avg));
+        });
     }
 }
