@@ -25,6 +25,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.laioffer.githubexample.ui.HomeList.HomeListFragment;
 import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.ui.login.LoginFragment;
+import com.laioffer.githubexample.ui.search.SearchEvent;
 import com.laioffer.githubexample.ui.search.SearchFragment;
 import com.laioffer.githubexample.util.Config;
 import com.laioffer.githubexample.util.Utils;
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        navigateTo(new HomeListFragment());
+        navigateTo(new HomeListFragment(new SearchEvent(0,"Developer")));
     }
 
     @Override

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/drawer_layout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".ui.HomeList.HomeListFragment"
+    android:fitsSystemWindows="true">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_alignParentTop="true"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/grey"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
+        <FrameLayout
+            android:id="@+id/content_frame"
+            android:layout_below="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:layout_marginTop="-250dp"
+                android:id="@+id/search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="Jump to Search"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:layout_marginTop="-150dp"
+                android:id="@+id/JobInfo"
+                android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:text="Jump to JobInfo"
+                android:textColor="@android:color/white"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:layout_marginTop="-50dp"
+                android:id="@+id/HomeMap"
+                android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:text="Jump to HomeMap"
+                android:textColor="@android:color/white"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:layout_marginTop="50dp"
+                android:id="@+id/UserInfo"
+                android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:text="Jump to UserInfo"
+                android:textColor="@android:color/white"
+                android:layout_height="wrap_content" />
+        </FrameLayout>
+    </RelativeLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:menu="@menu/menu_drawer"
+        app:headerLayout="@layout/nav_header"/>
+
+
+</androidx.drawerlayout.widget.DrawerLayout>
+    © 2020 GitHub, Inc.

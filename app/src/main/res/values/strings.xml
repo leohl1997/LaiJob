@@ -10,4 +10,13 @@
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
 
+
+
+    <string-array name="numbers">
+        <item>Clear The Filter</item>
+        <item>Past One Day</item>
+        <item>Past Three Days</item>
+        <item>Past One Week</item>
+    </string-array>
+
 </resources>

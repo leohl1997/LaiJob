@@ -19,10 +19,32 @@ import com.laioffer.githubexample.ui.search.SearchFragment;
 import com.laioffer.githubexample.ui.userInfo.UserInfoFragment;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+
+
+
+/*
+    Filter Rule here:
+    if the filter rule is 0, then do nothing to the data get from the API
+    if the filter rule is 1, then get the job posted within 24 hours
+    if the filter rule is 3, then get the job posted within three days
+    if the filter rule is 7, then get the job posted within one week
+
+     */
+
+
+
+
+
+
 public class ItemDataAdapter extends RecyclerView.Adapter<ItemDataAdapter.ItemDataViewHolder> {
     NavigationManager navigationManager;
     private ArrayList<Job> items = new ArrayList<>();
     private Context context;
+
+
+
 
 
     public void setOnNoteListener(OnNoteListener onNoteListener) {
@@ -55,15 +77,25 @@ public class ItemDataAdapter extends RecyclerView.Adapter<ItemDataAdapter.ItemDa
         holder.firm.setMaxWidth(500);
         holder.firm.setSingleLine(false);
 
-        holder.postTime.setText((currentJob.getCompany()));
+        holder.postTime.setText((currentJob.getPostTime()));
         holder.postTime.setMaxWidth(500);
         holder.postTime.setSingleLine(false);
 
         Job.loadImage(holder.image, currentJob.getImage_url());
     }
+    // do job filtration here
+    public void setItems(ArrayList<Job> items, int filterRule) {
+        ArrayList<Job> jobsLeft = new ArrayList<>();
+        Date currentTime = (Date) Calendar.getInstance().getTime();
 
-    public void setItems(ArrayList<Job> items) {
-        this.items = items;
+        if (items != null){
+            for(Job job : items){
+                if (!filteredJob(job.getPostTime(),currentTime,filterRule)){
+                    jobsLeft.add(job);
+                }
+            }
+        }
+        this.items = jobsLeft;
     }
 
     public Job getItem(int pos) {
@@ -108,6 +140,17 @@ public class ItemDataAdapter extends RecyclerView.Adapter<ItemDataAdapter.ItemDa
 
     public interface OnNoteListener {
         void onNoteClick(int position,  ItemDataAdapter adapter);
+    }
+
+    // check whether this job should be filtered or not
+    // if return true, we should filter this job
+    private boolean filteredJob(String postTime, Date currentTime, int maxDaysDiff){
+        if (maxDaysDiff == 0){
+            return false;
+        }
+        Date pt = new Date(postTime);
+        int daysDiff = (int) (currentTime.getTime() - pt.getTime()) / (1000 * 60 * 60 * 24);
+        return daysDiff >= maxDaysDiff;
     }
 }
 

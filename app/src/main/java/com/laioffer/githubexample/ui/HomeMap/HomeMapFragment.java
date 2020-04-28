@@ -21,6 +21,7 @@ import com.laioffer.githubexample.base.BaseRepository;
 import com.laioffer.githubexample.base.BaseViewModel;
 import com.laioffer.githubexample.ui.HomeList.HomeListFragment;
 import com.laioffer.githubexample.ui.NavigationManager;
+import com.laioffer.githubexample.ui.search.SearchEvent;
 
 public class HomeMapFragment extends BaseFragment {
     private NavigationManager navigationManager;
@@ -59,7 +60,7 @@ public class HomeMapFragment extends BaseFragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navigationManager.navigateTo(new HomeListFragment());
+                navigationManager.navigateTo(new HomeListFragment(new SearchEvent(0,"Developer")));
 //                getActivity().getSupportFragmentManager()
 //                        .beginTransaction()
 //                        .replace(R.id.fragment_home_list, new HomeListFragment(), null)

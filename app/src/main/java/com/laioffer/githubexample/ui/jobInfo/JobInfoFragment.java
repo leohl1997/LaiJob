@@ -17,13 +17,21 @@ import com.laioffer.githubexample.R;
 import com.laioffer.githubexample.base.BaseFragment;
 import com.laioffer.githubexample.base.BaseRepository;
 import com.laioffer.githubexample.base.BaseViewModel;
+import com.laioffer.githubexample.ui.HomeList.Job;
 
 public class JobInfoFragment extends BaseFragment {
 
     private JobInfoViewModel mViewModel;
+    private Job job;
 
-    public static JobInfoFragment newInstance() {
-        return new JobInfoFragment();
+    public static JobInfoFragment newInstance(Job job ) {
+
+        JobInfoFragment fragment =  new JobInfoFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("Job", job);
+        fragment.setArguments(bundle);
+        fragment.job = job;
+        return fragment;
     }
 
     @Override
@@ -37,6 +45,7 @@ public class JobInfoFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(JobInfoViewModel.class);
         // TODO: Use the ViewModel
+        //getArguments().getBundle("Job") = job;
     }
 
     @Override

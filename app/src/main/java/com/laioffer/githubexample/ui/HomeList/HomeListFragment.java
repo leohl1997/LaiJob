@@ -34,55 +34,73 @@ import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.ui.favorite.FavoriteJobFragment;
 import com.laioffer.githubexample.ui.jobInfo.JobInfoFragment;
 import com.laioffer.githubexample.ui.login.LoginViewModel;
+import com.laioffer.githubexample.ui.search.SearchEvent;
 import com.laioffer.githubexample.ui.search.SearchFragment;
 import com.laioffer.githubexample.ui.userInfo.UserInfoFragment;
 import com.laioffer.githubexample.util.Config;
+import com.laioffer.githubexample.util.Utils;
 
 import java.util.ArrayList;
 
 
 public class HomeListFragment extends BaseFragment<HomeListViewModel, HomeListRepository>
     implements ItemDataAdapter.OnNoteListener{
-    private HomeListViewModel mViewModel;
+    SearchEvent searchEvent;
+    int filterRule;
+    String keyWord;
     private NavigationManager navigationManager;
-    private DrawerLayout drawerLayout;
-    private AppCompatActivity mactivity;
+
     private ItemDataAdapter adapter = new ItemDataAdapter();
+
+    public HomeListFragment(SearchEvent searchEvent) {
+        super();
+        this.searchEvent = searchEvent;
+
+    }
 
     public void onAttach(Context context) {
         super.onAttach(context);
         navigationManager = (NavigationManager) context;
     }
 
-    public static HomeListFragment newInstance() {
-        return new HomeListFragment();
+    public static HomeListFragment newInstance(int filterRule, String keyWord) {
+        return new HomeListFragment(new SearchEvent(filterRule,keyWord));
     }
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //you can set the title for your toolbar here for different fragments different titles
-
         RecyclerView rv = view.findViewById(R.id.JobInfo);
+
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
         rv.setHasFixedSize(true);
         rv.setAdapter(adapter);
-        getAllItem();
+        getAllItem(keyWord);
     }
 
-    private void getAllItem() {
+    private void getAllItem(String keyWord) {
 
-        viewModel.getListJobMutableLiveData().observe(getViewLifecycleOwner(), list -> {
-            adapter.setItems(new ArrayList<>(list));
+        viewModel.getListJobMutableLiveData(keyWord).observe(getViewLifecycleOwner(), list -> {
+            adapter.setItems(new ArrayList<>(list),filterRule);
             adapter.setOnNoteListener(this);
             adapter.notifyDataSetChanged();
         });
     }
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.home_list_fragment, container, false);
+
+
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
+
+
+
+
+
 
         Button button1 = view.findViewById(R.id.search);
         button1.setOnClickListener(new View.OnClickListener() {
@@ -98,13 +116,7 @@ public class HomeListFragment extends BaseFragment<HomeListViewModel, HomeListRe
                 navigationManager.navigateTo(new HomeMapFragment());
             }
         });
-        Button button4 = view.findViewById(R.id.UserInfo);
-        button4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navigationManager.navigateTo(new UserInfoFragment());
-            }
-        });
+
         return view;
     }
 
@@ -116,15 +128,7 @@ public class HomeListFragment extends BaseFragment<HomeListViewModel, HomeListRe
         // TODO: Use the ViewModel
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                drawerLayout.openDrawer(GravityCompat.START);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
 
     @Override
     protected HomeListViewModel getViewModel() {
@@ -150,5 +154,8 @@ public class HomeListFragment extends BaseFragment<HomeListViewModel, HomeListRe
     @Override
     public void onNoteClick(int position, ItemDataAdapter adapter) {
         Job current = adapter.getItem(position);
+        Utils.constructToast(getContext(),current.getJobDescription()).show();
+        navigationManager.navigateTo(new JobInfoFragment());
+
     }
 }

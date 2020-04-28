@@ -25,7 +25,6 @@ public interface ApiService {
     Call<RemoteResponse<UserInfo>> register(@Body RegisterEvent body);
 
     @GET("jobsearch/search")
-    Call<RemoteResponse<List<Job>>> search(@Query("lat") double latitude,
-                           @Query("lon") double longitude);
+    Call<RemoteResponse<List<Job>>> search(@Query("lat") double latitude,@Query("lon") double longitude, @Query("keyword") String keyWord);
 
 }

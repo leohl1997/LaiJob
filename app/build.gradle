@@ -55,7 +55,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.7.1'
     // MD5 encrption
     implementation 'commons-codec:commons-codec:1.10'
-
+    
     implementation'de.hdodenhof:circleimageview:2.1.0'
 
 }
