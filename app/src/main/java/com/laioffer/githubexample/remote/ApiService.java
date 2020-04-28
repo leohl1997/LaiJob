@@ -57,6 +57,11 @@ public interface ApiService {
     @GET("jobsearch/history")
     Call<RemoteResponse<List<Job>>> getFavorite(@Query("user_id") String userId);
 
+    @GET("jobsearch/recommendation")
+    Call<RemoteResponse<List<Job>>> getRecommendation(@Query("lat") double lat,
+                                                      @Query("lon") double lon,
+                                                      @Query("user_id") String userId);
+
     @POST("jobsearch/history")
     Call<RemoteResponse<SaveEvent>> favorite(@Body SaveEvent saveEvent);
 
