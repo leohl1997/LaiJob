@@ -54,6 +54,9 @@ public interface ApiService {
     @GET("jobsearch/comment")
     Call<RemoteResponse<List<CommentEvent>>> getComment(@Query("item_id") String jobId);
 
+    @GET("jobsearch/history")
+    Call<RemoteResponse<List<Job>>> getFavorite(@Query("user_id") String userId);
+
     @POST("jobsearch/history")
     Call<RemoteResponse<SaveEvent>> favorite(@Body SaveEvent saveEvent);
 

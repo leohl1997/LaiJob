@@ -1,30 +1,23 @@
 package com.laioffer.githubexample.ui.jobInfo;
 
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 import android.widget.Button;
-import android.widget.LinearLayout;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.laioffer.githubexample.R;
 import com.laioffer.githubexample.base.BaseFragment;
 import com.laioffer.githubexample.databinding.JobInfoFragmentBinding;
 import com.laioffer.githubexample.remote.response.Job;
-import com.laioffer.githubexample.ui.HomeList.HomeListFragment;
 import com.laioffer.githubexample.ui.NavigationManager;
-import com.laioffer.githubexample.ui.comment.CommentEvent;
 import com.laioffer.githubexample.ui.comment.CommentFragment;
 import com.laioffer.githubexample.util.Config;
 import com.laioffer.githubexample.util.Utils;
@@ -60,8 +53,8 @@ public class JobInfoFragment extends BaseFragment<JobInfoViewModel, JobInfoRepos
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         Job currentJob = (Job) getArguments().getSerializable("job");
         if (currentJob == null) {
             return;

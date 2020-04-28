@@ -53,9 +53,8 @@ public class CommentFragment extends BaseFragment<CommentViewModel, CommentRepos
         navigationManager = (NavigationManager) context;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         binding.btnOneStar.setOnClickListener(v -> {
             unsetStars();
             binding.btnOneStar.setBackground(getResources().getDrawable(R.drawable.star_solid));

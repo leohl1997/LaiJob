@@ -62,8 +62,8 @@ public class UserInfoFragment extends BaseFragment<UserInfoViewModel, UserInfoRe
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         binding.editEducation.setOnClickListener(v -> {
             navigationManager.navigateTo(new EditEduFragment());
         });

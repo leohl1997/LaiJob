@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:weightSum="100"
     android:orientation="vertical"
-    tools:context=".ui.HomeList.HomeListFragment">>
+    tools:context=".ui.HomeList.HomeListFragment">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">

@@ -33,8 +33,8 @@ public class RegisterFragment extends BaseFragment<RegisterViewModel, RegisterRe
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         binding.btnRegister.setOnClickListener( v -> {
             viewModel.register(new RegisterEvent(binding.etUserId.getText().toString(),
