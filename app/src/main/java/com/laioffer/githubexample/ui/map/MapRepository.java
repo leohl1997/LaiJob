@@ -17,7 +17,9 @@ import retrofit2.internal.EverythingIsNonNull;
 public class MapRepository extends BaseRepository {
     MutableLiveData<List<Job>> search(String keyword) {
         MutableLiveData<List<Job>> listMutableLiveData = new MutableLiveData<>();
-        Call<RemoteResponse<List<Job>>> call = apiService.search(Config.latitude, Config.longitude);
+        Call<RemoteResponse<List<Job>>> call = apiService.search(Config.latitude,
+                Config.longitude,
+                Config.userId);
         call.enqueue(new Callback<RemoteResponse<List<Job>>>() {
             @EverythingIsNonNull
             @Override

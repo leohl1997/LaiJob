@@ -100,7 +100,7 @@ public class JobInfoFragment extends BaseFragment<JobInfoViewModel, JobInfoRepos
     public void onSaveClicked() {
         Job currentJob = (Job) getArguments().getSerializable("job");
         SaveEvent saveEvent = new SaveEvent();
-        saveEvent.userId = Config.username;
+        saveEvent.userId = Config.userId;
         saveEvent.job = currentJob;
         viewModel.setSaveEvent(saveEvent);
     }

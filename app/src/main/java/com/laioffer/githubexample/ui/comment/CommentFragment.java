@@ -97,11 +97,7 @@ public class CommentFragment extends BaseFragment<CommentViewModel, CommentRepos
                 return;
             }
             CommentEvent commentEvent = new CommentEvent();
-
-            commentEvent.userId = Config.username;
-
             commentEvent.userId = Config.userId;
-
             commentEvent.itemId = currJob.itemId;
             commentEvent.rating = rating;
             commentEvent.commentText = binding.commentBody.getText().toString();

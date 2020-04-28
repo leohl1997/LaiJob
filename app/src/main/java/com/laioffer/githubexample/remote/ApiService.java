@@ -36,7 +36,9 @@ public interface ApiService {
     Call<RemoteResponse<UserInfo>> register(@Body RegisterEvent body);
 
     @GET("jobsearch/search")
-    Call<RemoteResponse<List<Job>>> search(@Query("lat") double lat, @Query("lon") double lon);
+    Call<RemoteResponse<List<Job>>> search(@Query("lat") double lat,
+                                           @Query("lon") double lon,
+                                           @Query("user_id") String userId);
 
     @POST("jobsearch/comment")
     Call<RemoteResponse<CommentEvent>> sendComment(@Body CommentEvent commentEvent);
