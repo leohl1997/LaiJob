@@ -3,7 +3,7 @@ package com.laioffer.githubexample.remote.response;
 import com.google.gson.annotations.SerializedName;
 
 public class Education{
-    @SerializedName("profile")
+    @SerializedName("schoolName")
     public String schoolName;
     @SerializedName("schoolStartData")
     public String startDate;
