@@ -1,15 +1,14 @@
 package com.laioffer.githubexample.remote;
 
-import com.laioffer.githubexample.remote.response.Education;
 import com.laioffer.githubexample.remote.response.Job;
 import com.laioffer.githubexample.remote.response.RemoteResponse;
 import com.laioffer.githubexample.remote.response.UserInfo;
+import com.laioffer.githubexample.remote.response.UserProfile;
 import com.laioffer.githubexample.ui.comment.CommentEvent;
 
 import com.laioffer.githubexample.ui.editEdu.EditEduEvent;
 import com.laioffer.githubexample.ui.editProfile.EditProfileEvent;
 import com.laioffer.githubexample.ui.editWork.EditWorkEvent;
-import com.laioffer.githubexample.ui.editWork.EditWorkFragment;
 
 import com.laioffer.githubexample.ui.jobInfo.SaveEvent;
 
@@ -20,8 +19,6 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.HTTP;
 import retrofit2.http.POST;
@@ -50,6 +47,9 @@ public interface ApiService {
 
     @POST("jobsearch/user")
     Call<RemoteResponse<EditWorkEvent>> editWork(@Body EditWorkEvent editWorkEvent);
+
+    @GET("jobsearch/user")
+    Call<RemoteResponse<UserProfile>> getInfo(@Query("user_id") String userId);
 
     @GET("jobsearch/comment")
     Call<RemoteResponse<List<CommentEvent>>> getComment(@Query("item_id") String jobId);
