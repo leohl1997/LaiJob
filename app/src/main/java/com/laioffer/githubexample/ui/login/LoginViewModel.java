@@ -1,7 +1,5 @@
 package com.laioffer.githubexample.ui.login;
 
-import android.widget.Toast;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
@@ -9,6 +7,7 @@ import androidx.lifecycle.Transformations;
 import com.laioffer.githubexample.base.BaseViewModel;
 import com.laioffer.githubexample.remote.response.RemoteResponse;
 import com.laioffer.githubexample.remote.response.UserInfo;
+import com.laioffer.githubexample.remote.response.UserProfile;
 import com.laioffer.githubexample.util.Utils;
 
 public class LoginViewModel extends BaseViewModel<LoginRepository> {

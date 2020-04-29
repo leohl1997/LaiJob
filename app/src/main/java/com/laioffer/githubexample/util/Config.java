@@ -6,12 +6,24 @@ public class Config {
     public static String username = "leo";
     private static Config instance = null;
 
+    public static String schoolStartData;
+    public static String schoolName;
+    public static String schoolEndData;
+
     public static String userId;
-    private String firstName;
-    private String lastName;
+    public static String firstName;
+    public static String lastName;
+    public static String dataOfBirth;
+    public static String address;
+    public static String phone;
+    public static String email;
     public static double latitude;
     public static double longitude;
     public static String token;
+    public static String jobTitle;
+    public static String company;
+    public static String jobStartDate;
+    public static String jobEndDate;
 
     public String getUserId() {
         return userId;

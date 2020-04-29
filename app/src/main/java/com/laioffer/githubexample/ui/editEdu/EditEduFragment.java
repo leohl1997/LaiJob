@@ -15,9 +15,9 @@ import android.view.ViewGroup;
 
 import com.laioffer.githubexample.base.BaseFragment;
 import com.laioffer.githubexample.databinding.EditEduFragmentBinding;
-import com.laioffer.githubexample.remote.response.UserInfo;
 import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.ui.userInfo.UserInfoFragment;
+import com.laioffer.githubexample.util.Config;
 import com.laioffer.githubexample.util.Utils;
 
 public class EditEduFragment extends BaseFragment<EditEduViewModel, EditEduRepository> {
@@ -50,6 +50,9 @@ public class EditEduFragment extends BaseFragment<EditEduViewModel, EditEduRepos
             navigationManager.navigateTo(new UserInfoFragment());
         });
         binding.save.setOnClickListener(v -> {
+            Config.schoolName = binding.schoolName.getText().toString();
+            Config.schoolStartData = binding.startDate.getText().toString();
+            Config.schoolEndData =  binding.endDate.getText().toString();
             viewModel.sendEdu(new EditEduEvent( binding.schoolName.getText().toString(),
                     binding.startDate.getText().toString(),
                     binding.endDate.getText().toString()));

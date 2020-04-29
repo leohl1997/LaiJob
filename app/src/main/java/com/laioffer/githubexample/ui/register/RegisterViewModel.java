@@ -7,6 +7,7 @@ import androidx.lifecycle.Transformations;
 import com.laioffer.githubexample.base.BaseViewModel;
 import com.laioffer.githubexample.remote.response.RemoteResponse;
 import com.laioffer.githubexample.remote.response.UserInfo;
+import com.laioffer.githubexample.remote.response.UserProfile;
 import com.laioffer.githubexample.util.Utils;
 
 public class RegisterViewModel extends BaseViewModel<RegisterRepository> {

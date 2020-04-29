@@ -17,6 +17,8 @@ import com.laioffer.githubexample.base.BaseFragment;
 import com.laioffer.githubexample.databinding.EditProfileFragmentBinding;
 import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.ui.userInfo.UserInfoFragment;
+import com.laioffer.githubexample.util.Config;
+import com.laioffer.githubexample.util.Utils;
 
 public class EditProfileFragment extends BaseFragment<EditProfileViewModel, EditProfileRepository> {
     private NavigationManager navigationManager;
@@ -38,15 +40,41 @@ public class EditProfileFragment extends BaseFragment<EditProfileViewModel, Edit
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = EditProfileFragmentBinding.inflate(inflater, container, false);
+        binding.back.setOnClickListener(v -> {
+            navigationManager.navigateTo(new UserInfoFragment());
+        });
+        binding.save.setOnClickListener(v -> {
+            Config.firstName = binding.firstName.getText().toString();
+            Config.lastName = binding.lastName.getText().toString();
+            Config.phone = binding.phoneNumber.getText().toString();
+            Config.email = binding.email.getText().toString();
+            Config.address = binding.address.getText().toString();
+            Config.dataOfBirth = binding.dateBirth.getText().toString();
+            viewModel.sendProfile(new EditProfileEvent(binding.firstName.getText().toString(),
+                    binding.lastName.getText().toString(),
+                    binding.phoneNumber.getText().toString(),
+                    binding.email.getText().toString(),
+                    binding.address.getText().toString(),
+                    binding.dateBirth.getText().toString()));
+        });
+        viewModel.getMsgMutableLiveData().observe(getViewLifecycleOwner(), msg -> {
+            Utils.constructToast(getContext(), msg).show();
+        });
+        viewModel.getResponseLiveData().observe(getViewLifecycleOwner(), it -> {
+            if (it == null) {
+                Utils.constructToast(getContext(), "Error! empty response body!").show();
+            } else {
+                Utils.constructToast(getContext(), it.status).show();
+                // do we need to redirect to the userInfo fragment?
+            }
+        });
         return binding.getRoot();
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        binding.back.setOnClickListener(v -> {
-            navigationManager.navigateTo(new UserInfoFragment());
-        });
+
         // TODO: Use the ViewModel
     }
 
