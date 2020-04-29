@@ -24,5 +24,6 @@
     <string name="less">Less</string>
     <string name="save">Save</string>
     <string name="saved">Saved</string>
-
+    <string name="apply">Apply</string>
+    <string name="msg_token_fmt">InstanceID Token: %s</string>
 </resources>
