@@ -51,7 +51,7 @@ public class ItemDataAdapter extends RecyclerView.Adapter<ItemDataAdapter.ItemDa
         holder.firm.setMaxWidth(500);
         holder.firm.setSingleLine(false);
 
-        holder.postTime.setText((currentJob.company));
+        holder.postTime.setText((currentJob.time));
         holder.postTime.setMaxWidth(500);
         holder.postTime.setSingleLine(false);
 
