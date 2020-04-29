@@ -1,5 +1,6 @@
 package com.laioffer.githubexample.ui.login;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -13,10 +14,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessagingService;
 import com.laioffer.githubexample.base.BaseFragment;
 import com.laioffer.githubexample.databinding.LoginFragmentBinding;
 import com.laioffer.githubexample.ui.HomeList.HomeListFragment;
 import com.laioffer.githubexample.ui.NavigationManager;
+import com.laioffer.githubexample.ui.favorite.FavoriteJobFragment;
+import com.laioffer.githubexample.ui.map.MapFragment;
 import com.laioffer.githubexample.util.Config;
 import com.laioffer.githubexample.util.Utils;
 

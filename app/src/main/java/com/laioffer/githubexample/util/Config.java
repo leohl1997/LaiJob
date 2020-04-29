@@ -19,6 +19,7 @@ public class Config {
     public static String email;
     public static double latitude;
     public static double longitude;
+    public static String token;
     public static String jobTitle;
     public static String company;
     public static String jobStartDate;

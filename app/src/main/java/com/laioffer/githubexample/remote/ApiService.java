@@ -1,8 +1,11 @@
 package com.laioffer.githubexample.remote;
 
+import com.laioffer.githubexample.remote.response.BaseResponse;
+import com.laioffer.githubexample.remote.response.Education;
 import com.laioffer.githubexample.remote.response.Job;
 import com.laioffer.githubexample.remote.response.RemoteResponse;
 import com.laioffer.githubexample.remote.response.UserInfo;
+import com.laioffer.githubexample.ui.HomeList.TokenEvent;
 import com.laioffer.githubexample.remote.response.UserProfile;
 import com.laioffer.githubexample.ui.comment.CommentEvent;
 
@@ -69,6 +72,9 @@ public interface ApiService {
 
     @HTTP(method = "DELETE", path = "jobsearch/history", hasBody = true)
     Call<RemoteResponse<SaveEvent>> unfavorite(@Body SaveEvent saveEvent);
+
+    @POST("jobsearch/token")
+    Call<BaseResponse> sendToken(@Body TokenEvent tokenEvent);
 
 
 
