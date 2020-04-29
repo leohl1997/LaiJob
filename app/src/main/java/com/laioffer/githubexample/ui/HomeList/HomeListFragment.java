@@ -46,8 +46,9 @@ import java.util.ArrayList;
 public class HomeListFragment extends BaseFragment<HomeListViewModel, HomeListRepository>
     implements ItemDataAdapter.OnNoteListener{
     SearchEvent searchEvent;
-    int filterRule;
-    String keyWord;
+    private DrawerLayout drawerLayout;
+    private AppCompatActivity mactivity;
+
     private NavigationManager navigationManager;
 
     private ItemDataAdapter adapter = new ItemDataAdapter();
@@ -75,13 +76,13 @@ public class HomeListFragment extends BaseFragment<HomeListViewModel, HomeListRe
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
         rv.setHasFixedSize(true);
         rv.setAdapter(adapter);
-        getAllItem(keyWord);
+        getAllItem(searchEvent.getKeyWord());
     }
 
     private void getAllItem(String keyWord) {
 
         viewModel.getListJobMutableLiveData(keyWord).observe(getViewLifecycleOwner(), list -> {
-            adapter.setItems(new ArrayList<>(list),filterRule);
+            adapter.setItems(new ArrayList<>(list),searchEvent.getFilterRule());
             adapter.setOnNoteListener(this);
             adapter.notifyDataSetChanged();
         });
@@ -96,10 +97,85 @@ public class HomeListFragment extends BaseFragment<HomeListViewModel, HomeListRe
 
 
         Toolbar toolbar = view.findViewById(R.id.toolbar);
+        mactivity = (AppCompatActivity) getActivity();
+        assert mactivity != null;
+        mactivity.setSupportActionBar(toolbar);
+        ActionBar actionbar = mactivity.getSupportActionBar();
+        assert actionbar != null;
+        actionbar.setDisplayHomeAsUpEnabled(true);
+        actionbar.setHomeAsUpIndicator(R.drawable.baseline_home_black_18dp);
+        drawerLayout = view.findViewById(R.id.drawer_layout);
 
+        NavigationView navigationView = view.findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        // set item as selected to persist highlight
+                        menuItem.setChecked(true);
+                        // close drawer when item is tapped
+                        drawerLayout.closeDrawers();
+                        // Add code here to update the UI based on the item selected
+                        // For example, swap UI fragments here
+                        if (menuItem.getItemId() == R.id.drawer_logout) {
+                            Config.username = null;
+                            mactivity.finish();
+                        }
+                        if (menuItem.getItemId() == R.id.user_info) {
+                            Config.username = null;
+                            navigationManager.navigateTo(new UserInfoFragment());
+                        }
+                        if (menuItem.getItemId() == R.id.favorite) {
+                            Config.username = null;
+                            navigationManager.navigateTo(new FavoriteJobFragment());
+                        }
+                        if (menuItem.getItemId() == R.id.search) {
+                            Config.username = null;
+                            navigationManager.navigateTo(new SearchFragment());
+                        }
+                        return true;
+                    }
+                });
 
+        drawerLayout.addDrawerListener(
+                new DrawerLayout.DrawerListener() {
+                    @Override
+                    public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
 
+                    }
 
+                    @Override
+                    public void onDrawerOpened(@NonNull View drawerView) {
+                        final TextView user_textview = (TextView) drawerView.findViewById(R.id.user_name);
+                        final TextView location_textview = (TextView) drawerView.findViewById(R.id.user_location);
+
+//                        // Respond when the drawer is opened
+//                        mLocationTracker.getLocation();
+//                        final double longitude = mLocationTracker.getLongitude();
+//                        final double latitude = mLocationTracker.getLatitude();
+
+                        if (Config.username == null) {
+                            user_textview.setText("");
+                            location_textview.setText("");
+                        } else {
+                            user_textview.setText(Config.username);
+//                            location_textview.setText("Lat=" + new DecimalFormat(".##").
+//                                    format(latitude) + ",Lon=" + new DecimalFormat(".##").
+//                                    format(longitude));
+                        }
+                    }
+
+                    @Override
+                    public void onDrawerClosed(@NonNull View drawerView) {
+
+                    }
+
+                    @Override
+                    public void onDrawerStateChanged(int newState) {
+
+                    }
+                }
+        );
 
 
         Button button1 = view.findViewById(R.id.search);
@@ -109,6 +185,8 @@ public class HomeListFragment extends BaseFragment<HomeListViewModel, HomeListRe
                 navigationManager.navigateTo(new SearchFragment());
             }
         });
+
+
         Button button3 = view.findViewById(R.id.HomeMap);
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,6 +196,16 @@ public class HomeListFragment extends BaseFragment<HomeListViewModel, HomeListRe
         });
 
         return view;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                drawerLayout.openDrawer(GravityCompat.START);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 
