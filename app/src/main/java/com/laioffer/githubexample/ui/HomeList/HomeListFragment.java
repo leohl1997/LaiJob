@@ -1,14 +1,11 @@
 package com.laioffer.githubexample.ui.HomeList;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -22,20 +19,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
-import com.google.android.material.navigation.NavigationView;
 import com.laioffer.githubexample.R;
 import com.laioffer.githubexample.base.BaseFragment;
 import com.laioffer.githubexample.remote.response.Job;
-import com.laioffer.githubexample.remote.response.UserInfo;
 import com.laioffer.githubexample.ui.map.MapFragment;
 import com.laioffer.githubexample.ui.NavigationManager;
-import com.laioffer.githubexample.ui.favorite.FavoriteJobFragment;
 import com.laioffer.githubexample.ui.jobInfo.JobInfoFragment;
 import com.laioffer.githubexample.ui.search.SearchFragment;
 import com.laioffer.githubexample.ui.userInfo.UserInfoFragment;
-import com.laioffer.githubexample.util.Config;
 
 import java.util.ArrayList;
 
@@ -65,7 +57,7 @@ public class HomeListFragment extends BaseFragment<HomeListViewModel, HomeListRe
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
         rv.setHasFixedSize(true);
         rv.setAdapter(adapter);
-        getAllItem();
+
     }
 
     private void getAllItem() {
@@ -80,8 +72,8 @@ public class HomeListFragment extends BaseFragment<HomeListViewModel, HomeListRe
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
+        getAllItem();
         View view = inflater.inflate(R.layout.home_list_fragment, container, false);
-
         Button button1 = view.findViewById(R.id.search);
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
