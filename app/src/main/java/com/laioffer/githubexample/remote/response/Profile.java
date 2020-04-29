@@ -15,6 +15,6 @@ public class Profile {
     public  String Email;
     @SerializedName("address")
     public  String Address;
-    @SerializedName("dateOfBirth")
+    @SerializedName("dataOfBirth")
     public  String DateOfBirth;
 }
