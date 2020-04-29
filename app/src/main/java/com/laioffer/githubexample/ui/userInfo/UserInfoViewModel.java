@@ -9,9 +9,9 @@ public class UserInfoViewModel extends BaseViewModel<UserInfoRepository> {
     UserInfoViewModel(UserInfoRepository baseRepository) {
         super(baseRepository);
     }
-    private final MutableLiveData<UserProfile> UserInfoMutableLiveData = repository.getInfo();
+   // private final MutableLiveData<UserProfile> UserInfoMutableLiveData = repository.getInfo();
     public MutableLiveData<UserProfile> getUserInfoMutableLiveData(){
-        return UserInfoMutableLiveData;
+        return repository.getInfo();
     }
     // TODO: Implement the ViewModel
 }
