@@ -30,7 +30,9 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.laioffer.githubexample.remote.response.Job;
 import com.laioffer.githubexample.ui.NavigationManager;
-import com.laioffer.githubexample.ui.jobInfo.JobInfoFragment;
+import com.laioffer.githubexample.ui.login.LoginFragment;
+import com.laioffer.githubexample.ui.search.SearchEvent;
+import com.laioffer.githubexample.ui.search.SearchFragment;
 import com.laioffer.githubexample.util.Config;
 import com.laioffer.githubexample.util.Utils;
 

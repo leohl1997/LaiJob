@@ -1,40 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="100"
+    android:id="@+id/drawer_layout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".ui.HomeList.HomeListFragment">
+    tools:context=".ui.HomeList.HomeListFragment"
+    android:fitsSystemWindows="true">
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <Button
-            android:id="@+id/UserInfo"
-            android:layout_width="40dp"
-
-            android:textColor="@android:color/white"
-            android:layout_height="40dp"
-
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="8dp"
-            android:text="Jump to UserInfo"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/search"
-
-            app:layout_constraintHorizontal_chainStyle="spread"
-            app:layout_constraintStart_toStartOf="parent"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_alignParentTop="true"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/grey"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:layout_constraintTop_toTopOf="parent" />
-
-
         <Button
             android:id="@+id/search"
-            android:layout_width="320dp"
-
-
+            android:layout_width="250dp"
             android:layout_height="40dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="8dp"
@@ -43,8 +32,10 @@
             android:textColor="@android:color/white"
             android:textStyle="bold"
 
-            app:layout_constraintStart_toEndOf="@+id/UserInfo"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+
 
 
         <androidx.recyclerview.widget.RecyclerView
@@ -54,7 +45,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/search" />
+            app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
 
         <Button
@@ -74,4 +65,16 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</LinearLayout>
+
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:menu="@menu/menu_drawer"
+        app:headerLayout="@layout/nav_header"/>
+
+
+</androidx.drawerlayout.widget.DrawerLayout>
