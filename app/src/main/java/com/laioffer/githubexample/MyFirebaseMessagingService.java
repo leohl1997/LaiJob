@@ -100,16 +100,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         String userId = remoteMessage.getData().get("user_id");
         String comment = remoteMessage.getData().get("comment");
         String jobStr = remoteMessage.getData().get("job");
-//        Job job = gson.fromJson(jobStr, Job.class);
+        Job job = gson.fromJson(jobStr, Job.class);
 
         Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
-//        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//        Bundle args = new Bundle();
-//        args.putSerializable("job", job);
-//        intent.putExtras(args);
-//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        Bundle args = new Bundle();
+        args.putSerializable("job", job);
+        intent.putExtras(args);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         String NOTIFICATION_CHANNEL_ID = "101";
@@ -132,7 +132,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setSmallIcon(R.drawable.star_solid)
                 .setSound(defaultSound)
                 .setContentText(comment)
-//                .setContentIntent(pendingIntent)
+                .setContentIntent(pendingIntent)
                 .setWhen(System.currentTimeMillis())
                 .setPriority(Notification.PRIORITY_MAX);
 
