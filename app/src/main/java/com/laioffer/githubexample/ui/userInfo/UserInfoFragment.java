@@ -83,16 +83,27 @@ public class UserInfoFragment extends BaseFragment<UserInfoViewModel, UserInfoRe
             binding.cvProfile.lastName.setText(it.profile.LastName);
             Config.lastName = it.profile.LastName;
             binding.cvProfile.address.setText(it.profile.Address);
+            Config.address = it.profile.Address;
             binding.cvProfile.eMail.setText(it.profile.Email);
+            Config.email = it.profile.Email;
             binding.cvProfile.dateOfBirth.setText(it.profile.DateOfBirth);
+            Config.dataOfBirth = it.profile.DateOfBirth;
             binding.cvProfile.phoneNumber.setText(it.profile.PhoneNumber);
+            Config.phone = it.profile.PhoneNumber;
             binding.cvEducation.schoolName.setText(it.education.schoolName);
+            Config.schoolName = it.education.schoolName;
             binding.cvEducation.schoolStartDate.setText(it.education.startDate);
+            Config.schoolStartData = it.education.startDate;
             binding.cvEducation.schoolEndDate.setText(it.education.endDate);
+            Config.schoolEndData = it.education.endDate;
             binding.cvWork.companyName.setText(it.work.CompanyName);
+            Config.company = it.work.CompanyName;
             binding.cvWork.jobStartDate.setText(it.work.StartDate);
+            Config.jobStartDate = it.work.StartDate;
             binding.cvWork.jobTitle.setText(it.work.JobTitle);
+            Config.jobTitle = it.work.JobTitle;
             binding.cvWork.jobEndDate.setText(it.work.EndDate);
+            Config.jobEndDate = it.work.EndDate;
         });
         binding.name.setText(Config.userId);
         binding.editEducation.setOnClickListener(v -> {
@@ -110,17 +121,6 @@ public class UserInfoFragment extends BaseFragment<UserInfoViewModel, UserInfoRe
         binding.saveProfile.setOnClickListener(v -> {
             navigationManager.navigateTo(new HomeListFragment());
         });
-//        binding.cvProfile.address.setText(it.profile.Address);
-//        binding.cvProfile.eMail.setText(it.profile.Email);
-//        binding.cvProfile.dateOfBirth.setText(it.profile.DateOfBirth);
-//        binding.cvProfile.phoneNumber.setText(it.profile.PhoneNumber);
-//        binding.cvEducation.schoolName.setText(it.education.schoolName);
-//        binding.cvEducation.schoolStartDate.setText(it.education.startDate);
-//        binding.cvEducation.schoolEndDate.setText(it.education.endDate);
-//        binding.cvWork.companyName.setText(it.work.CompanyName);
-//        binding.cvWork.jobStartDate.setText(it.work.StartDate);
-//        binding.cvWork.jobTitle.setText(it.work.JobTitle);
-//        binding.cvWork.jobEndDate.setText(it.work.EndDate);
         return binding.getRoot();
     }
 
