@@ -6,14 +6,21 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.util.Config;
 import com.laioffer.githubexample.util.Utils;
@@ -23,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 
     private DrawerLayout drawerLayout;
     private FirebaseAnalytics firebaseAnalytics;
+    private final String TAG = "MainActivity";
 
 
     @Override
@@ -34,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                 Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         firebaseAnalytics = FirebaseAnalytics.getInstance(this);
         getLocation();
-
+        getInstanceId();
 
         navigateTo(new OnBoardingSplashFragment());
 
@@ -84,6 +92,27 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         catch(SecurityException e) {
             e.printStackTrace();
         }
+    }
+
+    void getInstanceId() {
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "getInstanceId failed", task.getException());
+                            return;
+                        }
+
+                        // Get new Instance ID token
+                        String token = task.getResult().getToken();
+
+                        // Log and toast
+                        String msg = getString(R.string.msg_token_fmt, token);
+                        Log.d(TAG, msg);
+                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     @Override
