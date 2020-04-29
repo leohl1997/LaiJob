@@ -5,8 +5,10 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
 import com.laioffer.githubexample.base.BaseViewModel;
+import com.laioffer.githubexample.remote.response.Job;
 import com.laioffer.githubexample.ui.comment.CommentEvent;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class JobInfoViewModel extends BaseViewModel<JobInfoRepository> {
@@ -37,5 +39,8 @@ public class JobInfoViewModel extends BaseViewModel<JobInfoRepository> {
     public LiveData<String> getSaveResponse() {
         return saveResponse;
     }
+
+
+
 
 }

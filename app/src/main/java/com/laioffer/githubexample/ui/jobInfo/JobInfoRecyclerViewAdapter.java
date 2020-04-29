@@ -8,7 +8,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.laioffer.githubexample.R;
@@ -18,6 +20,9 @@ import com.laioffer.githubexample.ui.comment.CommentEvent;
 import com.laioffer.githubexample.ui.comment.Item;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Comment;
 import org.w3c.dom.Text;
 
@@ -35,6 +40,18 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     private TextView avgRating = null;
     private Button saveButton = null;
     private SaveItemListener saveItemListener;
+
+    private Context mContext;
+    private JSONObject itemDetail;
+    private String itemTitle, price, subTitle, brand, shipping, itemId;
+    private JSONArray specifics;
+    private JSONArray similarItems;
+    private JSONObject ori;
+    private RequestQueue requestQueue;
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
+
 
     public JobInfoRecyclerViewAdapter(Job job, SaveItemListener saveItemListener) {
         this.saveItemListener = saveItemListener;
@@ -80,6 +97,12 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             this.commentNumber = ((InfoViewHolder) holder).commentNumber;
             this.avgRating = ((InfoViewHolder) holder).avgRating;
             this.saveButton = ((InfoViewHolder) holder).saveButton;
+//            ((InfoViewHolder) holder).recyclerView =
+
+
+
+
+
         } else if (holder instanceof CommentViewHolder) {
             CommentEvent currentComment = (CommentEvent) itemArrayList.get(position);
             ((CommentViewHolder) holder).userId.setText(currentComment.userId);
@@ -159,6 +182,7 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         private TextView commentNumber;
         private TextView avgRating;
         private Button saveButton;
+        private RecyclerView recyclerView;
 
         public InfoViewHolder(@NonNull View itemView, SaveItemListener listener) {
             super(itemView);
@@ -190,6 +214,9 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             itemView.findViewById(R.id.apply).setOnClickListener(
                     v -> saveItemListener.onApplyCLicked()
             );
+            recyclerView = itemView.findViewById(R.id.recommendation_card);
+
+
         }
     }
 
@@ -199,4 +226,53 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         void onCommentClicked();
         void onApplyCLicked();
     }
+
+    @Override
+    public Object instantiateItem(ViewGroup collection, int position) {
+        recyclerView = (RecyclerView) layout.findViewById(R.id.similarSearchResultList);
+        layoutManager = new GridLayoutManager(layout.getContext(),1);
+        recyclerView.setLayoutManager(layoutManager);
+
+        String url = "http:///jobSearch/recommendation?user_id=" + itemId;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONObject items = response.getJSONObject("getSimilarItemsResponse").getJSONObject("itemRecommendations");
+                            ori = items;
+                            JSONArray similarItemsArray = items.getJSONArray("item");
+
+                            similarItems = similarItemsArray;
+                            mAdapter = new RecommendationAdapter(similarItemsArray);
+                            recyclerView.setAdapter(mAdapter);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(layout.getContext(), "Nothing found!", Toast.LENGTH_SHORT);
+                    }
+                });
+        //add request to queue
+        requestQueue.add(jsonObjectRequest);
+
+
+        }
+
+
+        collection.addView(layout);
+        return layout;
+
+    }
+
+
+
+
+
 }

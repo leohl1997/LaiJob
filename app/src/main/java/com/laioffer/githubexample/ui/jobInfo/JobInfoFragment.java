@@ -13,10 +13,15 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.laioffer.githubexample.R;
 import com.laioffer.githubexample.base.BaseFragment;
 import com.laioffer.githubexample.databinding.JobInfoFragmentBinding;
 import com.laioffer.githubexample.remote.response.Job;
+import com.laioffer.githubexample.ui.HomeList.HomeListFragment;
 import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.ui.comment.CommentFragment;
 import com.laioffer.githubexample.util.Config;
@@ -99,6 +104,14 @@ public class JobInfoFragment extends BaseFragment<JobInfoViewModel, JobInfoRepos
             Utils.constructToast(getContext(), msg).show();
         });
 
+
+
+
+
+
+
+
+
     }
 
     @Override
@@ -149,4 +162,7 @@ public class JobInfoFragment extends BaseFragment<JobInfoViewModel, JobInfoRepos
         WebFragment webFragment = WebFragment.getInstance(currentJob);
         navigationManager.navigateTo(webFragment);
     }
+
+
+
 }
