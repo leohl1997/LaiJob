@@ -35,7 +35,15 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyA7lSi4IYGZjMtvEcJWENJwsFLhKJlr0NU" />
-
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.lt.uploadpicdemo.fileProvider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>
