@@ -1,12 +1,16 @@
 package com.laioffer.githubexample.ui.favorite;
 
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,41 +18,80 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.laioffer.githubexample.R;
+import com.laioffer.githubexample.base.BaseFragment;
+import com.laioffer.githubexample.databinding.FavoriteJobFragmentBinding;
+import com.laioffer.githubexample.remote.response.Job;
+import com.laioffer.githubexample.ui.HomeList.ItemDataAdapter;
+import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.ui.map.MapFragment;
 import com.laioffer.githubexample.ui.jobInfo.JobInfoFragment;
 
-public class FavoriteJobFragment extends Fragment {
+import java.util.ArrayList;
 
-    private FavoriteJobViewModel mViewModel;
+public class FavoriteJobFragment extends BaseFragment<FavoriteJobViewModel, FavoriteJobRepository>
+        implements  ItemDataAdapter.OnNoteListener {
+
+    private FavoriteJobFragmentBinding binding;
+    private ItemDataAdapter adapter = new ItemDataAdapter();
+    private NavigationManager navigationManager;
 
     public static FavoriteJobFragment newInstance() {
         return new FavoriteJobFragment();
     }
 
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        navigationManager = (NavigationManager) context;
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.favorite_job_fragment, container, false);
-        Button button = view.findViewById(R.id.JobInfo);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        // modified. change the base view to onboarding base fragment.
-                        .replace(R.id.first_fragment, new JobInfoFragment(), null)
-                        .addToBackStack(null)
-                        .commit();
-            }
+        binding = FavoriteJobFragmentBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+
+    private void getAllItem() {
+        viewModel.getFavJobLiveData().observe(getViewLifecycleOwner(), list -> {
+            adapter.setItems(new ArrayList<>(list));
+            adapter.setOnNoteListener(this);
+            adapter.notifyDataSetChanged();
         });
-        return view;
+    }
+
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        binding.FavInfo.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.FavInfo.setHasFixedSize(true);
+        binding.FavInfo.setAdapter(adapter);
+        getAllItem();
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(FavoriteJobViewModel.class);
-        // TODO: Use the ViewModel
+    protected FavoriteJobViewModel getViewModel() {
+        return new ViewModelProvider(requireActivity(), getFactory()).get(FavoriteJobViewModel.class);
     }
 
+    @Override
+    protected ViewModelProvider.Factory getFactory() {
+        return new ViewModelProvider.Factory() {
+            @NonNull
+            @Override
+            public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
+                return (T) new FavoriteJobViewModel(getRepository());
+            }
+        };
+    }
+
+    @Override
+    protected FavoriteJobRepository getRepository() {
+        return new FavoriteJobRepository();
+    }
+
+    @Override
+    public void onNoteClick(int position, ItemDataAdapter adapter) {
+        Job current = adapter.getItem(position);
+        JobInfoFragment fragment = JobInfoFragment.newInstance(current);
+        navigationManager.navigateTo(fragment);
+    }
 }
