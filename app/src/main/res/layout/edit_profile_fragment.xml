@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.editProfile.EditProfileFragment">
 
-    <RelativeLayout
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.editProfile.EditProfileFragment">
+
+        <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <androidx.appcompat.widget.Toolbar
@@ -28,7 +29,7 @@
                 android:layout_height="match_parent"
                 android:textAlignment="center"
                 android:text="Add Profile"
-                android:textSize="20dp"/>
+                android:textSize="20sp"/>
 
             <Button
                 android:layout_marginStart="180dp"
@@ -40,11 +41,13 @@
 
             </Button>
         </androidx.appcompat.widget.Toolbar>
-
+            <ScrollView
+                android:layout_below="@id/eduToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
         <LinearLayout
-            android:layout_below="@id/eduToolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:orientation="vertical">
 
@@ -144,7 +147,7 @@
 
             </com.google.android.material.textfield.TextInputEditText>
 
-        </LinearLayout>
+        </LinearLayout></ScrollView>
     </RelativeLayout>
-
 </FrameLayout>
+
