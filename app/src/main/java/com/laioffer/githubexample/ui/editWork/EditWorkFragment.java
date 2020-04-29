@@ -17,6 +17,8 @@ import com.laioffer.githubexample.base.BaseFragment;
 import com.laioffer.githubexample.databinding.EditWorkFragmentBinding;
 import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.ui.userInfo.UserInfoFragment;
+import com.laioffer.githubexample.util.Config;
+import com.laioffer.githubexample.util.Utils;
 
 public class EditWorkFragment extends BaseFragment<editWorkViewModel, EditWorkRepository> {
     private NavigationManager navigationManager;
@@ -46,6 +48,27 @@ public class EditWorkFragment extends BaseFragment<editWorkViewModel, EditWorkRe
         super.onActivityCreated(savedInstanceState);
         binding.back.setOnClickListener(v -> {
             navigationManager.navigateTo(new UserInfoFragment());
+        });
+        binding.save.setOnClickListener(v -> {
+            Config.jobTitle = binding.jobTitle.getText().toString();
+            Config.jobStartDate = binding.startDate.getText().toString();
+            Config.jobEndDate = binding.endDate.getText().toString();
+            Config.company = binding.companyName.getText().toString();
+            viewModel.sendWork(new EditWorkEvent(binding.companyName.getText().toString(),
+                    binding.jobTitle.getText().toString(),
+                    binding.startDate.getText().toString(),
+                    binding.endDate.getText().toString()));
+        });
+        viewModel.getMsgMutableLiveData().observe(getViewLifecycleOwner(), msg -> {
+            Utils.constructToast(getContext(), msg).show();
+        });
+        viewModel.getResponseLiveData().observe(getViewLifecycleOwner(), it -> {
+            if (it == null) {
+                Utils.constructToast(getContext(), "Error! empty response body!").show();
+            } else {
+                Utils.constructToast(getContext(), it.status).show();
+                // do we need to redirect to the userInfo fragment?
+            }
         });
         // TODO: Use the ViewModel
     }
