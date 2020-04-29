@@ -6,46 +6,31 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
-
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-
-import android.Manifest;
-import android.content.Context;
-import android.content.Intent;
-import android.location.Location;
-import android.location.LocationManager;
-import android.location.LocationListener;
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-
-import com.google.android.material.navigation.NavigationView;
-import com.laioffer.githubexample.ui.HomeList.HomeListFragment;
-
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.util.Config;
 import com.laioffer.githubexample.util.Utils;
-import java.text.DecimalFormat;
 
 
 public class MainActivity extends AppCompatActivity implements LocationListener,NavigationManager {
 
     private DrawerLayout drawerLayout;
     private FirebaseAnalytics firebaseAnalytics;
+    private final String TAG = "MainActivity";
 
 
     @Override
@@ -55,11 +40,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 
         ActivityCompat.requestPermissions(this, new String[]{
                 Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this);
         getLocation();
-
-
-        //navigateTo(new CommentFragment());
-        navigateTo(new OnBoardingBaseFragment());
+        getInstanceId();
 
         navigateTo(new OnBoardingSplashFragment());
 
@@ -109,6 +92,27 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         catch(SecurityException e) {
             e.printStackTrace();
         }
+    }
+
+    void getInstanceId() {
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "getInstanceId failed", task.getException());
+                            return;
+                        }
+
+                        // Get new Instance ID token
+                        String token = task.getResult().getToken();
+
+                        // Log and toast
+                        String msg = getString(R.string.msg_token_fmt, token);
+                        Log.d(TAG, msg);
+                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     @Override
