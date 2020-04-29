@@ -100,16 +100,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         String userId = remoteMessage.getData().get("user_id");
         String comment = remoteMessage.getData().get("comment");
         String jobStr = remoteMessage.getData().get("job");
-        Job job = gson.fromJson(jobStr, Job.class);
+//        Job job = gson.fromJson(jobStr, Job.class);
 
         Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        Bundle args = new Bundle();
-        args.putSerializable("job", job);
-        intent.putExtras(args);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
+//        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//        Bundle args = new Bundle();
+//        args.putSerializable("job", job);
+//        intent.putExtras(args);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         String NOTIFICATION_CHANNEL_ID = "101";
@@ -118,7 +118,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "Notification", NotificationManager.IMPORTANCE_HIGH);
 
             //Configure Notification Channel
-            notificationChannel.setDescription("Matrix Notfication");
+            notificationChannel.setDescription("Laijob Notfication");
             notificationChannel.enableLights(true);
             notificationChannel.setVibrationPattern(new long[]{0, 1000, 500, 1000});
             notificationChannel.enableVibration(true);
@@ -127,11 +127,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
-                .setContentTitle(userId + " has comments on Job " + job.name + "!")
+                .setContentTitle(userId + " comments on Job " + jobStr + "!")  // job.name
                 .setAutoCancel(true)
+                .setSmallIcon(R.drawable.star_solid)
                 .setSound(defaultSound)
                 .setContentText(comment)
-                .setContentIntent(pendingIntent)
+//                .setContentIntent(pendingIntent)
                 .setWhen(System.currentTimeMillis())
                 .setPriority(Notification.PRIORITY_MAX);
 
