@@ -65,7 +65,6 @@ public class UserInfoFragment extends BaseFragment<UserInfoViewModel, UserInfoRe
 
 
     @Override
-<<<<<<< HEAD
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = UserInfoFragmentBinding.inflate(inflater, container, false);
@@ -89,10 +88,6 @@ public class UserInfoFragment extends BaseFragment<UserInfoViewModel, UserInfoRe
             binding.cvWork.jobEndDate.setText(it.work.EndDate);
         });
         binding.name.setText(Config.userId);
-=======
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
->>>>>>> 4c4dafec284eb366aeca44124fc78fe3dd978ec4
         binding.editEducation.setOnClickListener(v -> {
             navigationManager.navigateTo(new EditEduFragment());
         });
