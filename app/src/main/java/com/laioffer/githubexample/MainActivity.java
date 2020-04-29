@@ -28,7 +28,9 @@ import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.laioffer.githubexample.remote.response.Job;
 import com.laioffer.githubexample.ui.NavigationManager;
+import com.laioffer.githubexample.ui.jobInfo.JobInfoFragment;
 import com.laioffer.githubexample.util.Config;
 import com.laioffer.githubexample.util.Utils;
 
@@ -89,6 +91,14 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     @Override
     public void goBack() {
         getSupportFragmentManager().popBackStack();
+    }
+
+    @Override
+    protected void onNewIntent(final Intent intent) {
+        super.onNewIntent(intent);
+        Job job = (Job) intent.getExtras().getSerializable("job");
+        JobInfoFragment fragment = JobInfoFragment.newInstance(job);
+        navigateTo(fragment);
     }
 
 
