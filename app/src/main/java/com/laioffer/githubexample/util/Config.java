@@ -11,6 +11,7 @@ public class Config {
     private String lastName;
     public static double latitude;
     public static double longitude;
+    public static String token;
 
     public String getUserId() {
         return userId;

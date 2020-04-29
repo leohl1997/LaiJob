@@ -36,6 +36,7 @@ import com.laioffer.githubexample.ui.jobInfo.JobInfoFragment;
 import com.laioffer.githubexample.ui.search.SearchFragment;
 import com.laioffer.githubexample.ui.userInfo.UserInfoFragment;
 import com.laioffer.githubexample.util.Config;
+import com.laioffer.githubexample.util.Utils;
 
 import java.util.ArrayList;
 
@@ -60,7 +61,9 @@ public class HomeListFragment extends BaseFragment<HomeListViewModel, HomeListRe
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //you can set the title for your toolbar here for different fragments different titles
-
+        viewModel.getTokenResponse().observe(getViewLifecycleOwner(), msg -> {
+            Utils.constructToast(getContext(), msg).show();
+        });
         RecyclerView rv = view.findViewById(R.id.JobInfo);
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
         rv.setHasFixedSize(true);
@@ -70,6 +73,9 @@ public class HomeListFragment extends BaseFragment<HomeListViewModel, HomeListRe
 
     private void getAllItem() {
         viewModel.getListJobMutableLiveData().observe(getViewLifecycleOwner(), list -> {
+            if (list == null) {
+                return;
+            }
             adapter.setItems(new ArrayList<>(list));
             adapter.setOnNoteListener(this);
             adapter.notifyDataSetChanged();
