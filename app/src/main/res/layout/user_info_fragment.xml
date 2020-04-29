@@ -44,7 +44,7 @@
     <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+
         android:layout_marginBottom="5dp">
 
     <RelativeLayout
@@ -86,7 +86,6 @@
         <include
             layout="@layout/profile"
             android:id="@+id/cv_profile"
-            android:layout_marginTop="10dp"
             android:layout_below="@+id/editProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -138,7 +137,6 @@
         <include
             layout="@layout/education"
             android:id="@+id/cv_education"
-            android:layout_marginTop="10dp"
             android:layout_below="@+id/editEducation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -190,7 +188,6 @@
         <include
             layout="@layout/work"
             android:id="@+id/cv_work"
-            android:layout_marginTop="10dp"
             android:layout_below="@+id/editWork"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -200,10 +197,11 @@
     <Button
         android:id="@+id/saveProfile"
         android:layout_marginTop="10dp"
-        android:layout_width="300dp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@color/lightgrey"
+        android:background="@drawable/btn_click_style"
         android:text="Save"
         android:textColor="@android:color/white" />
 
