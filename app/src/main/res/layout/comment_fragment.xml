@@ -71,12 +71,10 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="220dp"
         android:layout_marginEnd="20dp"
-        android:ems="10"
         android:gravity="start|top"
         android:hint="@string/comment_hint"
         android:inputType="textMultiLine"
-        android:lines="5"
-        android:maxLines="10"
+        android:maxLines="100"
         android:scrollbars="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -99,17 +97,10 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btn_back"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="430dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/btn_custom"
-        android:text="@string/Back"
-        android:textColor="@android:color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        android:id="@+id/btn_back_comment"
+        android:layout_width="53dp"
+        android:layout_height="50dp"
+        android:background="@drawable/ic_arrow_left"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
