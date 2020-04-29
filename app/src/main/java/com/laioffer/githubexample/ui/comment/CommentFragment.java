@@ -53,9 +53,8 @@ public class CommentFragment extends BaseFragment<CommentViewModel, CommentRepos
         navigationManager = (NavigationManager) context;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         binding.btnOneStar.setOnClickListener(v -> {
             unsetStars();
             binding.btnOneStar.setBackground(getResources().getDrawable(R.drawable.star_solid));
@@ -98,11 +97,7 @@ public class CommentFragment extends BaseFragment<CommentViewModel, CommentRepos
                 return;
             }
             CommentEvent commentEvent = new CommentEvent();
-
-            commentEvent.userId = Config.username;
-
             commentEvent.userId = Config.userId;
-
             commentEvent.itemId = currJob.itemId;
             commentEvent.rating = rating;
             commentEvent.commentText = binding.commentBody.getText().toString();
@@ -115,7 +110,7 @@ public class CommentFragment extends BaseFragment<CommentViewModel, CommentRepos
         viewModel.getResponseLiveData().observe(getViewLifecycleOwner(), msg -> {
             Utils.constructToast(getContext(), msg).show();
         });
-        binding.btnBack.setOnClickListener(v -> navigationManager.goBack());
+        binding.btnBackComment.setOnClickListener(v -> navigationManager.goBack());
     }
 
     @Override
