@@ -7,8 +7,8 @@ import androidx.lifecycle.Transformations;
 import com.laioffer.githubexample.base.BaseViewModel;
 import com.laioffer.githubexample.remote.response.RemoteResponse;
 
-public class editWorkViewModel extends BaseViewModel<EditWorkRepository> {
-    protected editWorkViewModel(EditWorkRepository baseRepository) {
+public class EditWorkViewModel extends BaseViewModel<EditWorkRepository> {
+    protected EditWorkViewModel(EditWorkRepository baseRepository) {
         super(baseRepository);
     }
     // TODO: Implement the ViewModel
