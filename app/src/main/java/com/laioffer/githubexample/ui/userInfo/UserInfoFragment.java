@@ -89,7 +89,7 @@ public class UserInfoFragment extends BaseFragment<UserInfoViewModel, UserInfoRe
         });
         binding.name.setText(Config.userId);
         binding.editEducation.setOnClickListener(v -> {
-            navigationManager.navigateTo(new EditEduFragment());
+            navigationManager.navigateWithFragmentDestroy(new EditEduFragment(),UserInfoFragment.newInstance());
         });
         binding.editProfile.setOnClickListener(v -> {
             navigationManager.navigateTo(new EditProfileFragment());
