@@ -13,11 +13,11 @@ public class EditProfileEvent {
     @SerializedName("schoolEndData")
     public String endDate;
     @SerializedName("firstName")
-    public String FirstName;
+    String FirstName;
     @SerializedName("lastName")
-    public String LastName;
+    String LastName;
     @SerializedName("phone")
-    public String PhoneNumber;
+    private String PhoneNumber;
     @SerializedName("email")
     public String Email;
     @SerializedName("address")
