@@ -49,7 +49,7 @@ public class HomeListFragment extends BaseFragment<HomeListViewModel, HomeListRe
         return new HomeListFragment();
     }
 
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //you can set the title for your toolbar here for different fragments different titles
 
