@@ -72,9 +72,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     public void navigateWithFragmentDestroy(Fragment target, Fragment current) {
         getSupportFragmentManager()
                 .beginTransaction()
+                .remove(current)
                 .replace(R.id.first_fragment, target, null)
                 .addToBackStack(null)
-                .remove(current)
                 .commit();
     }
 
