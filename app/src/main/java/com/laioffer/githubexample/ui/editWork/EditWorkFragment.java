@@ -3,22 +3,30 @@ package com.laioffer.githubexample.ui.editWork;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
+import android.icu.util.Calendar;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.laioffer.githubexample.base.BaseFragment;
 import com.laioffer.githubexample.databinding.EditWorkFragmentBinding;
 import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.ui.userInfo.UserInfoFragment;
 import com.laioffer.githubexample.util.Config;
+import com.laioffer.githubexample.util.DateUtil;
 import com.laioffer.githubexample.util.Utils;
+
+import java.util.Objects;
 
 public class EditWorkFragment extends BaseFragment<EditWorkViewModel, EditWorkRepository> {
     private NavigationManager navigationManager;
@@ -48,6 +56,16 @@ public class EditWorkFragment extends BaseFragment<EditWorkViewModel, EditWorkRe
         super.onActivityCreated(savedInstanceState);
         binding.back.setOnClickListener(v -> {
             navigationManager.navigateTo(new UserInfoFragment());
+        });
+        TextInputEditText startDateInputEditText = binding.startDate;
+        startDateInputEditText.setInputType(InputType.TYPE_NUMBER_VARIATION_NORMAL);
+        binding.startDate.setOnClickListener(v -> {
+            onStartCalenderClicked();
+        });
+        TextInputEditText endDateInputEditText = binding.endDate;
+        endDateInputEditText.setInputType(InputType.TYPE_NUMBER_VARIATION_NORMAL);
+        binding.endDate.setOnClickListener(v -> {
+            onEndCalenderClicked();
         });
         binding.save.setOnClickListener(v -> {
             Config.jobTitle = binding.jobTitle.getText().toString();
@@ -92,5 +110,47 @@ public class EditWorkFragment extends BaseFragment<EditWorkViewModel, EditWorkRe
     @Override
     protected EditWorkRepository getRepository() {
         return new EditWorkRepository();
+    }
+
+    private void onStartCalenderClicked(){
+        final Calendar calendar = Calendar.getInstance();
+        binding.startDate.setText(DateUtil.date2String(calendar.getTime(),DateUtil.YMD_FORMAT));
+        DatePickerDialog dialog = new DatePickerDialog(Objects.requireNonNull(getContext()), new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+//                LogUtils.d(TAG, "onDateSet: year: " + year + ", month: " + month + ", dayOfMonth: " + dayOfMonth);
+
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH, month);
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                binding.startDate.setText(DateUtil.date2String(calendar.getTime(),DateUtil.YMD_FORMAT));
+                Config.jobStartDate = DateUtil.date2String(calendar.getTime(),DateUtil.YMD_FORMAT);
+            }
+        },
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH) );
+        dialog.show();
+    }
+
+    private void onEndCalenderClicked(){
+        final Calendar calendar = Calendar.getInstance();
+        binding.endDate.setText(DateUtil.date2String(calendar.getTime(),DateUtil.YMD_FORMAT));
+        DatePickerDialog dialog = new DatePickerDialog(Objects.requireNonNull(getContext()), new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+//                LogUtils.d(TAG, "onDateSet: year: " + year + ", month: " + month + ", dayOfMonth: " + dayOfMonth);
+
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH, month);
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                binding.endDate.setText(DateUtil.date2String(calendar.getTime(),DateUtil.YMD_FORMAT));
+                Config.jobEndDate= DateUtil.date2String(calendar.getTime(),DateUtil.YMD_FORMAT);
+            }
+        },
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH) );
+        dialog.show();
     }
 }
