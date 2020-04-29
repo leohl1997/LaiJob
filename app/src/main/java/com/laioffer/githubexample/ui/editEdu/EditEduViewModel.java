@@ -5,10 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
 import com.laioffer.githubexample.base.BaseViewModel;
-import com.laioffer.githubexample.remote.response.Education;
 import com.laioffer.githubexample.remote.response.RemoteResponse;
-import com.laioffer.githubexample.remote.response.UserInfo;
-import com.laioffer.githubexample.ui.comment.CommentEvent;
 
 public class EditEduViewModel extends BaseViewModel<EditEduRepository> {
 
@@ -32,7 +29,7 @@ public class EditEduViewModel extends BaseViewModel<EditEduRepository> {
             msgMutableLiveData.postValue("School name can not be empty!");
             return;
         }
-       editEduEventMutableLiveData.setValue(editEduEvent);
+       editEduEventMutableLiveData.postValue(editEduEvent);
     }
     public LiveData<RemoteResponse<EditEduEvent>> getResponseLiveData() {
         return responseLiveData;
