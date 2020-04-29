@@ -24,10 +24,13 @@ import android.widget.ImageView;
 
 import com.laioffer.githubexample.base.BaseFragment;
 import com.laioffer.githubexample.databinding.UserInfoFragmentBinding;
+import com.laioffer.githubexample.remote.response.UserProfile;
+import com.laioffer.githubexample.ui.HomeList.HomeListFragment;
 import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.ui.editEdu.EditEduFragment;
 import com.laioffer.githubexample.ui.editProfile.EditProfileFragment;
 import com.laioffer.githubexample.ui.editWork.EditWorkFragment;
+import com.laioffer.githubexample.util.Config;
 import com.laioffer.githubexample.util.Utils;
 
 import java.io.File;
@@ -54,16 +57,37 @@ public class UserInfoFragment extends BaseFragment<UserInfoViewModel, UserInfoRe
         super.onAttach(context);
         navigationManager = (NavigationManager) context;
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = UserInfoFragmentBinding.inflate(inflater, container, false);
-        return binding.getRoot();
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+        binding.cvProfile.lastName.setText(Config.lastName);
+        binding.cvProfile.firstName.setText(Config.firstName);
+        viewModel.getUserInfoMutableLiveData().observe(getViewLifecycleOwner(), it->{
+            binding.cvProfile.firstName.setText(it.profile.FirstName);
+            Config.firstName = it.profile.FirstName;
+            binding.cvProfile.lastName.setText(it.profile.LastName);
+            Config.lastName = it.profile.LastName;
+            binding.cvProfile.address.setText(it.profile.Address);
+            binding.cvProfile.eMail.setText(it.profile.Email);
+            binding.cvProfile.dateOfBirth.setText(it.profile.DateOfBirth);
+            binding.cvProfile.phoneNumber.setText(it.profile.PhoneNumber);
+            binding.cvEducation.schoolName.setText(it.education.schoolName);
+            binding.cvEducation.schoolStartDate.setText(it.education.startDate);
+            binding.cvEducation.schoolEndDate.setText(it.education.endDate);
+            binding.cvWork.companyName.setText(it.work.CompanyName);
+            binding.cvWork.jobStartDate.setText(it.work.StartDate);
+            binding.cvWork.jobTitle.setText(it.work.JobTitle);
+            binding.cvWork.jobEndDate.setText(it.work.EndDate);
+        });
+        binding.name.setText(Config.userId);
         binding.editEducation.setOnClickListener(v -> {
             navigationManager.navigateTo(new EditEduFragment());
         });
@@ -76,6 +100,28 @@ public class UserInfoFragment extends BaseFragment<UserInfoViewModel, UserInfoRe
         binding.pimage.setOnClickListener(v->{
             showChoosePicDialog();
         });
+        binding.saveProfile.setOnClickListener(v -> {
+            navigationManager.navigateTo(new HomeListFragment());
+        });
+//        binding.cvProfile.address.setText(it.profile.Address);
+//        binding.cvProfile.eMail.setText(it.profile.Email);
+//        binding.cvProfile.dateOfBirth.setText(it.profile.DateOfBirth);
+//        binding.cvProfile.phoneNumber.setText(it.profile.PhoneNumber);
+//        binding.cvEducation.schoolName.setText(it.education.schoolName);
+//        binding.cvEducation.schoolStartDate.setText(it.education.startDate);
+//        binding.cvEducation.schoolEndDate.setText(it.education.endDate);
+//        binding.cvWork.companyName.setText(it.work.CompanyName);
+//        binding.cvWork.jobStartDate.setText(it.work.StartDate);
+//        binding.cvWork.jobTitle.setText(it.work.JobTitle);
+//        binding.cvWork.jobEndDate.setText(it.work.EndDate);
+        return binding.getRoot();
+    }
+
+
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         // TODO: Use the ViewModel
     }
 
