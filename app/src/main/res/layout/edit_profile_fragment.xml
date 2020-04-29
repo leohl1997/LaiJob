@@ -140,6 +140,7 @@
             </TextView>
 
             <com.google.android.material.textfield.TextInputEditText
+                android:clickable="true"
                 android:id="@+id/dateBirth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
