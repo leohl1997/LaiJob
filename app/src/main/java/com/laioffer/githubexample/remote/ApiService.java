@@ -29,14 +29,18 @@ import retrofit2.http.Query;
 
 public interface ApiService {
 
-    @POST("jobsearch/login") // need to know exactly
+    @POST("jobsearch/login")
+        // need to know exactly
     Call<RemoteResponse<UserInfo>> login(@Body LoginEvent body);
 
-    @POST("jobsearch/register") // need to know exactly
+    @POST("jobsearch/register")
+        // need to know exactly
     Call<RemoteResponse<UserInfo>> register(@Body RegisterEvent body);
 
     @GET("jobsearch/search")
-    Call<RemoteResponse<List<Job>>> search(@Query("lat") double lat, @Query("lon") double lon);
+    Call<RemoteResponse<List<Job>>> search(@Query("lat") double lat,
+                                           @Query("lon") double lon,
+                                           @Query("user_id") String userId);
 
     @POST("jobsearch/comment")
     Call<RemoteResponse<CommentEvent>> sendComment(@Body CommentEvent commentEvent);
@@ -51,11 +55,17 @@ public interface ApiService {
     @POST("jobsearch/user")
     Call<RemoteResponse<EditWorkEvent>> editWork(@Body EditWorkEvent editWorkEvent);
 
+
     @GET("jobsearch/comment")
     Call<RemoteResponse<List<CommentEvent>>> getComment(@Query("item_id") String jobId);
 
     @GET("jobsearch/history")
     Call<RemoteResponse<List<Job>>> getFavorite(@Query("user_id") String userId);
+
+    @GET("jobsearch/recommendation")
+    Call<RemoteResponse<List<Job>>> getRecommendation(@Query("lat") double lat,
+                                                      @Query("lon") double lon,
+                                                      @Query("user_id") String userId);
 
     @POST("jobsearch/history")
     Call<RemoteResponse<SaveEvent>> favorite(@Body SaveEvent saveEvent);
@@ -63,9 +73,5 @@ public interface ApiService {
     @HTTP(method = "DELETE", path = "jobsearch/history", hasBody = true)
     Call<RemoteResponse<SaveEvent>> unfavorite(@Body SaveEvent saveEvent);
 
-    @GET("jobsearch/recommendation")
-    Call<RemoteResponse<List<Job>>> searchRecommendation(@Query("lat") double lat, @Query("lon") double lon);
-
-
-
 }
+
