@@ -87,14 +87,6 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
                 addJobToMap(list);
                 viewModel.getSavedJob().addAll(list);
             }
-
-        });
-
-        viewModel.getRecommendation().observe(getViewLifecycleOwner(), list -> {
-            if (list == null || list.size() == 0) {
-                Utils.constructToast(getContext(), "No recommendations. Please save job frist").show();
-                return;
-            }
             //this should happen for recommend item.
 
             CardFragmentPagerAdapter pagerAdapter = new CardFragmentPagerAdapter(getChildFragmentManager(), Utils.dpToPixels(2, getContext()), list);
@@ -105,6 +97,24 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
             binding.mapViewPager.setPageTransformer(false ,shadowTransformer);
             binding.mapViewPager.setOffscreenPageLimit(3);
             shadowTransformer.enableScaling(true);
+
+        });
+
+        viewModel.getRecommendation().observe(getViewLifecycleOwner(), list -> {
+            if (list == null || list.size() == 0) {
+                Utils.constructToast(getContext(), "No recommendations. Please save job frist").show();
+                return;
+            }
+//            //this should happen for recommend item.
+//
+//            CardFragmentPagerAdapter pagerAdapter = new CardFragmentPagerAdapter(getChildFragmentManager(), Utils.dpToPixels(2, getContext()), list);
+//            ShadowTransformer shadowTransformer = new ShadowTransformer(binding.mapViewPager, pagerAdapter);
+//
+//            binding.mapViewPager.setAdapter(pagerAdapter);
+//            binding.mapViewPager.setPageMargin(120);
+//            binding.mapViewPager.setPageTransformer(false ,shadowTransformer);
+//            binding.mapViewPager.setOffscreenPageLimit(3);
+//            shadowTransformer.enableScaling(true);
         });
 
         viewModel.getMsg().observe(getViewLifecycleOwner(), msg ->
