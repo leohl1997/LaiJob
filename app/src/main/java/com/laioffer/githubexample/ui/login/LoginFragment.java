@@ -14,12 +14,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessagingService;
 import com.laioffer.githubexample.base.BaseFragment;
 import com.laioffer.githubexample.databinding.LoginFragmentBinding;
-import com.laioffer.githubexample.remote.response.UserInfo;
 import com.laioffer.githubexample.ui.HomeList.HomeListFragment;
 import com.laioffer.githubexample.ui.NavigationManager;
+import com.laioffer.githubexample.ui.favorite.FavoriteJobFragment;
 import com.laioffer.githubexample.ui.map.MapFragment;
+import com.laioffer.githubexample.ui.search.SearchEvent;
 import com.laioffer.githubexample.util.Config;
 import com.laioffer.githubexample.util.Utils;
 
@@ -45,10 +48,6 @@ public class LoginFragment extends BaseFragment<LoginViewModel, LoginRepository>
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.btnLogin.setOnClickListener( v -> {
-
-//            UserInfo userInfo = new UserInfo();
-//            userInfo.profile.user_id = binding.etUserIdLogin.getText().toString();
-
             viewModel.login(new LoginEvent(binding.etUserIdLogin.getText().toString(),
                     Utils.md5Encryption(binding.etPasswordLogin.getText().toString())));  // faker user info
         });
@@ -57,7 +56,8 @@ public class LoginFragment extends BaseFragment<LoginViewModel, LoginRepository>
                 Utils.constructToast(getContext(), "Login success!").show();
                 Config.userId = it.response.userId;
                 Config.username = it.response.name;
-                navigationManager.navigateTo(new HomeListFragment());
+                viewModel.setNull();
+                navigationManager.navigateTo(new HomeListFragment(new SearchEvent(0,"Developer")));
             } else {
                 Utils.constructToast(getContext(), it == null ? "Error !" : it.status).show();
             }

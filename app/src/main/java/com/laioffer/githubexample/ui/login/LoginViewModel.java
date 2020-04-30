@@ -1,7 +1,5 @@
 package com.laioffer.githubexample.ui.login;
 
-import android.widget.Toast;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
@@ -9,19 +7,23 @@ import androidx.lifecycle.Transformations;
 import com.laioffer.githubexample.base.BaseViewModel;
 import com.laioffer.githubexample.remote.response.RemoteResponse;
 import com.laioffer.githubexample.remote.response.UserInfo;
+import com.laioffer.githubexample.remote.response.UserProfile;
 import com.laioffer.githubexample.util.Utils;
 
 public class LoginViewModel extends BaseViewModel<LoginRepository> {
 
-    private final MutableLiveData<LoginEvent> loginEventMutableLiveData = new MutableLiveData<>();
-    private final LiveData<RemoteResponse<UserInfo>> remoteResponseMutableLiveData = Transformations.switchMap(loginEventMutableLiveData, repository::login);
-    private final MutableLiveData<String> errMsgMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<LoginEvent> loginEventMutableLiveData = new MutableLiveData<>();
+    private LiveData<RemoteResponse<UserInfo>> remoteResponseMutableLiveData = Transformations.switchMap(loginEventMutableLiveData, repository::login);
+    private MutableLiveData<String> errMsgMutableLiveData = new MutableLiveData<>();
 
     LoginViewModel(LoginRepository baseRepository) {
         super(baseRepository);
     }
 
     public LiveData<RemoteResponse<UserInfo>> getRemoteResponseMutableLiveData() {
+        if (remoteResponseMutableLiveData == null) {
+            remoteResponseMutableLiveData = Transformations.switchMap(loginEventMutableLiveData, repository::login);
+        }
         return remoteResponseMutableLiveData;
     }
 
@@ -30,6 +32,9 @@ public class LoginViewModel extends BaseViewModel<LoginRepository> {
     }
 
     public void login(LoginEvent loginEvent) {
+        if (loginEvent == null) {
+            return;
+        }
         if (Utils.isNullOrEmpty(loginEvent.userId)) {
             errMsgMutableLiveData.setValue("Please enter a valid password!");
             return;
@@ -39,6 +44,11 @@ public class LoginViewModel extends BaseViewModel<LoginRepository> {
             return;
         }
         loginEventMutableLiveData.setValue(loginEvent);
+    }
+
+    public void setNull() {
+        remoteResponseMutableLiveData = null;
+        loginEventMutableLiveData.postValue(null);
     }
 
 }

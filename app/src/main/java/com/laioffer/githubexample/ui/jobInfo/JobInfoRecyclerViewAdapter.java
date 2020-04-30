@@ -15,12 +15,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.laioffer.githubexample.R;
 import com.laioffer.githubexample.remote.response.Job;
+
 import com.laioffer.githubexample.ui.comment.CommentEvent;
 import com.laioffer.githubexample.ui.comment.Item;
+import com.laioffer.githubexample.util.Utils;
 import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Comment;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import tm.charlie.expandabletextview.ExpandableTextView;
 
 public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
@@ -29,6 +36,7 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     private ArrayList<Item> itemArrayList;
     private TextView commentNumber = null;
     private TextView avgRating = null;
+    private TextView saveText = null;
     private Button saveButton = null;
     private SaveItemListener saveItemListener;
 
@@ -58,8 +66,10 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         if (holder instanceof InfoViewHolder) {
             Job currJob = (Job) itemArrayList.get(position);
             ((InfoViewHolder) holder).company.setText(currJob.company);
-            ((InfoViewHolder) holder).description.setText(currJob.description.replaceAll("<.*?>", ""));
-            if (!currJob.imageUrl.isEmpty()) {
+            if (!Utils.isNullOrEmpty(currJob.description)) {
+                ((InfoViewHolder) holder).description.setText(currJob.description.replaceAll("<.*?>", ""));
+            }
+            if (!Utils.isNullOrEmpty(currJob.imageUrl)) {
                 Picasso.get().setLoggingEnabled(true);
                 Picasso.get().load(currJob.imageUrl).placeholder(R.drawable.thumbnail)
                         .resize(100,100)
@@ -70,11 +80,12 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             ((InfoViewHolder) holder).postTime.setText(currJob.time);
             if (currJob.favorite) {
                 ((InfoViewHolder) holder).saveButton.setBackground(context.getResources()
-                        .getDrawable(R.drawable.btn_custom_selected));
-                ((InfoViewHolder) holder).saveButton.setText(R.string.saved);
+                        .getDrawable(R.drawable.ic_saved_24dp));
+                ((InfoViewHolder) holder).saveText.setText(R.string.saved);
             }
             this.commentNumber = ((InfoViewHolder) holder).commentNumber;
             this.avgRating = ((InfoViewHolder) holder).avgRating;
+            this.saveText = ((InfoViewHolder) holder).saveText;
             this.saveButton = ((InfoViewHolder) holder).saveButton;
         } else if (holder instanceof CommentViewHolder) {
             CommentEvent currentComment = (CommentEvent) itemArrayList.get(position);
@@ -120,6 +131,10 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         return saveButton;
     }
 
+    public TextView getSavedText() {
+        return saveText;
+    }
+
     // comment view holder
     class CommentViewHolder extends RecyclerView.ViewHolder {
 
@@ -141,6 +156,8 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             stars.add(itemView.findViewById(R.id.cmt_star_five));
             time = itemView.findViewById(R.id.cmt_time);
             comment = itemView.findViewById(R.id.comment_body);
+
+
         }
     }
 
@@ -154,6 +171,7 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         private TextView postTime;
         private TextView commentNumber;
         private TextView avgRating;
+        private TextView saveText;
         private Button saveButton;
 
         public InfoViewHolder(@NonNull View itemView, SaveItemListener listener) {
@@ -167,7 +185,7 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
                 if (description.getMaxLines() < 1000) {
                     description.setMaxLines(1000);
                 } else {
-                    description.setMaxLines(10);
+                    description.setMaxLines(20);
                 }
             });
             postTime = itemView.findViewById(R.id.post_time);
@@ -186,6 +204,7 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             itemView.findViewById(R.id.apply).setOnClickListener(
                     v -> saveItemListener.onApplyCLicked()
             );
+            saveText = itemView.findViewById(R.id.save_text);
         }
     }
 

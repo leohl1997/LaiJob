@@ -22,15 +22,13 @@ import com.laioffer.githubexample.remote.response.Job;
 import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.ui.comment.CommentEvent;
 import com.laioffer.githubexample.ui.comment.CommentFragment;
-import com.laioffer.githubexample.ui.map.CardFragmentPagerAdapter;
-import com.laioffer.githubexample.ui.map.ShadowTransformer;
 import com.laioffer.githubexample.util.Config;
 import com.laioffer.githubexample.util.Utils;
 
 import java.util.List;
 
 public class JobInfoFragment extends BaseFragment<JobInfoViewModel, JobInfoRepository>
-    implements JobInfoRecyclerViewAdapter.SaveItemListener, JobInfoRecyclerViewAdapter.RemoteListener {
+        implements JobInfoRecyclerViewAdapter.SaveItemListener, JobInfoRecyclerViewAdapter.RemoteListener {
 
     private NavigationManager navigationManager;
     private JobInfoFragmentBinding binding;
@@ -73,7 +71,6 @@ public class JobInfoFragment extends BaseFragment<JobInfoViewModel, JobInfoRepos
         binding.rvMain.setLayoutManager(linearLayoutManager);
         binding.rvMain.setAdapter(adapter);
         viewModel.setJobIdLiveData(currentJob.itemId);
-
 
 
     }
@@ -134,14 +131,14 @@ public class JobInfoFragment extends BaseFragment<JobInfoViewModel, JobInfoRepos
             if (msg.equals("Save Success!")) {
                 button.setBackground(getView()
                         .getResources()
-                        .getDrawable(R.drawable.btn_custom_selected));
+                        .getDrawable(R.drawable.ic_saved_24dp));
                 ((Job) getArguments().getSerializable("job")).favorite = true;
-                adapter.getSaveButton().setText(R.string.saved);
+                adapter.getSavedText().setText(R.string.saved);
             } else if (msg.equals("Unsave Success!")) {
                 button.setBackground(getView()
                         .getResources()
-                        .getDrawable(R.drawable.btn_custom));
-                adapter.getSaveButton().setText(R.string.save);
+                        .getDrawable(R.drawable.ic_save_24dp));
+                adapter.getSavedText().setText(R.string.save);
                 ((Job) getArguments().getSerializable("job")).favorite = false;
             }
             Utils.constructToast(getContext(), msg).show();
@@ -164,7 +161,4 @@ public class JobInfoFragment extends BaseFragment<JobInfoViewModel, JobInfoRepos
             adapter.getAvgRating().setText(String.format("%.1f", avg));
         });
     }
-
-
-
 }

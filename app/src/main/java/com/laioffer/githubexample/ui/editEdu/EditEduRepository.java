@@ -3,9 +3,7 @@ package com.laioffer.githubexample.ui.editEdu;
 import androidx.lifecycle.MutableLiveData;
 
 import com.laioffer.githubexample.base.BaseRepository;
-import com.laioffer.githubexample.remote.response.Education;
 import com.laioffer.githubexample.remote.response.RemoteResponse;
-import com.laioffer.githubexample.remote.response.UserInfo;
 
 import retrofit2.Call;
 import retrofit2.Callback;

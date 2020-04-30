@@ -1,14 +1,20 @@
 package com.laioffer.githubexample.ui.userInfo;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,13 +27,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.laioffer.githubexample.MainActivity;
 import com.laioffer.githubexample.base.BaseFragment;
 import com.laioffer.githubexample.databinding.UserInfoFragmentBinding;
+import com.laioffer.githubexample.remote.response.UserProfile;
+import com.laioffer.githubexample.ui.HomeList.HomeListFragment;
 import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.ui.editEdu.EditEduFragment;
 import com.laioffer.githubexample.ui.editProfile.EditProfileFragment;
 import com.laioffer.githubexample.ui.editWork.EditWorkFragment;
+import com.laioffer.githubexample.ui.search.SearchEvent;
+import com.laioffer.githubexample.util.Config;
 import com.laioffer.githubexample.util.Utils;
 
 import java.io.File;
@@ -40,7 +52,6 @@ public class UserInfoFragment extends BaseFragment<UserInfoViewModel, UserInfoRe
     protected static final int TAKE_PICTURE = 1;
     protected static Uri tempUri;
     private static final int CROP_SMALL_PICTURE = 2;
-    private ImageView iv_personal_icon;
     private UserInfoViewModel mViewModel;
 
     public static UserInfoFragment newInstance() {
@@ -54,18 +65,50 @@ public class UserInfoFragment extends BaseFragment<UserInfoViewModel, UserInfoRe
         super.onAttach(context);
         navigationManager = (NavigationManager) context;
     }
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        binding = UserInfoFragmentBinding.inflate(inflater, container, false);
-        return binding.getRoot();
-    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        binding = UserInfoFragmentBinding.inflate(inflater, container, false);
+        binding.cvProfile.lastName.setText(Config.lastName);
+        binding.cvProfile.firstName.setText(Config.firstName);
+        viewModel.getUserInfoMutableLiveData().observe(getViewLifecycleOwner(), it->{
+            binding.cvProfile.firstName.setText(it.profile.FirstName);
+            Config.firstName = it.profile.FirstName;
+            binding.cvProfile.lastName.setText(it.profile.LastName);
+            Config.lastName = it.profile.LastName;
+            binding.cvProfile.address.setText(it.profile.Address);
+            Config.address = it.profile.Address;
+            binding.cvProfile.eMail.setText(it.profile.Email);
+            Config.email = it.profile.Email;
+            binding.cvProfile.dateOfBirth.setText(it.profile.DateOfBirth);
+            Config.dataOfBirth = it.profile.DateOfBirth;
+            binding.cvProfile.phoneNumber.setText(it.profile.PhoneNumber);
+            Config.phone = it.profile.PhoneNumber;
+            binding.cvEducation.schoolName.setText(it.education.schoolName);
+            Config.schoolName = it.education.schoolName;
+            binding.cvEducation.schoolStartDate.setText(it.education.startDate);
+            Config.schoolStartData = it.education.startDate;
+            binding.cvEducation.schoolEndDate.setText(it.education.endDate);
+            Config.schoolEndData = it.education.endDate;
+            binding.cvWork.companyName.setText(it.work.CompanyName);
+            Config.company = it.work.CompanyName;
+            binding.cvWork.jobStartDate.setText(it.work.StartDate);
+            Config.jobStartDate = it.work.StartDate;
+            binding.cvWork.jobTitle.setText(it.work.JobTitle);
+            Config.jobTitle = it.work.JobTitle;
+            binding.cvWork.jobEndDate.setText(it.work.EndDate);
+            Config.jobEndDate = it.work.EndDate;
+        });
+        binding.name.setText(Config.userId);
         binding.editEducation.setOnClickListener(v -> {
-            navigationManager.navigateTo(new EditEduFragment());
+            navigationManager.navigateWithFragmentDestroy(new EditEduFragment(),UserInfoFragment.newInstance());
         });
         binding.editProfile.setOnClickListener(v -> {
             navigationManager.navigateTo(new EditProfileFragment());
@@ -76,6 +119,17 @@ public class UserInfoFragment extends BaseFragment<UserInfoViewModel, UserInfoRe
         binding.pimage.setOnClickListener(v->{
             showChoosePicDialog();
         });
+        binding.saveProfile.setOnClickListener(v -> {
+            navigationManager.navigateTo(new HomeListFragment(new SearchEvent(0,"Developer")));
+        });
+        return binding.getRoot();
+    }
+
+
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         // TODO: Use the ViewModel
     }
 
@@ -117,18 +171,39 @@ public class UserInfoFragment extends BaseFragment<UserInfoViewModel, UserInfoRe
                         startActivityForResult(openAlbumIntent, CHOOSE_PICTURE);
                         break;
                     case TAKE_PICTURE: // 拍照
-                        Intent openCameraIntent = new Intent(
-                                MediaStore.ACTION_IMAGE_CAPTURE);
-                        tempUri = Uri.fromFile(new File(Environment
-                                .getExternalStorageDirectory(), "image.jpg"));
-                        // 指定照片保存路径（SD卡），image.jpg为一个临时文件，每次拍照后这个图片都会被替换
-                        openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, tempUri);
-                        startActivityForResult(openCameraIntent, TAKE_PICTURE);
+                        takePicture();
                         break;
                 }
             }
         });
         builder.create().show();
+    }
+
+    private void takePicture() {
+        String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        if (Build.VERSION.SDK_INT >= 23) {
+            // 需要申请动态权限
+            int check = ContextCompat.checkSelfPermission(Objects.requireNonNull(getActivity()), permissions[0]);
+            // 权限是否已经 授权 GRANTED---授权  DINIED---拒绝
+            if (check != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+            }
+        }
+        Intent openCameraIntent = new Intent(
+                MediaStore.ACTION_IMAGE_CAPTURE);
+        File file = new File(Environment
+                .getExternalStorageDirectory(), "image.jpg");
+        //判断是否是AndroidN以及更高的版本
+        if (Build.VERSION.SDK_INT >= 24) {
+            openCameraIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            tempUri = FileProvider.getUriForFile(Objects.requireNonNull(this.getContext()), "com.lt.uploadpicdemo.fileProvider", file);
+        } else {
+            tempUri = Uri.fromFile(new File(Environment
+                    .getExternalStorageDirectory(), "image.jpg"));
+        }
+        // 指定照片保存路径（SD卡），image.jpg为一个临时文件，每次拍照后这个图片都会被替换
+        openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, tempUri);
+        startActivityForResult(openCameraIntent, TAKE_PICTURE);
     }
 
     @Override
@@ -179,15 +254,13 @@ public class UserInfoFragment extends BaseFragment<UserInfoViewModel, UserInfoRe
      * 保存裁剪之后的图片数据
      *
      * @param
-     *
-     * @param data
      */
     protected void setImageToView(Intent data) {
         Bundle extras = data.getExtras();
         if (extras != null) {
             Bitmap photo = extras.getParcelable("data");
             photo = Utils.toRoundBitmap(photo, tempUri); // 这个时候的图片已经被处理成圆形的了
-            iv_personal_icon.setImageBitmap(photo);
+            binding.pimage.setImageBitmap(photo);
             uploadPic(photo);
         }
     }
@@ -205,6 +278,19 @@ public class UserInfoFragment extends BaseFragment<UserInfoViewModel, UserInfoRe
         if(imagePath != null){
             // 拿着imagePath上传了
             // ...
+//            Log.d(TAG,"imagePath:"+imagePath);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+        } else {
+            // 没有获取 到权限，从新请求，或者关闭app
+            Toast.makeText(getActivity(), "需要存储权限", Toast.LENGTH_SHORT).show();
         }
     }
 }

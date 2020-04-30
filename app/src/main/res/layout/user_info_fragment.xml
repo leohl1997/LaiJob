@@ -1,21 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.userInfo.UserInfoFragment"
     android:orientation="vertical">
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/grey">
+        android:layout_height="150dp"
+        android:background="@color/side">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/pimage"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_centerInParent="true"
@@ -27,9 +32,10 @@
             app:civ_border_width="1dp" />
 
         <TextView
+            android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="name"
+            android:textSize="70px"
             android:layout_below="@+id/pimage"
             android:layout_centerHorizontal="true"/>
 
@@ -37,87 +43,167 @@
 
     <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
 
+        android:layout_marginBottom="5dp">
 
+    <RelativeLayout
+        android:id="@+id/rProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+        <ImageView
+            android:id="@+id/imProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:background="@drawable/baseline_account_box_black_18dp">
+
+        </ImageView>
+        <TextView
+            android:layout_toRightOf="@+id/imProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Profile"
+            android:layout_marginStart="120dp"
+            android:textSize="20sp">
+        </TextView>
+    </RelativeLayout>
 
         <Button
+            android:layout_below="@+id/rProfile"
             android:id="@+id/editProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:background="@color/lightgrey"
             android:text="Edit Profile"
-            android:drawableStart="@drawable/baseline_account_box_black_18dp"
-            android:textColor="@android:color/white" />
+            android:drawablePadding="-40dp"
+            android:paddingLeft="12sp"
+            android:drawableStart="@drawable/baseline_add_circle_outline_black_18dp"
+            android:textColor="@color/blue" />
 
-
-        <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editProfile">
-
-        </androidx.recyclerview.widget.RecyclerView>
+        <include
+            layout="@layout/profile"
+            android:id="@+id/cv_profile"
+            android:layout_below="@+id/editProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp">
 
-
+        <RelativeLayout
+            android:id="@+id/rEdu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+            <ImageView
+                android:id="@+id/imEdu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:background="@drawable/baseline_account_balance_black_18dp">
+            </ImageView>
+            <TextView
+                android:layout_toRightOf="@+id/imEdu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Primary Education"
+                android:layout_marginStart="80dp"
+                android:textSize="20sp">
+            </TextView>
+        </RelativeLayout>
 
         <Button
+            android:layout_below="@+id/rEdu"
             android:id="@+id/editEducation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:background="@color/lightgrey"
+            android:drawablePadding="-35dp"
             android:text="Edit Education"
-            android:drawableStart="@drawable/baseline_account_balance_black_18dp"
-            android:textColor="@android:color/white" />
+            android:drawableStart="@drawable/baseline_add_circle_outline_black_18dp"
+            android:textColor="@color/blue"
+            android:paddingLeft="12sp"/>
 
 
-        <androidx.recyclerview.widget.RecyclerView
+        <include
+            layout="@layout/education"
+            android:id="@+id/cv_education"
+            android:layout_below="@+id/editEducation"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/editEducation">
-
-        </androidx.recyclerview.widget.RecyclerView>
+            android:layout_height="wrap_content" />
 
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp">
 
-
+        <RelativeLayout
+            android:id="@+id/rWork"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+            <ImageView
+                android:id="@+id/imWork"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:background="@drawable/baseline_work_black_18">
+            </ImageView>
+            <TextView
+                android:layout_toRightOf="@+id/imWork"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Primary WorkHistory"
+                android:layout_marginStart="70dp"
+                android:textSize="20sp">
+            </TextView>
+        </RelativeLayout>
 
         <Button
+            android:layout_below="@+id/rWork"
             android:id="@+id/editWork"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:background="@color/lightgrey"
             android:text="Edit Work History"
-            android:drawableStart="@drawable/baseline_work_black_18"
-            android:textColor="@android:color/white" />
+            android:drawablePadding="-30dp"
+            android:paddingLeft="12sp"
+            android:drawableStart="@drawable/baseline_add_circle_outline_black_18dp"
+            android:textColor="@color/blue" />
 
 
-        <androidx.recyclerview.widget.RecyclerView
+        <include
+            layout="@layout/work"
+            android:id="@+id/cv_work"
+            android:layout_below="@+id/editWork"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/editWork">
-
-        </androidx.recyclerview.widget.RecyclerView>
+            android:layout_height="wrap_content" />
 
     </RelativeLayout>
 
     <Button
         android:id="@+id/saveProfile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="120dp"
+        android:layout_height="30dp"
         android:layout_gravity="center"
-        android:background="@color/side"
+        android:background="@drawable/btn_click_style"
         android:text="Save"
         android:textColor="@android:color/white" />
 
-
 </LinearLayout>
+</ScrollView>

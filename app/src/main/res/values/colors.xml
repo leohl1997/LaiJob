@@ -11,4 +11,7 @@
     <color name="main">#3d70b2</color>
     <color name="side">#5596e6</color>
     <color name="light">#41d6c3</color>
+    <color name="lightGrey">#2f4f4f</color>
+    <color name="linen">#faf0e6</color> <!-- 亚麻色 -->
+    <color name="lightgrey">#d3d3d3</color> <!-- 亮灰色 -->
 </resources>

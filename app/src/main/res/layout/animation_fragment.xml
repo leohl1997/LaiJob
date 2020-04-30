@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         app:lottie_rawRes="@raw/location_pin"
-        app:lottie_colorFilter="@color/light"
+        app:lottie_colorFilter="@color/white"
         app:lottie_loop="true"
         app:lottie_autoPlay="true" />
 

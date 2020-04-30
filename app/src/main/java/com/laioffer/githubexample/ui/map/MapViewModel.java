@@ -17,6 +17,7 @@ public class MapViewModel extends BaseViewModel<MapRepository> {
             Transformations.switchMap(searchEvent, repository::search);
     private MutableLiveData<String> msg = new MutableLiveData<>();
     private ArrayList<Job> savedJob = new ArrayList<>();
+    private MutableLiveData<List<Job>> recommendation = repository.recommendation();
 
     protected MapViewModel(MapRepository baseRepository) {
         super(baseRepository);
@@ -40,6 +41,10 @@ public class MapViewModel extends BaseViewModel<MapRepository> {
 
     public ArrayList<Job> getSavedJob() {
         return savedJob;
+    }
+
+    public MutableLiveData<List<Job>> getRecommendation() {
+        return recommendation;
     }
 
 }

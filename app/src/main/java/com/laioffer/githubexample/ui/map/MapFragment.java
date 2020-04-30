@@ -31,6 +31,7 @@ import com.laioffer.githubexample.remote.response.Job;
 import com.laioffer.githubexample.ui.HomeList.HomeListFragment;
 import com.laioffer.githubexample.ui.NavigationManager;
 
+import com.laioffer.githubexample.ui.search.SearchEvent;
 import com.laioffer.githubexample.util.Config;
 
 import com.laioffer.githubexample.ui.jobInfo.JobInfoFragment;
@@ -70,7 +71,7 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
         }
 
         FloatingActionButton fab = view.findViewById(R.id.fab_return);
-        fab.setOnClickListener( v -> navigationManager.navigateTo(new HomeListFragment()));
+        fab.setOnClickListener( v -> navigationManager.navigateTo(new HomeListFragment(new SearchEvent(0,"Developer"))));
 
         FloatingActionButton returnFab = view.findViewById(R.id.fab_center);
         returnFab.setOnClickListener( v -> {
@@ -86,19 +87,35 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
             if (list != null && !list.isEmpty()) {
                 addJobToMap(list);
                 viewModel.getSavedJob().addAll(list);
-
-                //this should happen for recommend item.
-
-                CardFragmentPagerAdapter pagerAdapter = new CardFragmentPagerAdapter(getChildFragmentManager(), Utils.dpToPixels(2, getContext()), list);
-                ShadowTransformer shadowTransformer = new ShadowTransformer(binding.mapViewPager, pagerAdapter);
-
-                binding.mapViewPager.setAdapter(pagerAdapter);
-                binding.mapViewPager.setPageMargin(120);
-                binding.mapViewPager.setPageTransformer(false ,shadowTransformer);
-                binding.mapViewPager.setOffscreenPageLimit(3);
-                shadowTransformer.enableScaling(true);
             }
+            //this should happen for recommend item.
+//
+//            CardFragmentPagerAdapter pagerAdapter = new CardFragmentPagerAdapter(getChildFragmentManager(), Utils.dpToPixels(2, getContext()), list);
+//            ShadowTransformer shadowTransformer = new ShadowTransformer(binding.mapViewPager, pagerAdapter);
+//
+//            binding.mapViewPager.setAdapter(pagerAdapter);
+//            binding.mapViewPager.setPageMargin(120);
+//            binding.mapViewPager.setPageTransformer(false ,shadowTransformer);
+//            binding.mapViewPager.setOffscreenPageLimit(3);
+//            shadowTransformer.enableScaling(true);
 
+        });
+
+        viewModel.getRecommendation().observe(getViewLifecycleOwner(), list -> {
+            if (list == null || list.size() == 0) {
+                Utils.constructToast(getContext(), "No recommendations. Please save job frist").show();
+                return;
+            }
+//            //this should happen for recommend item.
+//
+            CardFragmentPagerAdapter pagerAdapter = new CardFragmentPagerAdapter(getChildFragmentManager(), Utils.dpToPixels(2, getContext()), list);
+            ShadowTransformer shadowTransformer = new ShadowTransformer(binding.mapViewPager, pagerAdapter);
+
+            binding.mapViewPager.setAdapter(pagerAdapter);
+            binding.mapViewPager.setPageMargin(120);
+            binding.mapViewPager.setPageTransformer(false ,shadowTransformer);
+            binding.mapViewPager.setOffscreenPageLimit(3);
+            shadowTransformer.enableScaling(true);
         });
 
         viewModel.getMsg().observe(getViewLifecycleOwner(), msg ->
@@ -107,12 +124,15 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
         binding.searchBar.setOnSearchListener(new PersistentSearchView.OnSearchListener() {
             @Override
             public void onSearchOpened() {
-
+                binding.searchBar.getSearchMenu().addSearchMenuItem(0, "All");
+                binding.searchBar.getSearchMenu().addSearchMenuItem(1, "Past 1 days");
+                binding.searchBar.getSearchMenu().addSearchMenuItem(2, "Past 3 days");
+                binding.searchBar.getSearchMenu().addSearchMenuItem(3, "Past 7 day");
             }
 
             @Override
             public void onSearchClosed() {
-
+                binding.searchBar.getSearchMenu().clearItems();
             }
 
             @Override
@@ -134,10 +154,7 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
             }
         });
 
-        binding.searchBar.getSearchMenu().addSearchMenuItem(0, "All");
-        binding.searchBar.getSearchMenu().addSearchMenuItem(1, "Past 7 days");
-        binding.searchBar.getSearchMenu().addSearchMenuItem(2, "Past 3 days");
-        binding.searchBar.getSearchMenu().addSearchMenuItem(3, "Past 1 day");
+
         binding.searchBar.setOnMenuItemClickListener(item -> {
             Utils.constructToast(getContext(), item.getTitle()).show();
         });

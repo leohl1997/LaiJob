@@ -17,7 +17,9 @@ import retrofit2.internal.EverythingIsNonNull;
 public class MapRepository extends BaseRepository {
     MutableLiveData<List<Job>> search(String keyword) {
         MutableLiveData<List<Job>> listMutableLiveData = new MutableLiveData<>();
-        Call<RemoteResponse<List<Job>>> call = apiService.search(Config.latitude, Config.longitude);
+        Call<RemoteResponse<List<Job>>> call = apiService.search(Config.latitude,
+                Config.longitude,
+                Config.userId);
         call.enqueue(new Callback<RemoteResponse<List<Job>>>() {
             @EverythingIsNonNull
             @Override
@@ -37,5 +39,31 @@ public class MapRepository extends BaseRepository {
             }
         });
         return listMutableLiveData;
+    }
+
+    MutableLiveData<List<Job>> recommendation() {
+        MutableLiveData<List<Job>> listMutableLiveData = new MutableLiveData<>();
+        Call<RemoteResponse<List<Job>>> call = apiService
+                .getRecommendation(Config.latitude, Config.longitude, Config.userId);
+        call.enqueue(new Callback<RemoteResponse<List<Job>>>() {
+            @EverythingIsNonNull
+            @Override
+            public void onResponse(Call<RemoteResponse<List<Job>>> call, Response<RemoteResponse<List<Job>>> response) {
+                if (response.code() == 200) {
+                    RemoteResponse<List<Job>> list = response.body();
+                    listMutableLiveData.postValue(response.body().response);
+                } else {
+                    listMutableLiveData.postValue(null);
+                }
+            }
+
+            @EverythingIsNonNull
+            @Override
+            public void onFailure(Call<RemoteResponse<List<Job>>> call, Throwable t) {
+                listMutableLiveData.postValue(null);
+            }
+        });
+        return listMutableLiveData;
+
     }
 }

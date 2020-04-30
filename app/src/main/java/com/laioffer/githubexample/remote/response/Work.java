@@ -4,11 +4,11 @@ import com.google.gson.annotations.SerializedName;
 
 public class Work {
     @SerializedName("company")
-    public static String CompanyName;
+    public  String CompanyName;
     @SerializedName("job")
-    public static String JobTitle;
+    public  String JobTitle;
     @SerializedName("jobStartData")
-    public static String StartDate;
+    public  String StartDate;
     @SerializedName("jobEndData")
-    public static String EndDate;
+    public  String EndDate;
 }

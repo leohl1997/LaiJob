@@ -80,7 +80,6 @@ public class Utils {
             if (!dir.exists()) {
                 dir.mkdirs();
             }
-
             File photoFile = new File(path, photoName + ".png");
             FileOutputStream fileOutputStream = null;
             try {

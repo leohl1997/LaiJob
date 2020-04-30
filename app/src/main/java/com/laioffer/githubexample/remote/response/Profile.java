@@ -6,15 +6,15 @@ public class Profile {
     @SerializedName("user_id")
     public String user_id;
     @SerializedName("firstName")
-    public static String FirstName;
+    public  String FirstName;
     @SerializedName("lastName")
-    public static String LastName;
+    public  String LastName;
     @SerializedName("phone")
-    public static String PhoneNumber;
+    public  String PhoneNumber;
     @SerializedName("email")
-    public static String Email;
+    public  String Email;
     @SerializedName("address")
-    public static String Address;
-    @SerializedName("dateOfBirth")
-    public static String DateOfBirth;
+    public  String Address;
+    @SerializedName("dataOfBirth")
+    public  String DateOfBirth;
 }
