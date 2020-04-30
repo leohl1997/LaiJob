@@ -76,15 +76,6 @@ public class Job extends Item implements Serializable {
     public String getApply_url(){ return this.url;}
     public String getJobDescription(){ return this.description;}
 
-    @BindingAdapter({"image_url"})
-    public static void loadImage(ImageView imageView, String image_url) {
-        Glide.with(imageView.getContext())
-                .setDefaultRequestOptions(new RequestOptions().circleCrop())
-                .load(image_url)
-                .placeholder(R.drawable.loading)
-                .into(imageView);
-    }
-
 
 
 

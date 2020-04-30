@@ -182,7 +182,7 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
                 if (description.getMaxLines() < 1000) {
                     description.setMaxLines(1000);
                 } else {
-                    description.setMaxLines(10);
+                    description.setMaxLines(20);
                 }
             });
             postTime = itemView.findViewById(R.id.post_time);
