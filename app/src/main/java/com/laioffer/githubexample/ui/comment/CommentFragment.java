@@ -103,7 +103,7 @@ public class CommentFragment extends BaseFragment<CommentViewModel, CommentRepos
             commentEvent.rating = rating;
             commentEvent.commentText = binding.commentBody.getText().toString();
             commentEvent.currentTime = DateUtil
-                    .date2String(Calendar.getInstance().getTime(), DateUtil.YMDHMS_FORMAT);
+                    .date2String(Calendar.getInstance().getTime());
             viewModel.setCommentEventMutableLiveData(commentEvent);
         });
         viewModel.getMsgMutableLiveData().observe(getViewLifecycleOwner(), msg -> {

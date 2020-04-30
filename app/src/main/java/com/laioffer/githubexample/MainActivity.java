@@ -28,6 +28,7 @@ import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.google.gson.Gson;
 import com.laioffer.githubexample.remote.response.Job;
 import com.laioffer.githubexample.ui.HomeList.HomeListFragment;
 import com.laioffer.githubexample.ui.NavigationManager;
@@ -99,7 +100,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     @Override
     protected void onNewIntent(final Intent intent) {
         super.onNewIntent(intent);
-
+//        Gson gson = new Gson();
+//        String jobStr = intent.getStringExtra("job");
+//        Job job = gson.fromJson(jobStr, Job.class);
         Job job = (Job) intent.getExtras().getSerializable("job");
         JobInfoFragment fragment = JobInfoFragment.newInstance(job);
         navigateTo(fragment);
