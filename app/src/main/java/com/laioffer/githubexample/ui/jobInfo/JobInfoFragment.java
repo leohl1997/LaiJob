@@ -131,14 +131,14 @@ public class JobInfoFragment extends BaseFragment<JobInfoViewModel, JobInfoRepos
             if (msg.equals("Save Success!")) {
                 button.setBackground(getView()
                         .getResources()
-                        .getDrawable(R.drawable.btn_custom_selected));
+                        .getDrawable(R.drawable.ic_saved_24dp));
                 ((Job) getArguments().getSerializable("job")).favorite = true;
-                adapter.getSaveButton().setText(R.string.saved);
+                adapter.getSavedText().setText(R.string.saved);
             } else if (msg.equals("Unsave Success!")) {
                 button.setBackground(getView()
                         .getResources()
-                        .getDrawable(R.drawable.btn_custom));
-                adapter.getSaveButton().setText(R.string.save);
+                        .getDrawable(R.drawable.ic_save_24dp));
+                adapter.getSavedText().setText(R.string.save);
                 ((Job) getArguments().getSerializable("job")).favorite = false;
             }
             Utils.constructToast(getContext(), msg).show();

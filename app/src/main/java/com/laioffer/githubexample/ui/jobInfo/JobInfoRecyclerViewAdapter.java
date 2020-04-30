@@ -35,6 +35,7 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     private ArrayList<Item> itemArrayList;
     private TextView commentNumber = null;
     private TextView avgRating = null;
+    private TextView saveText = null;
     private Button saveButton = null;
     private SaveItemListener saveItemListener;
 
@@ -76,11 +77,12 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             ((InfoViewHolder) holder).postTime.setText(currJob.time);
             if (currJob.favorite) {
                 ((InfoViewHolder) holder).saveButton.setBackground(context.getResources()
-                        .getDrawable(R.drawable.btn_custom_selected));
-                ((InfoViewHolder) holder).saveButton.setText(R.string.saved);
+                        .getDrawable(R.drawable.ic_saved_24dp));
+                ((InfoViewHolder) holder).saveText.setText(R.string.saved);
             }
             this.commentNumber = ((InfoViewHolder) holder).commentNumber;
             this.avgRating = ((InfoViewHolder) holder).avgRating;
+            this.saveText = ((InfoViewHolder) holder).saveText;
             this.saveButton = ((InfoViewHolder) holder).saveButton;
         } else if (holder instanceof CommentViewHolder) {
             CommentEvent currentComment = (CommentEvent) itemArrayList.get(position);
@@ -126,6 +128,10 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         return saveButton;
     }
 
+    public TextView getSavedText() {
+        return saveText;
+    }
+
     // comment view holder
     class CommentViewHolder extends RecyclerView.ViewHolder {
 
@@ -160,6 +166,7 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         private TextView postTime;
         private TextView commentNumber;
         private TextView avgRating;
+        private TextView saveText;
         private Button saveButton;
 
         public InfoViewHolder(@NonNull View itemView, SaveItemListener listener) {
@@ -192,6 +199,7 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             itemView.findViewById(R.id.apply).setOnClickListener(
                     v -> saveItemListener.onApplyCLicked()
             );
+            saveText = itemView.findViewById(R.id.save_text);
         }
     }
 

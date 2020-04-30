@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingBottom="10dp"
+    android:background="@color/white"
     tools:context=".ui.jobInfo.JobInfoFragment">
 
 
@@ -23,20 +23,48 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Software Developer" />
 
-    <Button
-        android:id="@+id/save"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:id="@+id/linearLayout5"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="10dp"
-        android:background="@drawable/btn_custom"
-        android:text="save"
-        android:textColor="@android:color/white"
+        android:layout_marginTop="24dp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/post_time" />
+        app:layout_constraintTop_toBottomOf="@+id/post_time">
+
+
+        <Button
+            android:id="@+id/comment"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="40dp"
+            android:background="@drawable/ic_comment_24dp"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="40dp"
+            android:background="@drawable/ic_star" />
+
+        <Button
+            android:id="@+id/save"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="40dp"
+            android:background="@drawable/ic_save_24dp"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/apply"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/ic_arrow_right"
+            android:textColor="@android:color/white" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/post_time"
@@ -63,7 +91,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:maxLines="10"
+        android:maxLines="20"
         app:layout_constraintTop_toBottomOf="@+id/job_image"
         tools:layout_editor_absoluteX="10dp" />
 
@@ -90,70 +118,6 @@
         tools:text="New York" />
 
     <Button
-        android:id="@+id/comment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:background="@drawable/btn_custom"
-        android:text="@string/Comment"
-        android:textColor="@android:color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/apply" />
-
-    <Button
-        android:id="@+id/apply"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:background="@drawable/btn_custom"
-        android:text="@string/apply"
-        android:textColor="@android:color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/save" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal"
-        android:paddingBottom="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/comment">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Comment: " />
-
-        <TextView
-            android:id="@+id/comment_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=", Rating: " />
-
-        <TextView
-            android:id="@+id/average_rating"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0.0" />
-
-    </LinearLayout>
-
-    <Button
         android:id="@+id/btn_back_info"
         android:layout_width="53dp"
         android:layout_height="50dp"
@@ -169,6 +133,54 @@
         android:text="Click text to see more/less"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/job_description" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Comment: " />
+
+        <TextView
+            android:id="@+id/comment_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:text="0" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rating: " />
+
+        <TextView
+            android:id="@+id/average_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
+            android:text="0.0" />
+
+        <TextView
+            android:id="@+id/save_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="45dp"
+            android:text="@string/save" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/apply" />
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
