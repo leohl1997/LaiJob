@@ -29,8 +29,10 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.laioffer.githubexample.remote.response.Job;
+import com.laioffer.githubexample.ui.HomeList.HomeListFragment;
 import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.ui.jobInfo.JobInfoFragment;
+import com.laioffer.githubexample.ui.search.SearchEvent;
 import com.laioffer.githubexample.util.Config;
 import com.laioffer.githubexample.util.Utils;
 
@@ -40,7 +42,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     private DrawerLayout drawerLayout;
     private FirebaseAnalytics firebaseAnalytics;
     private final String TAG = "MainActivity";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         navigateTo(new OnBoardingSplashFragment());
 
     }
+
+
 
     @Override
     public void navigateTo(Fragment fragment) {

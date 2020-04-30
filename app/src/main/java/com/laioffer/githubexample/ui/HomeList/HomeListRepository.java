@@ -19,12 +19,10 @@ import retrofit2.Response;
 import retrofit2.internal.EverythingIsNonNull;
 
 public class HomeListRepository extends BaseRepository {
-    public MutableLiveData<List<Job>> searchNearby() {
+    public MutableLiveData<List<Job>> searchNearby(String keyWord) {
         final MutableLiveData<List<Job>> result = new MutableLiveData<>();
         // retrieve user-related data
-        Call<RemoteResponse<List<Job>>> call = apiService.search(Config.latitude,
-                Config.longitude,
-                Config.userId);
+        Call<RemoteResponse<List<Job>>> call = apiService.search(37.38,-122.08, keyWord);
         call.enqueue(new Callback<RemoteResponse<List<Job>>>() {
             @Override
             public void onResponse(Call<RemoteResponse<List<Job>>> call, Response<RemoteResponse<List<Job>>> response) {

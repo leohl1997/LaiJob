@@ -28,7 +28,7 @@ import com.laioffer.githubexample.util.Utils;
 import java.util.List;
 
 public class JobInfoFragment extends BaseFragment<JobInfoViewModel, JobInfoRepository>
-    implements JobInfoRecyclerViewAdapter.SaveItemListener, JobInfoRecyclerViewAdapter.RemoteListener {
+        implements JobInfoRecyclerViewAdapter.SaveItemListener, JobInfoRecyclerViewAdapter.RemoteListener {
 
     private NavigationManager navigationManager;
     private JobInfoFragmentBinding binding;

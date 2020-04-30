@@ -8,4 +8,11 @@
         <item name="colorAccent">@color/black</item>
     </style>
 
+    <string-array name="numbers">
+        <item>Clear The Filter</item>
+        <item>Past One Day</item>
+        <item>Past Three Days</item>
+        <item>Past One Week</item>
+    </string-array>
+
 </resources>

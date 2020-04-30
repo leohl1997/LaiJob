@@ -22,6 +22,7 @@ import com.laioffer.githubexample.ui.HomeList.HomeListFragment;
 import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.ui.favorite.FavoriteJobFragment;
 import com.laioffer.githubexample.ui.map.MapFragment;
+import com.laioffer.githubexample.ui.search.SearchEvent;
 import com.laioffer.githubexample.util.Config;
 import com.laioffer.githubexample.util.Utils;
 
@@ -60,7 +61,7 @@ public class LoginFragment extends BaseFragment<LoginViewModel, LoginRepository>
                 Utils.constructToast(getContext(), "Login success!").show();
                 Config.userId = it.response.userId;
                 Config.username = it.response.name;
-                navigationManager.navigateTo(new HomeListFragment());
+                navigationManager.navigateTo(new HomeListFragment(new SearchEvent(0,"Developer")));
             } else {
                 Utils.constructToast(getContext(), it == null ? "Error !" : it.status).show();
             }

@@ -1,4 +1,10 @@
 package com.laioffer.githubexample.remote.response;
+import android.widget.ImageView;
+
+import androidx.databinding.BindingAdapter;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.annotations.SerializedName;
 import com.laioffer.githubexample.R;
 import com.laioffer.githubexample.ui.comment.Item;
@@ -43,10 +49,44 @@ public class Job extends Item implements Serializable {
     @SerializedName("time")
     public String time;
 
+
+
+
     //    @SerializedName("lat")
 //    public double lat;
 //
 //    @SerializedName("lon")
 //    public double lon;
+    public Job(String jobTitle, String location, String company,String postTime, String image_url, String jobDescription, String apply_url) {
+        this.name = jobTitle;
+        this.company = company;
+        this.address = location;
+        this.time = postTime;
+        this.imageUrl = image_url;
+        this.description = jobDescription;
+        this.url = apply_url;
+    }
+
+
+    public String getTitle() { return this.name; }
+    public String getCompany() { return this.company; }
+    public String getAddress() { return this.address; }
+    public String getPostTime() { return this.time; }
+    public String getImage_url(){ return this.imageUrl;}
+    public String getApply_url(){ return this.url;}
+    public String getJobDescription(){ return this.description;}
+
+    @BindingAdapter({"image_url"})
+    public static void loadImage(ImageView imageView, String image_url) {
+        Glide.with(imageView.getContext())
+                .setDefaultRequestOptions(new RequestOptions().circleCrop())
+                .load(image_url)
+                .placeholder(R.drawable.loading)
+                .into(imageView);
+    }
+
+
+
+
 
 }
