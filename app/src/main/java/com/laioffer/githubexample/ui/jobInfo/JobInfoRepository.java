@@ -3,10 +3,12 @@ package com.laioffer.githubexample.ui.jobInfo;
 import androidx.lifecycle.MutableLiveData;
 
 import com.laioffer.githubexample.base.BaseRepository;
+import com.laioffer.githubexample.remote.response.BaseResponse;
 import com.laioffer.githubexample.remote.response.Job;
 import com.laioffer.githubexample.remote.response.RemoteResponse;
 import com.laioffer.githubexample.ui.comment.CommentEvent;
 import com.laioffer.githubexample.util.Config;
+import com.laioffer.githubexample.util.Utils;
 
 import java.util.List;
 
@@ -39,12 +41,58 @@ public class JobInfoRepository extends BaseRepository {
         return responseLiveData;
     }
 
+    public MutableLiveData<List<Job>> getRecommendation() {
+        MutableLiveData<List<Job>> listRecommendationLiveData = new MutableLiveData<>();
+
+        Call<RemoteResponse<List<Job>>> call = apiService.getRecommendation(Config.latitude, Config.longitude, Config.userId);
+        call.enqueue(new Callback<RemoteResponse<List<Job>>>() {
+            @Override
+            public void onResponse(Call<RemoteResponse<List<Job>>> call, Response<RemoteResponse<List<Job>>> response) {
+                listRecommendationLiveData.postValue(response.body().response);
+            }
+
+            @Override
+            public void onFailure(Call<RemoteResponse<List<Job>>> call, Throwable t) {
+                listRecommendationLiveData.postValue(null);
+            }
+        });
+
+        return listRecommendationLiveData;
+    }
+
+    public MutableLiveData<String> sentToken() {
+        MutableLiveData<String> result = new MutableLiveData<>();
+        if (Utils.isNullOrEmpty(Config.userId) || Utils.isNullOrEmpty(Config.token)) {
+            return result;
+        }
+        TokenRecommendationEvent tokenRecommendationEvent = new TokenRecommendationEvent();
+        tokenRecommendationEvent.token = Config.token;
+        tokenRecommendationEvent.userId = Config.userId;
+        Call<BaseResponse> call = apiService.sendToken(tokenRecommendationEvent);
+        call.enqueue(new Callback<BaseResponse>() {
+            @EverythingIsNonNull
+            @Override
+            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                if (response.code() == 200) {
+                    result.postValue("Success");
+                } else {
+                    result.postValue("Fail");
+                }
+            }
+
+
+
+
+
+
+
+
     public MutableLiveData<String> save(SaveEvent saveEvent) {
         return saveEvent.job.favorite ? unfavorite(saveEvent) : favorite(saveEvent);
     }
 
     private MutableLiveData<String> favorite(SaveEvent saveEvent) {
-        MutableLiveData<String>  responseLiveDate = new MutableLiveData<>();
+        MutableLiveData<String> responseLiveDate = new MutableLiveData<>();
         Call<RemoteResponse<SaveEvent>> call = apiService.favorite(saveEvent);
         call.enqueue(new Callback<RemoteResponse<SaveEvent>>() {
             @EverythingIsNonNull
@@ -67,7 +115,7 @@ public class JobInfoRepository extends BaseRepository {
     }
 
     private MutableLiveData<String> unfavorite(SaveEvent saveEvent) {
-        MutableLiveData<String>  responseLiveDate = new MutableLiveData<>();
+        MutableLiveData<String> responseLiveDate = new MutableLiveData<>();
         Call<RemoteResponse<SaveEvent>> call = apiService.unfavorite(saveEvent);
         call.enqueue(new Callback<RemoteResponse<SaveEvent>>() {
             @EverythingIsNonNull
@@ -89,23 +137,3 @@ public class JobInfoRepository extends BaseRepository {
         return responseLiveDate;
     }
 
-    public MutableLiveData<List<Job>> searchRecommendation() {
-        final MutableLiveData<List<Job>> result = new MutableLiveData<>();
-
-        Call<RemoteResponse<List<Job>>> call = apiService.searchRecommendation(Config.latitude, Config.longitude);
-        call.enqueue(new Callback<RemoteResponse<List<Job>>>() {
-            @Override
-            public void onResponse(Call<RemoteResponse<List<Job>>> call, Response<RemoteResponse<List<Job>>> response) {
-                result.postValue(response.body().response);
-            }
-
-            @Override
-            public void onFailure(Call<RemoteResponse<List<Job>>> call, Throwable t) {
-                result.postValue(null);
-            }
-        });
-
-        return result;
-    }
-
-}

@@ -63,6 +63,9 @@ public interface ApiService {
     @HTTP(method = "DELETE", path = "jobsearch/history", hasBody = true)
     Call<RemoteResponse<SaveEvent>> unfavorite(@Body SaveEvent saveEvent);
 
+    @GET("jobsearch/recommendation")
+    Call<RemoteResponse<List<Job>>> searchRecommendation(@Query("lat") double lat, @Query("lon") double lon);
+
 
 
 }
