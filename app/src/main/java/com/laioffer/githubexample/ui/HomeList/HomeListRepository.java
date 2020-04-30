@@ -19,7 +19,8 @@ import retrofit2.Response;
 import retrofit2.internal.EverythingIsNonNull;
 
 public class HomeListRepository extends BaseRepository {
-    public MutableLiveData<List<Job>> searchNearby() {
+
+    public MutableLiveData<List<Job>> searchNearby(String keyWord) {
         final MutableLiveData<List<Job>> result = new MutableLiveData<>();
         // retrieve user-related data
         Call<RemoteResponse<List<Job>>> call = apiService.search(Config.latitude,
