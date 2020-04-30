@@ -18,7 +18,7 @@
             android:layout_alignParentTop="true"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/grey"
+            android:background="@color/side"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:layout_constraintTop_toTopOf="parent" />
         <Button
@@ -39,6 +39,7 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="10dp"
             android:id="@+id/JobInfo"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -50,14 +51,13 @@
 
         <Button
             android:id="@+id/HomeMap"
-            android:layout_width="180dp"
-            android:layout_height="50dp"
-            android:layout_marginBottom="40dp"
-            android:text="Jump to HomeMap"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/btn_click_style"
+            android:text="Map"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-
-
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent" />

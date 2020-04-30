@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="172dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/grey"
+    android:background="@color/main"
     android:orientation="vertical"
     android:paddingTop="25dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
