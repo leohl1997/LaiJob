@@ -62,10 +62,10 @@ public class RecommendationFragment extends BaseFragment<JobInfoViewModel, JobIn
             return;
         }
 
-      
+
         linearLayoutManager = new LinearLayoutManager(getContext());
-        binding.recommendation_card.setLayoutManager(linearLayoutManager);
-        binding.recommendation_card.setAdapter(adapter);
+        binding.recommendationCard.setLayoutManager(linearLayoutManager);
+        binding.recommendationCard.setAdapter(adapter);
         viewModel.setJobIdLiveData(currentJob.itemId);
 
 
