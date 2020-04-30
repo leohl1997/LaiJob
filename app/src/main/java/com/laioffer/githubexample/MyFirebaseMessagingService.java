@@ -127,7 +127,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
-                .setContentTitle(userId + " comments on Job " + jobStr + "!")  // job.name
+                .setContentTitle(userId + " comments on Job " + job.name + "!")  // job.name
                 .setAutoCancel(true)
                 .setSmallIcon(R.drawable.star_solid)
                 .setSound(defaultSound)

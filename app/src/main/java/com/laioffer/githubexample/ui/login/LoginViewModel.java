@@ -29,6 +29,9 @@ public class LoginViewModel extends BaseViewModel<LoginRepository> {
     }
 
     public void login(LoginEvent loginEvent) {
+        if (loginEvent == null) {
+            return;
+        }
         if (Utils.isNullOrEmpty(loginEvent.userId)) {
             errMsgMutableLiveData.setValue("Please enter a valid password!");
             return;

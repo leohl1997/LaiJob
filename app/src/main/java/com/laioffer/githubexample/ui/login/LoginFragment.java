@@ -34,6 +34,7 @@ public class LoginFragment extends BaseFragment<LoginViewModel, LoginRepository>
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = LoginFragmentBinding.inflate(inflater, container, false);
+        viewModel.login(null);
         return binding.getRoot();
     }
 

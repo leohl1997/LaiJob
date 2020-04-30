@@ -21,6 +21,7 @@ import com.laioffer.githubexample.util.Config;
 import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.util.Config;
 
+import com.laioffer.githubexample.util.DateUtil;
 import com.laioffer.githubexample.util.Utils;
 
 import java.util.Calendar;
@@ -101,7 +102,8 @@ public class CommentFragment extends BaseFragment<CommentViewModel, CommentRepos
             commentEvent.itemId = currJob.itemId;
             commentEvent.rating = rating;
             commentEvent.commentText = binding.commentBody.getText().toString();
-            commentEvent.currentTime = Calendar.getInstance().getTime().toString();
+            commentEvent.currentTime = DateUtil
+                    .date2String(Calendar.getInstance().getTime(), DateUtil.YMDHMS_FORMAT);
             viewModel.setCommentEventMutableLiveData(commentEvent);
         });
         viewModel.getMsgMutableLiveData().observe(getViewLifecycleOwner(), msg -> {
