@@ -80,7 +80,7 @@ public class JobInfoFragment extends BaseFragment<JobInfoViewModel, JobInfoRepos
         viewModel.getListRecommendationJobLiveData().observe(getViewLifecycleOwner(), list -> {
             viewModel.getTokenRecommendation().clear();
             if (list != null && !list.isEmpty()) {
-                
+
                 viewModel.getTokenRecommendation().addAll(list);
 
                 //this should happen for recommend item.

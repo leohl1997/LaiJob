@@ -18,11 +18,9 @@
         android:id="@+id/recommendation_card"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="620dp"
         android:orientation="horizontal"
-        android:text="Click text to see more/less"
-        app:layout_constraintTop_toBottomOf="@+id/comment"
-        tools:layout_editor_absoluteX="-191dp" />
+        android:text="Click text to see more/less" />
 
 
 </FrameLayout>
