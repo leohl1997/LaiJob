@@ -29,15 +29,4 @@ public class JobInfoViewModel extends BaseViewModel<JobInfoRepository> {
         remoteListener.onSaveEvent(repository.save(saveEvent));
     }
 //
-    private ArrayList<Job> tokenRecommendation = new ArrayList<>();
-    private final MutableLiveData<List<Job>> ListRecommendationLiveData = repository.getRecommendation();
-    private final MutableLiveData<String> tokenResponse = repository.sentToken();
 
-    public MutableLiveData<List<Job>> getListRecommendationJobLiveData() {
-        return ListRecommendationLiveData;
-    }
-
-    public MutableLiveData<String> getTokenRecommendation() {
-        return tokenRecommendation;
-    }
-}

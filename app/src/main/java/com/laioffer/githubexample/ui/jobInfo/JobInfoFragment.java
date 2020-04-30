@@ -75,31 +75,6 @@ public class JobInfoFragment extends BaseFragment<JobInfoViewModel, JobInfoRepos
         viewModel.setJobIdLiveData(currentJob.itemId);
 
 
-        //recommendation item
-
-        viewModel.getListRecommendationJobLiveData().observe(getViewLifecycleOwner(), list -> {
-            viewModel.getTokenRecommendation().clear();
-            if (list != null && !list.isEmpty()) {
-
-                viewModel.getTokenRecommendation().addAll(list);
-
-                //this should happen for recommend item.
-
-                CardFragmentPagerAdapter pagerAdapter = new CardFragmentPagerAdapter(getChildFragmentManager(), Utils.dpToPixels(2, getContext()), list);
-                ShadowTransformer shadowTransformer = new ShadowTransformer(binding.recommendation_card, pagerAdapter);
-
-                binding.recommendation_card.setAdapter(pagerAdapter);
-                binding.recommendation_card.setPageMargin(120);
-                binding.recommendation_card.setPageTransformer(false ,shadowTransformer);
-                binding.recommendation_card.setOffscreenPageLimit(3);
-                shadowTransformer.enableScaling(true);
-            }
-
-        });
-
-        viewModel.getMsg().observe(getViewLifecycleOwner(), msg ->
-                Utils.constructToast(getContext(), msg).show());
-
 
     }
 
