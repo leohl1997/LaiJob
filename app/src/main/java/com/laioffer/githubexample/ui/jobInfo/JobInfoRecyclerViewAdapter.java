@@ -153,6 +153,8 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             stars.add(itemView.findViewById(R.id.cmt_star_five));
             time = itemView.findViewById(R.id.cmt_time);
             comment = itemView.findViewById(R.id.comment_body);
+
+
         }
     }
 
