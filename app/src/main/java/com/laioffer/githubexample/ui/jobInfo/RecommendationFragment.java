@@ -93,6 +93,8 @@ public class RecommendationFragment extends BaseFragment<JobInfoViewModel, JobIn
     }
 
 
+    @Override
+    public void onNoteClick(int position, ItemDataAdapter adapter) {
 
-
+    }
 }

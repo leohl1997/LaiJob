@@ -28,5 +28,5 @@ public class JobInfoViewModel extends BaseViewModel<JobInfoRepository> {
     public void setSaveEvent(SaveEvent saveEvent) {
         remoteListener.onSaveEvent(repository.save(saveEvent));
     }
-//
+}
 

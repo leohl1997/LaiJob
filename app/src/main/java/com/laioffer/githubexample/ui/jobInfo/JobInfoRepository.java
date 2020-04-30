@@ -60,8 +60,6 @@ public class JobInfoRepository extends BaseRepository {
     }
 
 
-
-
     public MutableLiveData<String> save(SaveEvent saveEvent) {
         return saveEvent.job.favorite ? unfavorite(saveEvent) : favorite(saveEvent);
     }
@@ -111,4 +109,5 @@ public class JobInfoRepository extends BaseRepository {
         });
         return responseLiveDate;
     }
+}
 
