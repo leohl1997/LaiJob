@@ -38,6 +38,7 @@ import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.ui.editEdu.EditEduFragment;
 import com.laioffer.githubexample.ui.editProfile.EditProfileFragment;
 import com.laioffer.githubexample.ui.editWork.EditWorkFragment;
+import com.laioffer.githubexample.ui.search.SearchEvent;
 import com.laioffer.githubexample.util.Config;
 import com.laioffer.githubexample.util.Utils;
 
@@ -119,7 +120,7 @@ public class UserInfoFragment extends BaseFragment<UserInfoViewModel, UserInfoRe
             showChoosePicDialog();
         });
         binding.saveProfile.setOnClickListener(v -> {
-            navigationManager.navigateTo(new HomeListFragment());
+            navigationManager.navigateTo(new HomeListFragment(new SearchEvent(0,"Developer")));
         });
         return binding.getRoot();
     }
