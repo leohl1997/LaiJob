@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     @Override
     protected void onNewIntent(final Intent intent) {
         super.onNewIntent(intent);
+
         Job job = (Job) intent.getExtras().getSerializable("job");
         JobInfoFragment fragment = JobInfoFragment.newInstance(job);
         navigateTo(fragment);

@@ -13,6 +13,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public class Job extends Item implements Serializable {
+    private static final long serialVersionUID = 6438006871713340886L;
     @SerializedName("address")
     public String address;
 

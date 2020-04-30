@@ -18,6 +18,7 @@ import com.laioffer.githubexample.remote.response.Job;
 
 import com.laioffer.githubexample.ui.comment.CommentEvent;
 import com.laioffer.githubexample.ui.comment.Item;
+import com.laioffer.githubexample.util.Utils;
 import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Comment;
@@ -65,8 +66,10 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         if (holder instanceof InfoViewHolder) {
             Job currJob = (Job) itemArrayList.get(position);
             ((InfoViewHolder) holder).company.setText(currJob.company);
-            ((InfoViewHolder) holder).description.setText(currJob.description.replaceAll("<.*?>", ""));
-            if (!currJob.imageUrl.isEmpty()) {
+            if (!Utils.isNullOrEmpty(currJob.description)) {
+                ((InfoViewHolder) holder).description.setText(currJob.description.replaceAll("<.*?>", ""));
+            }
+            if (!Utils.isNullOrEmpty(currJob.imageUrl)) {
                 Picasso.get().setLoggingEnabled(true);
                 Picasso.get().load(currJob.imageUrl).placeholder(R.drawable.thumbnail)
                         .resize(100,100)
