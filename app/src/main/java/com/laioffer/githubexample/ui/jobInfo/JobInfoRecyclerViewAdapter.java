@@ -38,10 +38,10 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     private TextView avgRating = null;
     private TextView saveText = null;
     private Button saveButton = null;
-    private SaveItemListener saveItemListener;
+    private AdapterOperationListener adapterOperationListener;
 
-    public JobInfoRecyclerViewAdapter(Job job, SaveItemListener saveItemListener) {
-        this.saveItemListener = saveItemListener;
+    public JobInfoRecyclerViewAdapter(Job job, AdapterOperationListener adapterOperationListener) {
+        this.adapterOperationListener = adapterOperationListener;
         itemArrayList = new ArrayList<>();
         itemArrayList.add(job);
         itemArrayList.add(new Item());
@@ -54,13 +54,13 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         context = parent.getContext();
         if (viewType == TYPE_JOB_INFO) {
             View itemView = LayoutInflater.from(context).inflate(R.layout.job_info_card, parent, false);
-            return new InfoViewHolder(itemView, saveItemListener);
+            return new InfoViewHolder(itemView, adapterOperationListener);
         } else if (viewType == TYPE_COMMENT){
             View itemView = LayoutInflater.from(context).inflate(R.layout.comment_card, parent, false);
             return new CommentViewHolder(itemView);
         } else if (viewType == TYPE_WRITE_COMMENT) {
             View itemView = LayoutInflater.from(context).inflate(R.layout.write_comment_card, parent, false);
-            return new WriteCommentViewHolder(itemView, saveItemListener);
+            return new WriteCommentViewHolder(itemView, adapterOperationListener);
         }
         throw new RuntimeException("No support view type");
     }
@@ -182,7 +182,7 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         private TextView saveText;
         private Button saveButton;
 
-        public InfoViewHolder(@NonNull View itemView, SaveItemListener listener) {
+        public InfoViewHolder(@NonNull View itemView, AdapterOperationListener listener) {
             super(itemView);
             title = itemView.findViewById(R.id.job_title);
             company = itemView.findViewById(R.id.company);
@@ -205,12 +205,12 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             });
             Button button = itemView.findViewById(R.id.btn_back_info);
             button.setOnClickListener(v -> {
-                saveItemListener.onBackClicked();
+                adapterOperationListener.onBackClicked();
             });
             itemView.findViewById(R.id.comment).setOnClickListener(
-                    v -> saveItemListener.onCommentClicked());
+                    v -> adapterOperationListener.onCommentClicked());
             itemView.findViewById(R.id.apply).setOnClickListener(
-                    v -> saveItemListener.onApplyCLicked()
+                    v -> adapterOperationListener.onApplyCLicked()
             );
             saveText = itemView.findViewById(R.id.save_text);
         }
@@ -231,9 +231,9 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         private Button btnFourStar;
         private Button btnFiveStar;
         private Button sendComment;
-        private SaveItemListener listener;
+        private AdapterOperationListener listener;
 
-        public WriteCommentViewHolder(@NonNull View itemView, SaveItemListener listener) {
+        public WriteCommentViewHolder(@NonNull View itemView, AdapterOperationListener listener) {
             super(itemView);
             this.listener = listener;
             writeCommentUserId = itemView.findViewById(R.id.send_cmt_user_id);
@@ -268,6 +268,8 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         private void setVisible() {
             if (!visible) {
                 visible = true;
+                writeCommentBody.requestFocus();
+                adapterOperationListener.showKeyboard();
                 showComment.setVisibility(View.INVISIBLE);
                 invisibleBody.setVisibility(View.VISIBLE);
                 sendComment.setOnClickListener(view -> {
@@ -343,12 +345,13 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         }
     }
 
-    public interface SaveItemListener {
+    public interface AdapterOperationListener {
         void onSaveClicked();
         void onBackClicked();
         void onCommentClicked();
         void onApplyCLicked();
         void onSendClicked(int rating, String commentBody);
+        void showKeyboard();
         void sentInfo(String msg);
     }
 
