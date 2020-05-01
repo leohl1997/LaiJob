@@ -28,7 +28,7 @@ import java.util.Calendar;
 import java.util.List;
 
 public class JobInfoFragment extends BaseFragment<JobInfoViewModel, JobInfoRepository>
-        implements JobInfoRecyclerViewAdapter.SaveItemListener, JobInfoRecyclerViewAdapter.RemoteListener {
+        implements JobInfoRecyclerViewAdapter.AdapterOperationListener, JobInfoRecyclerViewAdapter.RemoteListener {
 
     private NavigationManager navigationManager;
     private JobInfoFragmentBinding binding;
@@ -125,6 +125,7 @@ public class JobInfoFragment extends BaseFragment<JobInfoViewModel, JobInfoRepos
     @Override
     public void onSendClicked(int rating, String commentBody) {
         Job currentJob = (Job) getArguments().getSerializable("job");
+        Utils.hideKeyboard(getActivity());
         CommentEvent commentEvent = new CommentEvent();
         commentEvent.commentText = commentBody;
         commentEvent.rating = rating;
@@ -133,6 +134,11 @@ public class JobInfoFragment extends BaseFragment<JobInfoViewModel, JobInfoRepos
         commentEvent.currentTime = DateUtil
                 .date2String(Calendar.getInstance().getTime());
         viewModel.setCommentEventMutableLiveData(commentEvent);
+    }
+
+    @Override
+    public void showKeyboard() {
+        Utils.showKeyboard(getActivity());
     }
 
     @Override
