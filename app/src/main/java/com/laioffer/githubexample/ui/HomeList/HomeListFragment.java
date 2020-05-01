@@ -104,7 +104,7 @@ public class HomeListFragment extends BaseFragment<HomeListViewModel, HomeListRe
         setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.home_list_fragment, container, false);
         animationView = view.findViewById(R.id.loading_animation);
-        animationView.setVisibility(View.VISIBLE);
+        //animationView.setVisibility(View.VISIBLE);
 
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         mactivity = (AppCompatActivity) getActivity();
