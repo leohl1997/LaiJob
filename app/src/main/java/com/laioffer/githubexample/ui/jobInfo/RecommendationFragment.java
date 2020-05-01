@@ -48,7 +48,7 @@ import com.laioffer.githubexample.util.Utils;
 import java.util.ArrayList;
 
 
-public class HomeListFragment extends BaseFragment<RecommendationViewModel, RecommendationRepository>
+public class RecommendationFragment extends BaseFragment<RecommendationViewModel, RecommendationRepository>
         implements ItemDataAdapter.OnNoteListener{
     SearchEvent searchEvent;
     private DrawerLayout drawerLayout;
@@ -58,7 +58,7 @@ public class HomeListFragment extends BaseFragment<RecommendationViewModel, Reco
 
     private ItemDataAdapter adapter = new ItemDataAdapter();
 
-    public HomeListFragment(SearchEvent searchEvent) {
+    public RecommendationFragment(SearchEvent searchEvent) {
         super();
         this.searchEvent = searchEvent;
 
@@ -69,8 +69,8 @@ public class HomeListFragment extends BaseFragment<RecommendationViewModel, Reco
         navigationManager = (NavigationManager) context;
     }
 
-    public static HomeListFragment newInstance(int filterRule, String keyWord) {
-        return new HomeListFragment(new SearchEvent(filterRule,keyWord));
+    public static RecommendationFragment newInstance(int filterRule, String keyWord) {
+        return new RecommendationFragment(new SearchEvent(filterRule,keyWord));
     }
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -94,114 +94,7 @@ public class HomeListFragment extends BaseFragment<RecommendationViewModel, Reco
     }
 
 
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
-        View view = inflater.inflate(R.layout.home_list_fragment, container, false);
 
-
-        Toolbar toolbar = view.findViewById(R.id.toolbar);
-        mactivity = (AppCompatActivity) getActivity();
-        assert mactivity != null;
-        mactivity.setSupportActionBar(toolbar);
-        ActionBar actionbar = mactivity.getSupportActionBar();
-        assert actionbar != null;
-        actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setHomeAsUpIndicator(R.drawable.baseline_home_black_18dp);
-        drawerLayout = view.findViewById(R.id.drawer_layout);
-
-        NavigationView navigationView = view.findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        // set item as selected to persist highlight
-                        menuItem.setChecked(true);
-                        // close drawer when item is tapped
-                        drawerLayout.closeDrawers();
-                        // Add code here to update the UI based on the item selected
-                        // For example, swap UI fragments here
-                        if (menuItem.getItemId() == R.id.drawer_logout) {
-                            Config.username = null;
-                            mactivity.finish();
-                        }
-                        if (menuItem.getItemId() == R.id.user_info) {
-                            Config.username = null;
-                            navigationManager.navigateTo(new UserInfoFragment());
-                        }
-                        if (menuItem.getItemId() == R.id.favorite) {
-                            Config.username = null;
-                            navigationManager.navigateTo(new FavoriteJobFragment());
-                        }
-                        if (menuItem.getItemId() == R.id.search) {
-                            Config.username = null;
-                            navigationManager.navigateTo(new SearchFragment());
-                        }
-                        return true;
-                    }
-                });
-
-        drawerLayout.addDrawerListener(
-                new DrawerLayout.DrawerListener() {
-                    @Override
-                    public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
-
-                    }
-
-                    @Override
-                    public void onDrawerOpened(@NonNull View drawerView) {
-                        final TextView user_textview = (TextView) drawerView.findViewById(R.id.user_name);
-                        final TextView location_textview = (TextView) drawerView.findViewById(R.id.user_location);
-
-//                        // Respond when the drawer is opened
-//                        mLocationTracker.getLocation();
-//                        final double longitude = mLocationTracker.getLongitude();
-//                        final double latitude = mLocationTracker.getLatitude();
-
-                        if (Config.username == null) {
-                            user_textview.setText("");
-                            location_textview.setText("");
-                        } else {
-                            user_textview.setText(Config.username);
-//                            location_textview.setText("Lat=" + new DecimalFormat(".##").
-//                                    format(latitude) + ",Lon=" + new DecimalFormat(".##").
-//                                    format(longitude));
-                        }
-                    }
-
-                    @Override
-                    public void onDrawerClosed(@NonNull View drawerView) {
-
-                    }
-
-                    @Override
-                    public void onDrawerStateChanged(int newState) {
-
-                    }
-                }
-        );
-
-
-        Button button1 = view.findViewById(R.id.search);
-        button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navigationManager.navigateTo(new SearchFragment());
-            }
-        });
-
-
-        ImageButton button3 = view.findViewById(R.id.HomeMap);
-        button3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navigationManager.navigateTo(new MapFragment());
-            }
-        });
-
-        return view;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -234,7 +127,7 @@ public class HomeListFragment extends BaseFragment<RecommendationViewModel, Reco
             @NonNull
             @Override
             public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-                return (T) new RecommendationRepository(getRepository());
+                return (T) new RecommendationViewModel(getRepository());
             }
         };
     }

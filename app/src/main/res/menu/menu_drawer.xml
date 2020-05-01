@@ -18,10 +18,10 @@
             android:icon="@drawable/baseline_favorite_black_18dp"
             android:title="Favorite" />
         <item
-            android:id="@+id/search"
+            android:id="@+id/recommendation"
             android:checked="false"
             android:icon="@drawable/baseline_search_black_18dp"
-            android:title="Search" />
+            android:title="Recommendation" />
         <item
         android:id="@+id/drawer_setting"
         android:checked="false"

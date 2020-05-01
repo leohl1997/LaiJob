@@ -35,6 +35,7 @@ import com.laioffer.githubexample.remote.response.UserInfo;
 import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.ui.favorite.FavoriteJobFragment;
 import com.laioffer.githubexample.ui.jobInfo.JobInfoFragment;
+import com.laioffer.githubexample.ui.jobInfo.RecommendationFragment;
 import com.laioffer.githubexample.ui.login.LoginViewModel;
 import com.laioffer.githubexample.ui.map.MapFragment;
 import com.laioffer.githubexample.ui.search.SearchEvent;
@@ -132,9 +133,9 @@ public class HomeListFragment extends BaseFragment<HomeListViewModel, HomeListRe
                             Config.username = null;
                             navigationManager.navigateTo(new FavoriteJobFragment());
                         }
-                        if (menuItem.getItemId() == R.id.search) {
+                        if (menuItem.getItemId() == R.id.recommendation) {
                             Config.username = null;
-                            navigationManager.navigateTo(new SearchFragment());
+                            navigationManager.navigateTo(new RecommendationFragment());
                         }
                         return true;
                     }
