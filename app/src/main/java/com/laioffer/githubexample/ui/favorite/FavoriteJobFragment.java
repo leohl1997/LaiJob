@@ -21,10 +21,12 @@ import com.laioffer.githubexample.R;
 import com.laioffer.githubexample.base.BaseFragment;
 import com.laioffer.githubexample.databinding.FavoriteJobFragmentBinding;
 import com.laioffer.githubexample.remote.response.Job;
+import com.laioffer.githubexample.ui.HomeList.HomeListFragment;
 import com.laioffer.githubexample.ui.HomeList.ItemDataAdapter;
 import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.ui.map.MapFragment;
 import com.laioffer.githubexample.ui.jobInfo.JobInfoFragment;
+import com.laioffer.githubexample.ui.search.SearchEvent;
 
 import java.util.ArrayList;
 
@@ -61,7 +63,7 @@ public class FavoriteJobFragment extends BaseFragment<FavoriteJobViewModel, Favo
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.backFab.setOnClickListener(v -> navigationManager.goBack());
+        binding.backFab.setOnClickListener(v ->  navigationManager.navigateTo(new HomeListFragment(new SearchEvent(0,""))));
         binding.FavInfo.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.FavInfo.setHasFixedSize(true);
         binding.FavInfo.setAdapter(adapter);

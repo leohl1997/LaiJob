@@ -31,7 +31,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 public class SearchFragment extends BaseFragment<SearchViewModel, SearchRepository> implements AdapterView.OnItemSelectedListener  {
-    SearchEvent searchEvent = new SearchEvent(0,"Developer");
+    SearchEvent searchEvent = new SearchEvent(0,"");
 
     private SearchViewModel mViewModel;
     EditText t1;
