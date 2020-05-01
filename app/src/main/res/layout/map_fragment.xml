@@ -50,7 +50,6 @@
             android:src="@drawable/ic_center"
             android:contentDescription="@string/bt_center"
             app:backgroundTint="@color/white"
-            app:maxImageSize="59dp"
             android:layout_margin="16dp" />
 
         <androidx.viewpager.widget.ViewPager
