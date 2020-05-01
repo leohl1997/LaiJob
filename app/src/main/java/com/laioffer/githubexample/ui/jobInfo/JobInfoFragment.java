@@ -20,11 +20,11 @@ import com.laioffer.githubexample.base.BaseFragment;
 import com.laioffer.githubexample.databinding.JobInfoFragmentBinding;
 import com.laioffer.githubexample.remote.response.Job;
 import com.laioffer.githubexample.ui.NavigationManager;
-import com.laioffer.githubexample.ui.comment.CommentEvent;
-import com.laioffer.githubexample.ui.comment.CommentFragment;
 import com.laioffer.githubexample.util.Config;
+import com.laioffer.githubexample.util.DateUtil;
 import com.laioffer.githubexample.util.Utils;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class JobInfoFragment extends BaseFragment<JobInfoViewModel, JobInfoRepository>
@@ -112,9 +112,7 @@ public class JobInfoFragment extends BaseFragment<JobInfoViewModel, JobInfoRepos
 
     @Override
     public void onCommentClicked() {
-        Job currentJob = (Job) getArguments().getSerializable("job");
-        CommentFragment commentFragment = CommentFragment.getInstance(currentJob);
-        navigationManager.navigateTo(commentFragment);
+
     }
 
     @Override
@@ -122,6 +120,24 @@ public class JobInfoFragment extends BaseFragment<JobInfoViewModel, JobInfoRepos
         Job currentJob = (Job) getArguments().getSerializable("job");
         WebFragment webFragment = WebFragment.getInstance(currentJob);
         navigationManager.navigateTo(webFragment);
+    }
+
+    @Override
+    public void onSendClicked(int rating, String commentBody) {
+        Job currentJob = (Job) getArguments().getSerializable("job");
+        CommentEvent commentEvent = new CommentEvent();
+        commentEvent.commentText = commentBody;
+        commentEvent.rating = rating;
+        commentEvent.itemId = currentJob.itemId;
+        commentEvent.userId = Config.userId;
+        commentEvent.currentTime = DateUtil
+                .date2String(Calendar.getInstance().getTime());
+        viewModel.setCommentEventMutableLiveData(commentEvent);
+    }
+
+    @Override
+    public void sentInfo(String msg) {
+        Utils.constructToast(getContext(), msg).show();
     }
 
     @Override
@@ -159,6 +175,15 @@ public class JobInfoFragment extends BaseFragment<JobInfoViewModel, JobInfoRepos
                     .average()
                     .orElse(0.0);
             adapter.getAvgRating().setText(String.format("%.1f", avg));
+        });
+    }
+
+    @Override
+    public void onSendEvent(LiveData<String> responseLiveData) {
+        Job currentJob = (Job) getArguments().getSerializable("job");
+        responseLiveData.observe( getViewLifecycleOwner(), msg -> {
+            Utils.constructToast(getContext(), msg).show();
+            viewModel.setJobIdLiveData(currentJob.itemId);
         });
     }
 }
