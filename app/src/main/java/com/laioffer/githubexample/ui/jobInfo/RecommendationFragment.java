@@ -16,6 +16,7 @@ import androidx.cardview.widget.CardView;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.laioffer.githubexample.R;
@@ -30,6 +31,8 @@ import com.laioffer.githubexample.ui.map.ShadowTransformer;
 import com.laioffer.githubexample.util.Utils;
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 
 public class RecommendationFragment extends BaseFragment<JobInfoViewModel, JobInfoRepository>
         implements ItemDataAdapter.OnNoteListener {
@@ -39,6 +42,7 @@ public class RecommendationFragment extends BaseFragment<JobInfoViewModel, JobIn
     private ItemDataAdapter adapter;
     private LinearLayoutManager linearLayoutManager;
     private CardView cardView;
+    private Object ItemDataAdapter;
 
     public static RecommendationFragment newInstance(Job job) {
 
@@ -90,14 +94,12 @@ public class RecommendationFragment extends BaseFragment<JobInfoViewModel, JobIn
         }
         return recommendationView;
 
-        CardFragmentPagerAdapter pagerAdapter = new CardFragmentPagerAdapter(getChildFragmentManager(), Utils.dpToPixels(2, getContext()), list);
+        List<Job> list;
+        ItemDataAdapter pagerAdapter = new ItemDataAdapter(getChildFragmentManager(), Utils.dpToPixels(2, getContext()), list);
         ShadowTransformer shadowTransformer = new ShadowTransformer(binding.recommendationCard, pagerAdapter);
 
-        binding.recommendationCard.setAdapter();
-        binding.recommendationCard.set(120);
-        binding.recommendationCard.set(false ,shadowTransformer);
-        binding.recommendationCard.setOffscreenPageLimit(3);
-        shadowTransformer.enableScaling(true);
+        binding.recommendationCard.setAdapter((RecyclerView.Adapter) ItemDataAdapter);
+        
 
 
     }
