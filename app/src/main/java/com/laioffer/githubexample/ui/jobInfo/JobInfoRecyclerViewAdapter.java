@@ -10,16 +10,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.laioffer.githubexample.R;
-import com.laioffer.githubexample.remote.response.Job;
-
 import com.laioffer.githubexample.remote.response.Item;
+import com.laioffer.githubexample.remote.response.Job;
 import com.laioffer.githubexample.util.Config;
 import com.laioffer.githubexample.util.Utils;
 import com.squareup.picasso.Picasso;
@@ -40,7 +40,7 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     private Button saveButton = null;
     private AdapterOperationListener adapterOperationListener;
 
-    public JobInfoRecyclerViewAdapter(Job job, AdapterOperationListener adapterOperationListener) {
+    JobInfoRecyclerViewAdapter(Job job, AdapterOperationListener adapterOperationListener) {
         this.adapterOperationListener = adapterOperationListener;
         itemArrayList = new ArrayList<>();
         itemArrayList.add(job);
@@ -99,13 +99,21 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             for (int i = 0; i < currentComment.rating; i++) {
                 ((CommentViewHolder) holder).stars.get(i).setImageResource(R.drawable.star_solid);
             }
+            Glide.with(context).setDefaultRequestOptions(new RequestOptions().circleCrop())
+                    .load(R.drawable.thumbnail)
+                    .placeholder(R.drawable.thumbnail)
+                    .into(((CommentViewHolder) holder).thumbnail);
         } else if (holder instanceof WriteCommentViewHolder) {
             ((WriteCommentViewHolder) holder).writeCommentUserId.setText(Config.userId);
+            Glide.with(context).setDefaultRequestOptions(new RequestOptions().circleCrop())
+                    .load(R.drawable.thumbnail)
+                    .placeholder(R.drawable.thumbnail)
+                    .into(((WriteCommentViewHolder) holder).imageView);
         }
 
     }
 
-    public void addAll(List<CommentEvent> comments) {
+    void addAll(List<CommentEvent> comments) {
         while (itemArrayList.size() > 2) {
             itemArrayList.remove(itemArrayList.size() - 1);
         }
@@ -127,11 +135,11 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         return TYPE_COMMENT;
     }
 
-    public TextView getCommentNumber() {
+    TextView getCommentNumber() {
         return commentNumber;
     }
 
-    public TextView getAvgRating() {
+    TextView getAvgRating() {
         return avgRating;
     }
 
@@ -139,12 +147,12 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         return saveButton;
     }
 
-    public TextView getSavedText() {
+    TextView getSavedText() {
         return saveText;
     }
 
     // comment view holder
-    class CommentViewHolder extends RecyclerView.ViewHolder {
+    static class CommentViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView thumbnail;
         private TextView userId;
@@ -182,7 +190,7 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         private TextView saveText;
         private Button saveButton;
 
-        public InfoViewHolder(@NonNull View itemView, AdapterOperationListener listener) {
+        InfoViewHolder(@NonNull View itemView, AdapterOperationListener listener) {
             super(itemView);
             title = itemView.findViewById(R.id.job_title);
             company = itemView.findViewById(R.id.company);
@@ -222,7 +230,6 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         private boolean visible = false;
         private TextView writeCommentUserId;
         private TextView showComment;
-        private CardView cardView;
         private ConstraintLayout invisibleBody;
         private EditText writeCommentBody;
         private Button btnOneStar;
@@ -232,12 +239,13 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         private Button btnFiveStar;
         private Button sendComment;
         private AdapterOperationListener listener;
+        private ImageView imageView;
 
-        public WriteCommentViewHolder(@NonNull View itemView, AdapterOperationListener listener) {
+        WriteCommentViewHolder(@NonNull View itemView, AdapterOperationListener listener) {
             super(itemView);
             this.listener = listener;
+            imageView = itemView.findViewById(R.id.send_cmt_thumbnail);
             writeCommentUserId = itemView.findViewById(R.id.send_cmt_user_id);
-            cardView = itemView.findViewById(R.id.write_comment_cardview);
             invisibleBody = itemView.findViewById(R.id.invisible_body);
             showComment = itemView.findViewById(R.id.textView_show_comment);
             sendComment = itemView.findViewById(R.id.btn_comment);
@@ -338,6 +346,7 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         @Override
         public void onClick(View v) {
             if (visible) {
+                listener.hideKeyboard();
                 setInvisible();
             } else {
                 setVisible();
@@ -352,6 +361,7 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         void onApplyCLicked();
         void onSendClicked(int rating, String commentBody);
         void showKeyboard();
+        void hideKeyboard();
         void sentInfo(String msg);
     }
 

@@ -182,7 +182,12 @@ public class HomeListFragment extends BaseFragment<HomeListViewModel, HomeListRe
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navigationManager.navigateTo(new MapFragment());
+                if (searchEvent == null || Utils.isNullOrEmpty(searchEvent.getKeyWord())) {
+                    navigationManager.navigateTo(new MapFragment());
+                } else {
+                    MapFragment mapFragment = MapFragment.getInstance(searchEvent.getKeyWord());
+                    navigationManager.navigateTo(mapFragment);
+                }
             }
         });
 

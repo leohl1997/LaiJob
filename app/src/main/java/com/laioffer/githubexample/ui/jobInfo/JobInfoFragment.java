@@ -28,7 +28,8 @@ import java.util.Calendar;
 import java.util.List;
 
 public class JobInfoFragment extends BaseFragment<JobInfoViewModel, JobInfoRepository>
-        implements JobInfoRecyclerViewAdapter.AdapterOperationListener, JobInfoRecyclerViewAdapter.RemoteListener {
+        implements JobInfoRecyclerViewAdapter.AdapterOperationListener
+        , JobInfoRecyclerViewAdapter.RemoteListener {
 
     private NavigationManager navigationManager;
     private JobInfoFragmentBinding binding;
@@ -139,6 +140,11 @@ public class JobInfoFragment extends BaseFragment<JobInfoViewModel, JobInfoRepos
     @Override
     public void showKeyboard() {
         Utils.showKeyboard(getActivity());
+    }
+
+    @Override
+    public void hideKeyboard() {
+        Utils.hideKeyboard(getActivity());
     }
 
     @Override
