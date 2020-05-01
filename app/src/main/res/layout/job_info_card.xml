@@ -23,6 +23,52 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Software Developer" />
 
+<<<<<<< HEAD
+    <LinearLayout
+        android:id="@+id/linearLayout5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/post_time">
+
+
+        <Button
+            android:id="@+id/comment"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="40dp"
+            android:background="@drawable/ic_comment_24dp"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="40dp"
+            android:layout_height="35dp"
+            android:layout_marginEnd="40dp"
+            android:background="@drawable/ic_star" />
+
+        <Button
+            android:id="@+id/save"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="40dp"
+            android:background="@drawable/ic_favorite"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/apply"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/ic_arrow_right"
+            android:textColor="@android:color/white" />
+
+    </LinearLayout>
+
+=======
+>>>>>>> 19d70e1b49d54c11a455e0ce694a33ef9f675446
     <TextView
         android:id="@+id/post_time"
         android:layout_width="wrap_content"
@@ -171,7 +217,7 @@
         android:id="@+id/button"
         android:layout_width="40dp"
         android:layout_height="35dp"
-        android:background="@drawable/ic_star"
+        android:background="@drawable/star_half"
         app:layout_constraintEnd_toStartOf="@+id/save"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/comment"
