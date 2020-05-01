@@ -42,35 +42,22 @@
 
 
 
-<<<<<<< HEAD
+
         </androidx.recyclerview.widget.RecyclerView>
-=======
-            android:src="@drawable/map_icon"
 
-            android:scaleType="fitXY"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
-
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/loading_animation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            android:layout_centerInParent="true"
             app:lottie_autoPlay="true"
             app:lottie_colorFilter="@color/white"
             app:lottie_loop="true"
             app:lottie_rawRes="@raw/loading" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
->>>>>>> 7725032a987316995125078660ce7d574322ef6c
+
 
         <Button
         android:id="@+id/HomeMap"
