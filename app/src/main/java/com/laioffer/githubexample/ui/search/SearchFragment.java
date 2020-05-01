@@ -52,8 +52,7 @@ public class SearchFragment extends BaseFragment<SearchViewModel, SearchReposito
     public void setFilterRule(int filterRule) {
         this.searchEvent.setFilterRule(filterRule);
     }
-    //private String [] data = {"Java","kotlin","C","C++","C#","Python","PHP","JavaScript"};
-    //
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -115,11 +114,13 @@ public class SearchFragment extends BaseFragment<SearchViewModel, SearchReposito
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String item = data.get(position);
-//                //HashMap<String,String> map=(HashMap<String,String>)binding.listview.getItemAtPosition(position);
                 EditText mEdit = (SearchView.SearchAutoComplete)binding.searchView.findViewById(R.id.search_src_text);
                 mEdit.setText(item);
                 binding.searchView.setSubmitButtonEnabled(true);
             }
+        });
+        binding.button.setOnClickListener(v -> {
+            navigationManager.navigateTo(new HomeListFragment(searchEvent));
         });
 
         return binding.getRoot();
