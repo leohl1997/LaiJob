@@ -18,7 +18,7 @@
             android:layout_alignParentTop="true"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/side"
+            android:background="@color/grey"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:layout_constraintTop_toTopOf="parent" />
         <Button
@@ -37,7 +37,6 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_marginTop="10dp"
             android:id="@+id/JobInfo"
             android:layout_width="match_parent"
 
