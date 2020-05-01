@@ -5,23 +5,27 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import androidx.cardview.widget.CardView;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 
+import com.laioffer.githubexample.R;
 import com.laioffer.githubexample.base.BaseFragment;
 import com.laioffer.githubexample.databinding.JobInfoFragmentBinding;
 import com.laioffer.githubexample.remote.response.Job;
 import com.laioffer.githubexample.ui.HomeList.ItemDataAdapter;
 import com.laioffer.githubexample.ui.NavigationManager;
-
-
+import com.laioffer.githubexample.ui.map.CardAdapter;
+import com.squareup.picasso.Picasso;
 
 
 public class RecommendationFragment extends BaseFragment<JobInfoViewModel, JobInfoRepository>
@@ -31,6 +35,7 @@ public class RecommendationFragment extends BaseFragment<JobInfoViewModel, JobIn
     private JobInfoFragmentBinding binding;
     private ItemDataAdapter adapter;
     private LinearLayoutManager linearLayoutManager;
+    private CardView cardView;
 
     public static RecommendationFragment newInstance(Job job) {
 
@@ -54,19 +59,33 @@ public class RecommendationFragment extends BaseFragment<JobInfoViewModel, JobIn
         navigationManager = (NavigationManager) context;
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public View onViewCreated(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Job currentJob = (Job) getArguments().getSerializable("job");
-        if (currentJob == null) {
-            return;
+
+        View recommendationView = inflater.inflate(R.layout.map_card, container, false);
+        cardView = recommendationView.findViewById(R.id.map_card_view);
+        cardView.setMaxCardElevation(cardView.getCardElevation() *
+                CardAdapter.MAX_ELEVATION_FACTOR);
+        Job job = (Job) getArguments().getSerializable("job");
+        TextView title = recommendationView.findViewById(R.id.cv_title);
+        title.setText(job.name);
+        TextView companyName = recommendationView.findViewById(R.id.cv_company_name);
+        companyName.setText(job.company);
+        TextView location = recommendationView.findViewById(R.id.cv_location);
+        location.setText(job.address);
+        cardView.setOnClickListener( v -> {
+            JobInfoFragment fragment = JobInfoFragment.newInstance(job);
+            navigationManager.navigateTo(fragment);
+        });
+        ImageView imageView = recommendationView.findViewById(R.id.cvImg_info);
+        if (!job.imageUrl.isEmpty()) {
+            Picasso.get().setLoggingEnabled(true);
+            Picasso.get().load(job.imageUrl).placeholder(R.drawable.ic_center)
+                    .resize(70,70)
+                    .into(imageView);
+
         }
-
-
-        linearLayoutManager = new LinearLayoutManager(getContext());
-        binding.recommendationCard.setLayoutManager(linearLayoutManager);
-        binding.recommendationCard.setAdapter(adapter);
-        viewModel.setJobIdLiveData(currentJob.itemId);
+        return recommendationView;
 
 
     }
