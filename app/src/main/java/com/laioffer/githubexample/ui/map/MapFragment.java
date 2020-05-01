@@ -210,12 +210,10 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
         googleMap.setOnInfoWindowClickListener(this);
         if (viewModel.getSavedJob().isEmpty()) {
             Bundle args = getArguments();
-            assert args != null;
-            String keyword = args.getString("keyword");
-            if (Utils.isNullOrEmpty(keyword)) {
-                viewModel.setSearchEvent(args.getString(""));
-            } else {
+            if (args == null || Utils.isNullOrEmpty(args.getString("keyword"))) {
                 viewModel.setSearchEvent("");
+            } else {
+                viewModel.setSearchEvent(args.getString("keyword"));
             }
         } else {
             addJobToMap(viewModel.getSavedJob());
