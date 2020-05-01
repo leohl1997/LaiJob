@@ -94,8 +94,6 @@ public class SearchFragment extends BaseFragment<SearchViewModel, SearchReposito
         t1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Utils.constructToast(getContext(),searchEvent.getKeyWord()).show();
-                searchEvent.setKeyWord(t1.getText().toString());
             }
         });
 
@@ -107,6 +105,7 @@ public class SearchFragment extends BaseFragment<SearchViewModel, SearchReposito
                     searchEvent = new SearchEvent(0,"Developer");
                 }
                 // Utils.constructToast(getContext(),searchEvent.getKeyWord()).show();
+                searchEvent.setKeyWord(t1.getText().toString());
                 navigationManager.navigateTo(new HomeListFragment(searchEvent));
             }
         });
