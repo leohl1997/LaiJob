@@ -35,7 +35,6 @@ public class LoginFragment extends BaseFragment<LoginViewModel, LoginRepository>
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = LoginFragmentBinding.inflate(inflater, container, false);
-        viewModel.login(null);
         return binding.getRoot();
     }
 
@@ -49,10 +48,6 @@ public class LoginFragment extends BaseFragment<LoginViewModel, LoginRepository>
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding.btnLogin.setOnClickListener( v -> {
-
-//            UserInfo userInfo = new UserInfo();
-//            userInfo.profile.user_id = binding.etUserIdLogin.getText().toString();
-
             viewModel.login(new LoginEvent(binding.etUserIdLogin.getText().toString(),
                     Utils.md5Encryption(binding.etPasswordLogin.getText().toString())));  // faker user info
         });
@@ -61,6 +56,7 @@ public class LoginFragment extends BaseFragment<LoginViewModel, LoginRepository>
                 Utils.constructToast(getContext(), "Login success!").show();
                 Config.userId = it.response.userId;
                 Config.username = it.response.name;
+                viewModel.setNull();
                 navigationManager.navigateTo(new HomeListFragment(new SearchEvent(0,"Developer")));
             } else {
                 Utils.constructToast(getContext(), it == null ? "Error !" : it.status).show();
