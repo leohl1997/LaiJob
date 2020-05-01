@@ -1,8 +1,7 @@
-package com.laioffer.githubexample.ui.comment;
+package com.laioffer.githubexample.ui.jobInfo;
 
 import com.google.gson.annotations.SerializedName;
-
-import java.util.Date;
+import com.laioffer.githubexample.remote.response.Item;
 
 public class CommentEvent extends Item {
     @SerializedName("user_id")

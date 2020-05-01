@@ -3,9 +3,7 @@ package com.laioffer.githubexample.ui.jobInfo;
 import androidx.lifecycle.MutableLiveData;
 
 import com.laioffer.githubexample.base.BaseRepository;
-import com.laioffer.githubexample.remote.response.Job;
 import com.laioffer.githubexample.remote.response.RemoteResponse;
-import com.laioffer.githubexample.ui.comment.CommentEvent;
 
 import java.util.List;
 
@@ -86,5 +84,29 @@ public class JobInfoRepository extends BaseRepository {
             }
         });
         return responseLiveDate;
+    }
+
+    public MutableLiveData<String> comment(CommentEvent commentEvent) {
+        MutableLiveData<String> stringMutableLiveData = new MutableLiveData<>();
+        Call<RemoteResponse<CommentEvent>> call = apiService.sendComment(commentEvent);
+        call.enqueue(new Callback<RemoteResponse<CommentEvent>>() {
+            @EverythingIsNonNull
+            @Override
+            public void onResponse(Call<RemoteResponse<CommentEvent>> call,
+                                   Response<RemoteResponse<CommentEvent>> response) {
+                if (response.code() == 200) {
+                    stringMutableLiveData.postValue("Success!");
+                } else {
+                    stringMutableLiveData.postValue("Error! " + Integer.toString(response.code()));
+                }
+            }
+
+            @EverythingIsNonNull
+            @Override
+            public void onFailure(Call<RemoteResponse<CommentEvent>> call, Throwable t) {
+                stringMutableLiveData.postValue(t.getMessage());
+            }
+        });
+        return stringMutableLiveData;
     }
 }

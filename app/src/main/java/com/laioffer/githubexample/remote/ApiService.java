@@ -1,13 +1,12 @@
 package com.laioffer.githubexample.remote;
 
 import com.laioffer.githubexample.remote.response.BaseResponse;
-import com.laioffer.githubexample.remote.response.Education;
 import com.laioffer.githubexample.remote.response.Job;
 import com.laioffer.githubexample.remote.response.RemoteResponse;
 import com.laioffer.githubexample.remote.response.UserInfo;
 import com.laioffer.githubexample.ui.HomeList.TokenEvent;
 import com.laioffer.githubexample.remote.response.UserProfile;
-import com.laioffer.githubexample.ui.comment.CommentEvent;
+import com.laioffer.githubexample.ui.jobInfo.CommentEvent;
 
 import com.laioffer.githubexample.ui.editEdu.EditEduEvent;
 import com.laioffer.githubexample.ui.editProfile.EditProfileEvent;

@@ -1,13 +1,6 @@
 package com.laioffer.githubexample.ui.jobInfo;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Transformations;
-
 import com.laioffer.githubexample.base.BaseViewModel;
-import com.laioffer.githubexample.ui.comment.CommentEvent;
-
-import java.util.List;
 
 public class JobInfoViewModel extends BaseViewModel<JobInfoRepository> {
 
@@ -27,6 +20,10 @@ public class JobInfoViewModel extends BaseViewModel<JobInfoRepository> {
 
     public void setSaveEvent(SaveEvent saveEvent) {
         remoteListener.onSaveEvent(repository.save(saveEvent));
+    }
+
+    public void setCommentEventMutableLiveData(CommentEvent commentEvent) {
+        remoteListener.onSendEvent(repository.comment(commentEvent));
     }
 
 
