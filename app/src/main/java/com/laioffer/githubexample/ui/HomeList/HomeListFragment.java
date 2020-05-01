@@ -1,5 +1,6 @@
 package com.laioffer.githubexample.ui.HomeList;
 
+import androidx.annotation.DrawableRes;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -25,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -105,7 +107,6 @@ public class HomeListFragment extends BaseFragment<HomeListViewModel, HomeListRe
         View view = inflater.inflate(R.layout.home_list_fragment, container, false);
         animationView = view.findViewById(R.id.loading_animation);
         //animationView.setVisibility(View.VISIBLE);
-
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         mactivity = (AppCompatActivity) getActivity();
         assert mactivity != null;
@@ -115,7 +116,10 @@ public class HomeListFragment extends BaseFragment<HomeListViewModel, HomeListRe
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.baseline_home_black_18dp);
         drawerLayout = view.findViewById(R.id.drawer_layout);
-
+        ImageView im = view.findViewById(R.id.Image_search);
+        im.setOnClickListener(v -> {
+            navigationManager.navigateTo(new SearchFragment());
+        });
         NavigationView navigationView = view.findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
@@ -172,15 +176,6 @@ public class HomeListFragment extends BaseFragment<HomeListViewModel, HomeListRe
                     }
                 }
         );
-
-
-        SearchView sview = view.findViewById(R.id.search);
-        sview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navigationManager.navigateTo(new SearchFragment());
-            }
-        });
 
 
         Button button3 = view.findViewById(R.id.HomeMap);
