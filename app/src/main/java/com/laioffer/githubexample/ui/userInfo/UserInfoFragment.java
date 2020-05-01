@@ -120,7 +120,7 @@ public class UserInfoFragment extends BaseFragment<UserInfoViewModel, UserInfoRe
             showChoosePicDialog();
         });
         binding.saveProfile.setOnClickListener(v -> {
-            navigationManager.navigateTo(new HomeListFragment(new SearchEvent(0,"Developer")));
+            navigationManager.navigateTo(new HomeListFragment(new SearchEvent(0,"")));
         });
         return binding.getRoot();
     }
