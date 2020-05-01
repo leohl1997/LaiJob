@@ -21,25 +21,30 @@ import retrofit2.internal.EverythingIsNonNull;
 
 public class RecommendationRepository extends BaseRepository {
 
-    public MutableLiveData<List<Job>> recommendation() {
-        final MutableLiveData<List<Job>> result = new MutableLiveData<>();
-        // retrieve user-related data
-        Call<RemoteResponse<List<Job>>> call = apiService.getRecommendation(Config.latitude,
-                Config.longitude,
-                Config.userId );
+    MutableLiveData<List<Job>> recommendation() {
+        MutableLiveData<List<Job>> listMutableLiveData = new MutableLiveData<>();
+        Call<RemoteResponse<List<Job>>> call = apiService
+                .getRecommendation(Config.latitude, Config.longitude, Config.userId);
         call.enqueue(new Callback<RemoteResponse<List<Job>>>() {
+            @EverythingIsNonNull
             @Override
             public void onResponse(Call<RemoteResponse<List<Job>>> call, Response<RemoteResponse<List<Job>>> response) {
-                result.postValue(response.body().response);
+                if (response.code() == 200) {
+                    RemoteResponse<List<Job>> list = response.body();
+                    listMutableLiveData.postValue(response.body().response);
+                } else {
+                    listMutableLiveData.postValue(null);
+                }
             }
 
+            @EverythingIsNonNull
             @Override
             public void onFailure(Call<RemoteResponse<List<Job>>> call, Throwable t) {
-                result.postValue(null);
+                listMutableLiveData.postValue(null);
             }
         });
+        return listMutableLiveData;
 
-        return result;
     }
 
 

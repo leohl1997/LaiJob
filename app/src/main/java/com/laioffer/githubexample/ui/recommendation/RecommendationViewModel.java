@@ -16,13 +16,11 @@ public class RecommendationViewModel extends BaseViewModel<RecommendationReposit
     RecommendationViewModel(RecommendationRepository baseRepository) {
         super(baseRepository);
     }
-    private MutableLiveData<List<Job>> ListJobMutableLiveData;
 
 
     public MutableLiveData<List<Job>> getListJobMutableLiveData(){
 
-        ListJobMutableLiveData = repository.recommendation();
-        return ListJobMutableLiveData;
+        return repository.recommendation();
 
     }
 

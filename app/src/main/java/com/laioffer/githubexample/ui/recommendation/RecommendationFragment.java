@@ -1,49 +1,25 @@
 package com.laioffer.githubexample.ui.recommendation;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
-
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.TextView;
-
-import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.laioffer.githubexample.R;
 import com.laioffer.githubexample.base.BaseFragment;
 import com.laioffer.githubexample.remote.response.Job;
-import com.laioffer.githubexample.remote.response.UserInfo;
-
-import com.laioffer.githubexample.ui.HomeList.HomeListRepository;
 import com.laioffer.githubexample.ui.HomeList.ItemDataAdapter;
 import com.laioffer.githubexample.ui.NavigationManager;
-import com.laioffer.githubexample.ui.favorite.FavoriteJobFragment;
 import com.laioffer.githubexample.ui.jobInfo.JobInfoFragment;
-import com.laioffer.githubexample.ui.login.LoginViewModel;
-import com.laioffer.githubexample.ui.map.MapFragment;
-import com.laioffer.githubexample.ui.search.SearchEvent;
-import com.laioffer.githubexample.ui.search.SearchFragment;
-import com.laioffer.githubexample.ui.userInfo.UserInfoFragment;
-import com.laioffer.githubexample.util.Config;
-import com.laioffer.githubexample.util.Utils;
 
 import java.util.ArrayList;
 
@@ -51,14 +27,14 @@ import java.util.ArrayList;
 public class RecommendationFragment extends BaseFragment<RecommendationViewModel, RecommendationRepository>
         implements ItemDataAdapter.OnNoteListener{
 
-    private DrawerLayout drawerLayout;
-    private AppCompatActivity mactivity;
-
     private NavigationManager navigationManager;
-
     private ItemDataAdapter adapter = new ItemDataAdapter();
 
-
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.favorite_job_fragment, container, false);
+        return view;
+    }
 
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -70,33 +46,21 @@ public class RecommendationFragment extends BaseFragment<RecommendationViewModel
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //you can set the title for your toolbar here for different fragments different titles
-        RecyclerView rv = view.findViewById(R.id.JobInfo);
-
+        RecyclerView rv = view.findViewById(R.id.FavInfo);
+        FloatingActionButton backFab = view.findViewById(R.id.backFab);
+        backFab.setOnClickListener(v -> navigationManager.goBack());
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
         rv.setHasFixedSize(true);
         rv.setAdapter(adapter);
+        viewModel.getListJobMutableLiveData().observe(getViewLifecycleOwner(), list -> {
+            if (list == null || list.size() == 0) {
+                return;
+            }
+            adapter.setItems(new ArrayList<>(list));
+            adapter.setOnNoteListener(this);
+            adapter.notifyDataSetChanged();
+        });
 
-    }
-
-
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                drawerLayout.openDrawer(GravityCompat.START);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        //mViewModel = ViewModelProviders.of(this).get(HomeListViewModel.class);
-        // TODO: Use the ViewModel
     }
 
 
