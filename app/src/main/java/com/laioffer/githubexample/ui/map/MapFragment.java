@@ -205,12 +205,12 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
         this.googleMap = googleMap;
         this.googleMap.setMapStyle(MapStyleOptions
                 .loadRawResourceStyle(Objects.requireNonNull(getActivity()), R.raw.style_json));
-
         setMarkerAtCurrentPosition();
         googleMap.setInfoWindowAdapter(this);
         googleMap.setOnInfoWindowClickListener(this);
         if (viewModel.getSavedJob().isEmpty()) {
             Bundle args = getArguments();
+            assert args != null;
             String keyword = args.getString("keyword");
             if (Utils.isNullOrEmpty(keyword)) {
                 viewModel.setSearchEvent(args.getString(""));
