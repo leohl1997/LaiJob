@@ -14,7 +14,7 @@
     <string name="Comment">Comment</string>
     <string name="Submit">Submit</string>
     <string name="Back">Back</string>
-    <string name="Rating">Tap a Star to Rate</string>
+    <string name="Rating">Tap to Rate</string>
     <string name="comment_hint">Write Your Comments Here</string>
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -26,4 +26,5 @@
     <string name="saved">Saved</string>
     <string name="apply">Apply</string>
     <string name="msg_token_fmt">InstanceID Token: %s</string>
+    <string name="show_comment_hint">Write your comment and Rating here…</string>
 </resources>

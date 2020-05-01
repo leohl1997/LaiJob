@@ -54,7 +54,7 @@ public class CardFragment extends Fragment {
         ImageView imageView = view.findViewById(R.id.cvImg_info);
         if (!job.imageUrl.isEmpty()) {
             Picasso.get().setLoggingEnabled(true);
-            Picasso.get().load(job.imageUrl).placeholder(R.drawable.ic_center)
+            Picasso.get().load(job.imageUrl).placeholder(R.drawable.thumbnail)
                     .resize(70,70)
                     .into(imageView);
 
