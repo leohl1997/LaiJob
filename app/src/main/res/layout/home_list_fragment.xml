@@ -23,14 +23,31 @@
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:layout_constraintTop_toTopOf="parent" >
 
-            <androidx.appcompat.widget.SearchView
-                android:id="@+id/search"
-                android:layout_width="match_parent"
+        <RelativeLayout
+            android:id="@+id/rl_home"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/tx_home"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                app:iconifiedByDefault="false"
-                app:queryHint="请输入搜索内容" />
+                android:layout_centerVertical="true"
+                android:layout_marginStart="85dp"
+                android:text="Lai Job"
+                android:textSize="30dp"
+                android:src="@drawable/btn_click_style">
+            </TextView>
 
+            <ImageView
+                android:id="@+id/Image_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_search"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/tx_home"
+                android:layout_marginStart="100dp">
+            </ImageView>
+         </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
 
         <androidx.recyclerview.widget.RecyclerView
