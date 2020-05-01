@@ -1,112 +1,231 @@
 package com.laioffer.githubexample.ui.jobInfo;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
+
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-import androidx.cardview.widget.CardView;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
+import com.google.android.material.navigation.NavigationView;
 import com.laioffer.githubexample.R;
 import com.laioffer.githubexample.base.BaseFragment;
-import com.laioffer.githubexample.databinding.JobInfoFragmentBinding;
 import com.laioffer.githubexample.remote.response.Job;
+import com.laioffer.githubexample.remote.response.UserInfo;
+
+import com.laioffer.githubexample.ui.HomeList.HomeListRepository;
 import com.laioffer.githubexample.ui.HomeList.ItemDataAdapter;
 import com.laioffer.githubexample.ui.NavigationManager;
-import com.laioffer.githubexample.ui.map.CardAdapter;
-import com.laioffer.githubexample.ui.map.CardFragmentPagerAdapter;
-import com.laioffer.githubexample.ui.map.ShadowTransformer;
+import com.laioffer.githubexample.ui.favorite.FavoriteJobFragment;
+import com.laioffer.githubexample.ui.jobInfo.JobInfoFragment;
+import com.laioffer.githubexample.ui.login.LoginViewModel;
+import com.laioffer.githubexample.ui.map.MapFragment;
+import com.laioffer.githubexample.ui.search.SearchEvent;
+import com.laioffer.githubexample.ui.search.SearchFragment;
+import com.laioffer.githubexample.ui.userInfo.UserInfoFragment;
+import com.laioffer.githubexample.util.Config;
 import com.laioffer.githubexample.util.Utils;
-import com.squareup.picasso.Picasso;
 
-import java.util.List;
+import java.util.ArrayList;
 
 
-public class RecommendationFragment extends BaseFragment<JobInfoViewModel, JobInfoRepository>
-        implements ItemDataAdapter.OnNoteListener {
+public class HomeListFragment extends BaseFragment<RecommendationViewModel, RecommendationRepository>
+        implements ItemDataAdapter.OnNoteListener{
+    SearchEvent searchEvent;
+    private DrawerLayout drawerLayout;
+    private AppCompatActivity mactivity;
 
     private NavigationManager navigationManager;
-    private JobInfoFragmentBinding binding;
-    private ItemDataAdapter adapter;
-    private LinearLayoutManager linearLayoutManager;
-    private CardView cardView;
-    private Object ItemDataAdapter;
 
-    public static RecommendationFragment newInstance(Job job) {
+    private ItemDataAdapter adapter = new ItemDataAdapter();
 
-        RecommendationFragment recommendationFragment = new RecommendationFragment();
-        Bundle args = new Bundle();
-        args.putSerializable("job", job);
-        recommendationFragment.setArguments(args);
-        return recommendationFragment;
+    public HomeListFragment(SearchEvent searchEvent) {
+        super();
+        this.searchEvent = searchEvent;
+
     }
 
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        binding = JobInfoFragmentBinding.inflate(inflater, container, false);
-        return binding.getRoot();
-    }
-
-    @Override
-    public void onAttach(@NonNull Context context) {
+    public void onAttach(Context context) {
         super.onAttach(context);
         navigationManager = (NavigationManager) context;
     }
 
-    public View onViewCreated(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @NonNull View view, @Nullable Bundle savedInstanceState) {
+    public static HomeListFragment newInstance(int filterRule, String keyWord) {
+        return new HomeListFragment(new SearchEvent(filterRule,keyWord));
+    }
+
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        //you can set the title for your toolbar here for different fragments different titles
+        RecyclerView rv = view.findViewById(R.id.JobInfo);
 
-        View recommendationView = inflater.inflate(R.layout.map_card, container, false);
-        cardView = recommendationView.findViewById(R.id.map_card_view);
-        cardView.setMaxCardElevation(cardView.getCardElevation() *
-                CardAdapter.MAX_ELEVATION_FACTOR);
-        Job job = (Job) getArguments().getSerializable("job");
-        TextView title = recommendationView.findViewById(R.id.cv_title);
-        title.setText(job.name);
-        TextView companyName = recommendationView.findViewById(R.id.cv_company_name);
-        companyName.setText(job.company);
-        TextView location = recommendationView.findViewById(R.id.cv_location);
-        location.setText(job.address);
-        cardView.setOnClickListener( v -> {
-            JobInfoFragment fragment = JobInfoFragment.newInstance(job);
-            navigationManager.navigateTo(fragment);
+        rv.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv.setHasFixedSize(true);
+        rv.setAdapter(adapter);
+        getAllItem(searchEvent.getKeyWord());
+    }
+
+    private void getAllItem(String keyWord) {
+
+        viewModel.getListJobMutableLiveData(keyWord).observe(getViewLifecycleOwner(), list -> {
+            adapter.setItems(new ArrayList<>(list),searchEvent.getFilterRule());
+            adapter.setOnNoteListener(this);
+            adapter.notifyDataSetChanged();
         });
-        ImageView imageView = recommendationView.findViewById(R.id.cvImg_info);
-        if (!job.imageUrl.isEmpty()) {
-            Picasso.get().setLoggingEnabled(true);
-            Picasso.get().load(job.imageUrl).placeholder(R.drawable.ic_center)
-                    .resize(70,70)
-                    .into(imageView);
-
-        }
-        return recommendationView;
-
-        List<Job> list;
-        ItemDataAdapter pagerAdapter = new ItemDataAdapter(getChildFragmentManager(), Utils.dpToPixels(2, getContext()), list);
-        ShadowTransformer shadowTransformer = new ShadowTransformer(binding.recommendationCard, pagerAdapter);
-
-        binding.recommendationCard.setAdapter((RecyclerView.Adapter) ItemDataAdapter);
-        
+    }
 
 
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        View view = inflater.inflate(R.layout.home_list_fragment, container, false);
+
+
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
+        mactivity = (AppCompatActivity) getActivity();
+        assert mactivity != null;
+        mactivity.setSupportActionBar(toolbar);
+        ActionBar actionbar = mactivity.getSupportActionBar();
+        assert actionbar != null;
+        actionbar.setDisplayHomeAsUpEnabled(true);
+        actionbar.setHomeAsUpIndicator(R.drawable.baseline_home_black_18dp);
+        drawerLayout = view.findViewById(R.id.drawer_layout);
+
+        NavigationView navigationView = view.findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        // set item as selected to persist highlight
+                        menuItem.setChecked(true);
+                        // close drawer when item is tapped
+                        drawerLayout.closeDrawers();
+                        // Add code here to update the UI based on the item selected
+                        // For example, swap UI fragments here
+                        if (menuItem.getItemId() == R.id.drawer_logout) {
+                            Config.username = null;
+                            mactivity.finish();
+                        }
+                        if (menuItem.getItemId() == R.id.user_info) {
+                            Config.username = null;
+                            navigationManager.navigateTo(new UserInfoFragment());
+                        }
+                        if (menuItem.getItemId() == R.id.favorite) {
+                            Config.username = null;
+                            navigationManager.navigateTo(new FavoriteJobFragment());
+                        }
+                        if (menuItem.getItemId() == R.id.search) {
+                            Config.username = null;
+                            navigationManager.navigateTo(new SearchFragment());
+                        }
+                        return true;
+                    }
+                });
+
+        drawerLayout.addDrawerListener(
+                new DrawerLayout.DrawerListener() {
+                    @Override
+                    public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+
+                    }
+
+                    @Override
+                    public void onDrawerOpened(@NonNull View drawerView) {
+                        final TextView user_textview = (TextView) drawerView.findViewById(R.id.user_name);
+                        final TextView location_textview = (TextView) drawerView.findViewById(R.id.user_location);
+
+//                        // Respond when the drawer is opened
+//                        mLocationTracker.getLocation();
+//                        final double longitude = mLocationTracker.getLongitude();
+//                        final double latitude = mLocationTracker.getLatitude();
+
+                        if (Config.username == null) {
+                            user_textview.setText("");
+                            location_textview.setText("");
+                        } else {
+                            user_textview.setText(Config.username);
+//                            location_textview.setText("Lat=" + new DecimalFormat(".##").
+//                                    format(latitude) + ",Lon=" + new DecimalFormat(".##").
+//                                    format(longitude));
+                        }
+                    }
+
+                    @Override
+                    public void onDrawerClosed(@NonNull View drawerView) {
+
+                    }
+
+                    @Override
+                    public void onDrawerStateChanged(int newState) {
+
+                    }
+                }
+        );
+
+
+        Button button1 = view.findViewById(R.id.search);
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigationManager.navigateTo(new SearchFragment());
+            }
+        });
+
+
+        ImageButton button3 = view.findViewById(R.id.HomeMap);
+        button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigationManager.navigateTo(new MapFragment());
+            }
+        });
+
+        return view;
     }
 
     @Override
-    protected JobInfoViewModel getViewModel() {
-        return new ViewModelProvider(requireActivity(), getFactory()).get(JobInfoViewModel.class);
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                drawerLayout.openDrawer(GravityCompat.START);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        //mViewModel = ViewModelProviders.of(this).get(HomeListViewModel.class);
+        // TODO: Use the ViewModel
+    }
+
+
+
+    @Override
+    protected RecommendationViewModel getViewModel() {
+        return new ViewModelProvider(requireActivity(), getFactory()).get(RecommendationViewModel.class);
     }
 
     @Override
@@ -115,19 +234,22 @@ public class RecommendationFragment extends BaseFragment<JobInfoViewModel, JobIn
             @NonNull
             @Override
             public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-                return (T) new JobInfoViewModel(getRepository());
+                return (T) new RecommendationRepository(getRepository());
             }
         };
     }
 
     @Override
-    protected JobInfoRepository getRepository() {
-        return new JobInfoRepository();
+    protected RecommendationRepository getRepository() {
+        return new RecommendationRepository();
     }
-
 
     @Override
     public void onNoteClick(int position, ItemDataAdapter adapter) {
+        Job current = adapter.getItem(position);
+        JobInfoFragment fragment = JobInfoFragment.newInstance(current);
+        //Utils.constructToast(getContext(),current.getJobDescription()).show();
+        navigationManager.navigateTo(fragment);
 
     }
 }
