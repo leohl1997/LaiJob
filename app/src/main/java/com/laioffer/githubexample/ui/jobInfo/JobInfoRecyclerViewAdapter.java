@@ -346,6 +346,7 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         @Override
         public void onClick(View v) {
             if (visible) {
+                listener.hideKeyboard();
                 setInvisible();
             } else {
                 setVisible();
@@ -360,6 +361,7 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         void onApplyCLicked();
         void onSendClicked(int rating, String commentBody);
         void showKeyboard();
+        void hideKeyboard();
         void sentInfo(String msg);
     }
 
