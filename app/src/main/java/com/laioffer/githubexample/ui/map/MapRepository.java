@@ -19,13 +19,12 @@ public class MapRepository extends BaseRepository {
         MutableLiveData<List<Job>> listMutableLiveData = new MutableLiveData<>();
         Call<RemoteResponse<List<Job>>> call = apiService.search(Config.latitude,
                 Config.longitude,
-                Config.userId,"Developer");
+                Config.userId,keyword);
         call.enqueue(new Callback<RemoteResponse<List<Job>>>() {
             @EverythingIsNonNull
             @Override
             public void onResponse(Call<RemoteResponse<List<Job>>> call, Response<RemoteResponse<List<Job>>> response) {
                 if (response.code() == 200) {
-                    RemoteResponse<List<Job>> list = response.body();
                     listMutableLiveData.postValue(response.body().response);
                 } else {
                     listMutableLiveData.postValue(null);

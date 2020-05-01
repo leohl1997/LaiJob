@@ -85,6 +85,9 @@ public class HomeListFragment extends BaseFragment<HomeListViewModel, HomeListRe
     private void getAllItem(String keyWord) {
 
         viewModel.getListJobMutableLiveData(keyWord).observe(getViewLifecycleOwner(), list -> {
+            if (list == null) {
+                return;
+            }
             adapter.setItems(new ArrayList<>(list),searchEvent.getFilterRule());
             adapter.setOnNoteListener(this);
             adapter.notifyDataSetChanged();
