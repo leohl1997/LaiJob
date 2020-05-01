@@ -26,6 +26,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.navigation.NavigationView;
 import com.laioffer.githubexample.R;
 import com.laioffer.githubexample.base.BaseFragment;
@@ -51,7 +52,7 @@ public class HomeListFragment extends BaseFragment<HomeListViewModel, HomeListRe
     SearchEvent searchEvent;
     private DrawerLayout drawerLayout;
     private AppCompatActivity mactivity;
-
+    private LottieAnimationView animationView;
     private NavigationManager navigationManager;
 
     private ItemDataAdapter adapter = new ItemDataAdapter();
@@ -85,7 +86,9 @@ public class HomeListFragment extends BaseFragment<HomeListViewModel, HomeListRe
     private void getAllItem(String keyWord) {
 
         viewModel.getListJobMutableLiveData(keyWord).observe(getViewLifecycleOwner(), list -> {
-            if (list == null) {
+            animationView.setVisibility(View.INVISIBLE);
+            if (list == null || list.size() == 0) {
+                Utils.constructToast(getContext(),"Loading failed. Check connection").show();
                 return;
             }
             adapter.setItems(new ArrayList<>(list),searchEvent.getFilterRule());
@@ -100,7 +103,8 @@ public class HomeListFragment extends BaseFragment<HomeListViewModel, HomeListRe
                              @Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.home_list_fragment, container, false);
-
+        animationView = view.findViewById(R.id.loading_animation);
+        animationView.setVisibility(View.VISIBLE);
 
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         mactivity = (AppCompatActivity) getActivity();
