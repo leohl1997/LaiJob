@@ -2,6 +2,7 @@ package com.laioffer.githubexample.ui.HomeList;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -59,7 +60,6 @@ public class HomeListFragment extends BaseFragment<HomeListViewModel, HomeListRe
     public HomeListFragment(SearchEvent searchEvent) {
         super();
         this.searchEvent = searchEvent;
-
     }
 
     public void onAttach(Context context) {
@@ -150,25 +150,11 @@ public class HomeListFragment extends BaseFragment<HomeListViewModel, HomeListRe
 
                     }
 
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onDrawerOpened(@NonNull View drawerView) {
-                        final TextView user_textview = (TextView) drawerView.findViewById(R.id.user_name);
-                        final TextView location_textview = (TextView) drawerView.findViewById(R.id.user_location);
-
-//                        // Respond when the drawer is opened
-//                        mLocationTracker.getLocation();
-//                        final double longitude = mLocationTracker.getLongitude();
-//                        final double latitude = mLocationTracker.getLatitude();
-
-                        if (Config.username == null) {
-                            user_textview.setText("");
-                            location_textview.setText("");
-                        } else {
-                            user_textview.setText(Config.username);
-//                            location_textview.setText("Lat=" + new DecimalFormat(".##").
-//                                    format(latitude) + ",Lon=" + new DecimalFormat(".##").
-//                                    format(longitude));
-                        }
+                        final TextView user_textview = drawerView.findViewById(R.id.user_name);
+                        user_textview.setText(Config.userId);
                     }
 
                     @Override
@@ -184,8 +170,8 @@ public class HomeListFragment extends BaseFragment<HomeListViewModel, HomeListRe
         );
 
 
-        Button button1 = view.findViewById(R.id.search);
-        button1.setOnClickListener(new View.OnClickListener() {
+        SearchView sview = view.findViewById(R.id.search);
+        sview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 navigationManager.navigateTo(new SearchFragment());
@@ -193,7 +179,7 @@ public class HomeListFragment extends BaseFragment<HomeListViewModel, HomeListRe
         });
 
 
-        ImageButton button3 = view.findViewById(R.id.HomeMap);
+        Button button3 = view.findViewById(R.id.HomeMap);
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
