@@ -102,7 +102,7 @@ public class SearchFragment extends BaseFragment<SearchViewModel, SearchReposito
             @Override
             public void onClick(View v) {
                 if (searchEvent == null){
-                    searchEvent = new SearchEvent(0,"Developer");
+                    searchEvent = new SearchEvent(0,"");
                 }
                 // Utils.constructToast(getContext(),searchEvent.getKeyWord()).show();
                 searchEvent.setKeyWord(t1.getText().toString());
