@@ -50,7 +50,7 @@ import java.util.ArrayList;
 
 public class RecommendationFragment extends BaseFragment<RecommendationViewModel, RecommendationRepository>
         implements ItemDataAdapter.OnNoteListener{
-    SearchEvent searchEvent;
+
     private DrawerLayout drawerLayout;
     private AppCompatActivity mactivity;
 
@@ -58,20 +58,14 @@ public class RecommendationFragment extends BaseFragment<RecommendationViewModel
 
     private ItemDataAdapter adapter = new ItemDataAdapter();
 
-    public RecommendationFragment(SearchEvent searchEvent) {
-        super();
-        this.searchEvent = searchEvent;
 
-    }
 
     public void onAttach(Context context) {
         super.onAttach(context);
         navigationManager = (NavigationManager) context;
     }
 
-    public static RecommendationFragment newInstance(int filterRule, String keyWord) {
-        return new RecommendationFragment(new SearchEvent(filterRule,keyWord));
-    }
+
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -81,16 +75,7 @@ public class RecommendationFragment extends BaseFragment<RecommendationViewModel
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
         rv.setHasFixedSize(true);
         rv.setAdapter(adapter);
-        getAllItem(searchEvent.getKeyWord());
-    }
 
-    private void getAllItem(String keyWord) {
-
-        viewModel.getListJobMutableLiveData(keyWord).observe(getViewLifecycleOwner(), list -> {
-            adapter.setItems(new ArrayList<>(list),searchEvent.getFilterRule());
-            adapter.setOnNoteListener(this);
-            adapter.notifyDataSetChanged();
-        });
     }
 
 
