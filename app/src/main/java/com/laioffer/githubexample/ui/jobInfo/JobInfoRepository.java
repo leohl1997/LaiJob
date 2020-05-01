@@ -40,7 +40,7 @@ public class JobInfoRepository extends BaseRepository {
         return responseLiveData;
     }
 
-    public MutableLiveData<List<Job>> getRecommendation() {
+    public MutableLiveData<List<Job>> getRecommendation(String keyWord) {
         MutableLiveData<List<Job>> listRecommendationLiveData = new MutableLiveData<>();
 
         Call<RemoteResponse<List<Job>>> call = apiService.getRecommendation(Config.latitude, Config.longitude, Config.userId);

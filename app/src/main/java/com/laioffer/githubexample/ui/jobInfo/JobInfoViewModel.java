@@ -28,5 +28,16 @@ public class JobInfoViewModel extends BaseViewModel<JobInfoRepository> {
     public void setSaveEvent(SaveEvent saveEvent) {
         remoteListener.onSaveEvent(repository.save(saveEvent));
     }
+
+    String keyWord;
+    private MutableLiveData<List<Job>> ListJobRecommendationLiveData;
+
+    public MutableLiveData<List<Job>> getRecommendationLiveData(String keyWord){
+
+        this.keyWord = keyWord;
+        ListJobRecommendationLiveData = repository.getRecommendation(keyWord);
+        return ListJobRecommendationLiveData;
+
+    }
 }
 
