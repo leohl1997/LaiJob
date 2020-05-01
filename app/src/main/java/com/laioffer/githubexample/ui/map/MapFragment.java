@@ -53,6 +53,14 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
     private GoogleMap googleMap;
     private NavigationManager navigationManager;
 
+    public static MapFragment getInstance(String keyword) {
+        Bundle args = new Bundle();
+        args.putString("keyword", keyword);
+        MapFragment mapFragment = new MapFragment();
+        mapFragment.setArguments(args);
+        return mapFragment;
+    }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -202,7 +210,13 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
         googleMap.setInfoWindowAdapter(this);
         googleMap.setOnInfoWindowClickListener(this);
         if (viewModel.getSavedJob().isEmpty()) {
-            viewModel.setSearchEvent("");
+            Bundle args = getArguments();
+            String keyword = args.getString("keyword");
+            if (Utils.isNullOrEmpty(keyword)) {
+                viewModel.setSearchEvent(args.getString(""));
+            } else {
+                viewModel.setSearchEvent("");
+            }
         } else {
             addJobToMap(viewModel.getSavedJob());
         }
