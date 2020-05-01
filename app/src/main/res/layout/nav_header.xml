@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/user_location"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="32dp"
         android:textSize="20sp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
     <TextView
