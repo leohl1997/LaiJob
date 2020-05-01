@@ -25,6 +25,9 @@ import com.laioffer.githubexample.remote.response.Job;
 import com.laioffer.githubexample.ui.HomeList.ItemDataAdapter;
 import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.ui.map.CardAdapter;
+import com.laioffer.githubexample.ui.map.CardFragmentPagerAdapter;
+import com.laioffer.githubexample.ui.map.ShadowTransformer;
+import com.laioffer.githubexample.util.Utils;
 import com.squareup.picasso.Picasso;
 
 
@@ -86,6 +89,15 @@ public class RecommendationFragment extends BaseFragment<JobInfoViewModel, JobIn
 
         }
         return recommendationView;
+
+        CardFragmentPagerAdapter pagerAdapter = new CardFragmentPagerAdapter(getChildFragmentManager(), Utils.dpToPixels(2, getContext()), list);
+        ShadowTransformer shadowTransformer = new ShadowTransformer(binding.recommendationCard, pagerAdapter);
+
+        binding.recommendationCard.setAdapter();
+        binding.recommendationCard.set(120);
+        binding.recommendationCard.set(false ,shadowTransformer);
+        binding.recommendationCard.setOffscreenPageLimit(3);
+        shadowTransformer.enableScaling(true);
 
 
     }

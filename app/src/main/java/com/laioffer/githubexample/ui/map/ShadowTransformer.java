@@ -4,6 +4,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 public class ShadowTransformer implements ViewPager.OnPageChangeListener, ViewPager.PageTransformer {
@@ -13,7 +14,7 @@ public class ShadowTransformer implements ViewPager.OnPageChangeListener, ViewPa
     private float lastOffset;
     private boolean scalingEnabled;
 
-    ShadowTransformer(ViewPager viewPager, CardAdapter adapter) {
+    public ShadowTransformer(RecyclerView viewPager, CardAdapter adapter) {
         this.viewPager = viewPager;
         viewPager.addOnPageChangeListener(this);
         cardAdapter = adapter;
