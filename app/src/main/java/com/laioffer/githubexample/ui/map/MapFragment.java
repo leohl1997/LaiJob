@@ -285,7 +285,7 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
         binding.tvLocation.setText(currJob.address);
         if (!currJob.imageUrl.isEmpty()) {
             Picasso.get().setLoggingEnabled(true);
-            Picasso.get().load(currJob.imageUrl).placeholder(R.drawable.ic_center)
+            Picasso.get().load(currJob.imageUrl).placeholder(R.drawable.thumbnail)
                     .resize(70,70)
                     .into(binding.imgInfo);
 

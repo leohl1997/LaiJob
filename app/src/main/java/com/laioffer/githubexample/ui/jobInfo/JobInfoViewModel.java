@@ -1,15 +1,8 @@
 package com.laioffer.githubexample.ui.jobInfo;
 
-import androidx.lifecycle.MutableLiveData;
-
 import com.laioffer.githubexample.base.BaseViewModel;
-import com.laioffer.githubexample.remote.response.Job;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class JobInfoViewModel extends BaseViewModel<JobInfoRepository> {
-
 
     private JobInfoRecyclerViewAdapter.RemoteListener remoteListener;
 
@@ -29,15 +22,9 @@ public class JobInfoViewModel extends BaseViewModel<JobInfoRepository> {
         remoteListener.onSaveEvent(repository.save(saveEvent));
     }
 
-    String keyWord;
-    private MutableLiveData<List<Job>> ListJobRecommendationLiveData;
-
-    public MutableLiveData<List<Job>> getRecommendationLiveData(String keyWord){
-
-        this.keyWord = keyWord;
-        ListJobRecommendationLiveData = repository.getRecommendation(keyWord);
-        return ListJobRecommendationLiveData;
-
+    public void setCommentEventMutableLiveData(CommentEvent commentEvent) {
+        remoteListener.onSendEvent(repository.comment(commentEvent));
     }
-}
 
+
+}

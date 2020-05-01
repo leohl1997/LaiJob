@@ -5,10 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,23 +19,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.laioffer.githubexample.R;
 import com.laioffer.githubexample.remote.response.Job;
 
-import com.laioffer.githubexample.ui.comment.CommentEvent;
-import com.laioffer.githubexample.ui.comment.Item;
+import com.laioffer.githubexample.remote.response.Item;
+import com.laioffer.githubexample.util.Config;
 import com.laioffer.githubexample.util.Utils;
 import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Comment;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import tm.charlie.expandabletextview.ExpandableTextView;
-
 public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context context;
     private static final int TYPE_JOB_INFO = 0;
-    private static final int TYPE_COMMENT = 1;
+    private static final int TYPE_WRITE_COMMENT = 1;
+    private static final int TYPE_COMMENT = 2;
+
     private ArrayList<Item> itemArrayList;
     private TextView commentNumber = null;
     private TextView avgRating = null;
@@ -44,6 +44,7 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         this.saveItemListener = saveItemListener;
         itemArrayList = new ArrayList<>();
         itemArrayList.add(job);
+        itemArrayList.add(new Item());
         notifyDataSetChanged();
     }
 
@@ -57,6 +58,9 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         } else if (viewType == TYPE_COMMENT){
             View itemView = LayoutInflater.from(context).inflate(R.layout.comment_card, parent, false);
             return new CommentViewHolder(itemView);
+        } else if (viewType == TYPE_WRITE_COMMENT) {
+            View itemView = LayoutInflater.from(context).inflate(R.layout.write_comment_card, parent, false);
+            return new WriteCommentViewHolder(itemView, saveItemListener);
         }
         throw new RuntimeException("No support view type");
     }
@@ -95,12 +99,14 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             for (int i = 0; i < currentComment.rating; i++) {
                 ((CommentViewHolder) holder).stars.get(i).setImageResource(R.drawable.star_solid);
             }
+        } else if (holder instanceof WriteCommentViewHolder) {
+            ((WriteCommentViewHolder) holder).writeCommentUserId.setText(Config.userId);
         }
 
     }
 
     public void addAll(List<CommentEvent> comments) {
-        while (itemArrayList.size() > 1) {
+        while (itemArrayList.size() > 2) {
             itemArrayList.remove(itemArrayList.size() - 1);
         }
         itemArrayList.addAll(comments);
@@ -115,6 +121,8 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     public int getItemViewType(int position) {
         if (position == 0) {
             return TYPE_JOB_INFO;
+        } else if (position == 1) {
+            return TYPE_WRITE_COMMENT;
         }
         return TYPE_COMMENT;
     }
@@ -208,15 +216,145 @@ public class JobInfoRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         }
     }
 
+    class WriteCommentViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        private int rating = 0;
+        private boolean visible = false;
+        private TextView writeCommentUserId;
+        private TextView showComment;
+        private CardView cardView;
+        private ConstraintLayout invisibleBody;
+        private EditText writeCommentBody;
+        private Button btnOneStar;
+        private Button btnTwoStar;
+        private Button btnThreeStar;
+        private Button btnFourStar;
+        private Button btnFiveStar;
+        private Button sendComment;
+        private SaveItemListener listener;
+
+        public WriteCommentViewHolder(@NonNull View itemView, SaveItemListener listener) {
+            super(itemView);
+            this.listener = listener;
+            writeCommentUserId = itemView.findViewById(R.id.send_cmt_user_id);
+            cardView = itemView.findViewById(R.id.write_comment_cardview);
+            invisibleBody = itemView.findViewById(R.id.invisible_body);
+            showComment = itemView.findViewById(R.id.textView_show_comment);
+            sendComment = itemView.findViewById(R.id.btn_comment);
+            sendComment.setOnClickListener(null);
+            writeCommentBody = itemView.findViewById(R.id.et_comment_body);
+            btnOneStar = itemView.findViewById(R.id.btn_one_star);
+            btnOneStar.setOnClickListener(null);
+            btnTwoStar = itemView.findViewById(R.id.btn_two_star);
+            btnTwoStar.setOnClickListener(null);
+            btnThreeStar = itemView.findViewById(R.id.btn_three_star);
+            btnThreeStar.setOnClickListener(null);
+            btnFourStar = itemView.findViewById(R.id.btn_four_star);
+            btnFourStar.setOnClickListener(null);
+            btnFiveStar = itemView.findViewById(R.id.btn_five_star);
+            btnFiveStar.setOnClickListener(null);
+            showComment.setOnClickListener(v -> setVisible());
+            itemView.setOnClickListener(this);
+        }
+
+        private void unsetStars() {
+            btnOneStar.setBackground(itemView.getResources().getDrawable(R.drawable.star_hollow));
+            btnTwoStar.setBackground(itemView.getResources().getDrawable(R.drawable.star_hollow));
+            btnThreeStar.setBackground(itemView.getResources().getDrawable(R.drawable.star_hollow));
+            btnFourStar.setBackground(itemView.getResources().getDrawable(R.drawable.star_hollow));
+            btnFiveStar.setBackground(itemView.getResources().getDrawable(R.drawable.star_hollow));
+        }
+
+        private void setVisible() {
+            if (!visible) {
+                visible = true;
+                showComment.setVisibility(View.INVISIBLE);
+                invisibleBody.setVisibility(View.VISIBLE);
+                sendComment.setOnClickListener(view -> {
+                    send();
+                });
+                btnOneStar.setOnClickListener(v1 -> {
+                    unsetStars();
+                    btnOneStar.setBackground(itemView.getResources().getDrawable(R.drawable.star_solid));
+                    rating = 1;
+                });
+                btnTwoStar.setOnClickListener(v1 -> {
+                    unsetStars();
+                    btnOneStar.setBackground(itemView.getResources().getDrawable(R.drawable.star_solid));
+                    btnTwoStar.setBackground(itemView.getResources().getDrawable(R.drawable.star_solid));
+                    rating = 2;
+                });
+                btnThreeStar.setOnClickListener(v1 -> {
+                    unsetStars();
+                    btnOneStar.setBackground(itemView.getResources().getDrawable(R.drawable.star_solid));
+                    btnTwoStar.setBackground(itemView.getResources().getDrawable(R.drawable.star_solid));
+                    btnThreeStar.setBackground(itemView.getResources().getDrawable(R.drawable.star_solid));
+                    rating = 3;
+                });
+                btnFourStar.setOnClickListener(v1 -> {
+                    unsetStars();
+                    btnOneStar.setBackground(itemView.getResources().getDrawable(R.drawable.star_solid));
+                    btnTwoStar.setBackground(itemView.getResources().getDrawable(R.drawable.star_solid));
+                    btnThreeStar.setBackground(itemView.getResources().getDrawable(R.drawable.star_solid));
+                    btnFourStar.setBackground(itemView.getResources().getDrawable(R.drawable.star_solid));
+                    rating = 4;
+                });
+                btnFiveStar.setOnClickListener(v1 -> {
+                    unsetStars();
+                    btnOneStar.setBackground(itemView.getResources().getDrawable(R.drawable.star_solid));
+                    btnTwoStar.setBackground(itemView.getResources().getDrawable(R.drawable.star_solid));
+                    btnThreeStar.setBackground(itemView.getResources().getDrawable(R.drawable.star_solid));
+                    btnFourStar.setBackground(itemView.getResources().getDrawable(R.drawable.star_solid));
+                    btnFiveStar.setBackground(itemView.getResources().getDrawable(R.drawable.star_solid));
+                    rating = 5;
+                });
+            }
+        }
+
+        private void send() {
+            if (rating == 0) {
+                listener.sentInfo("Please give a rating first!");
+                return;
+            }
+            listener.onSendClicked(rating, writeCommentBody.getText().toString());
+            setInvisible();
+
+        }
+
+        private void setInvisible() {
+            visible = false;
+            showComment.setVisibility(View.VISIBLE);
+            invisibleBody.setVisibility(View.GONE);
+            sendComment.setOnClickListener(null);
+            btnOneStar.setOnClickListener(null);
+            btnTwoStar.setOnClickListener(null);
+            btnThreeStar.setOnClickListener(null);
+            btnFourStar.setOnClickListener(null);
+            btnFiveStar.setOnClickListener(null);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (visible) {
+                setInvisible();
+            } else {
+                setVisible();
+            }
+        }
+    }
+
     public interface SaveItemListener {
         void onSaveClicked();
         void onBackClicked();
         void onCommentClicked();
         void onApplyCLicked();
+        void onSendClicked(int rating, String commentBody);
+        void sentInfo(String msg);
     }
 
     public interface RemoteListener {
         void onSaveEvent(MutableLiveData<String> responseLiveData);
         void onCommentEvent(LiveData<List<CommentEvent>> responseLiveData);
+        void onSendEvent(LiveData<String> responseLiveData);
     }
 }

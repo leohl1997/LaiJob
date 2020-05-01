@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
@@ -189,7 +190,7 @@ public class HomeListFragment extends BaseFragment<HomeListViewModel, HomeListRe
         });
 
 
-        Button button3 = view.findViewById(R.id.HomeMap);
+        ImageButton button3 = view.findViewById(R.id.HomeMap);
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

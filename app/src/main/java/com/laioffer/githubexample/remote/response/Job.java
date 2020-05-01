@@ -1,13 +1,6 @@
 package com.laioffer.githubexample.remote.response;
-import android.widget.ImageView;
 
-import androidx.databinding.BindingAdapter;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.google.gson.annotations.SerializedName;
-import com.laioffer.githubexample.R;
-import com.laioffer.githubexample.ui.comment.Item;
 
 import java.io.Serializable;
 import java.util.List;

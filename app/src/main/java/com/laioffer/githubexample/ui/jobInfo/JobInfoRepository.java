@@ -1,13 +1,9 @@
 package com.laioffer.githubexample.ui.jobInfo;
 
 import androidx.lifecycle.MutableLiveData;
-import com.laioffer.githubexample.base.BaseRepository;
 
-import com.laioffer.githubexample.remote.response.Job;
+import com.laioffer.githubexample.base.BaseRepository;
 import com.laioffer.githubexample.remote.response.RemoteResponse;
-import com.laioffer.githubexample.ui.comment.CommentEvent;
-import com.laioffer.githubexample.util.Config;
-import com.laioffer.githubexample.util.Utils;
 
 import java.util.List;
 
@@ -40,32 +36,12 @@ public class JobInfoRepository extends BaseRepository {
         return responseLiveData;
     }
 
-    public MutableLiveData<List<Job>> getRecommendation(String keyWord) {
-        MutableLiveData<List<Job>> listRecommendationLiveData = new MutableLiveData<>();
-
-        Call<RemoteResponse<List<Job>>> call = apiService.getRecommendation(Config.latitude, Config.longitude, Config.userId);
-        call.enqueue(new Callback<RemoteResponse<List<Job>>>() {
-            @Override
-            public void onResponse(Call<RemoteResponse<List<Job>>> call, Response<RemoteResponse<List<Job>>> response) {
-                listRecommendationLiveData.postValue(response.body().response);
-            }
-
-            @Override
-            public void onFailure(Call<RemoteResponse<List<Job>>> call, Throwable t) {
-                listRecommendationLiveData.postValue(null);
-            }
-        });
-
-        return listRecommendationLiveData;
-    }
-
-
     public MutableLiveData<String> save(SaveEvent saveEvent) {
         return saveEvent.job.favorite ? unfavorite(saveEvent) : favorite(saveEvent);
     }
 
     private MutableLiveData<String> favorite(SaveEvent saveEvent) {
-        MutableLiveData<String> responseLiveDate = new MutableLiveData<>();
+        MutableLiveData<String>  responseLiveDate = new MutableLiveData<>();
         Call<RemoteResponse<SaveEvent>> call = apiService.favorite(saveEvent);
         call.enqueue(new Callback<RemoteResponse<SaveEvent>>() {
             @EverythingIsNonNull
@@ -88,7 +64,7 @@ public class JobInfoRepository extends BaseRepository {
     }
 
     private MutableLiveData<String> unfavorite(SaveEvent saveEvent) {
-        MutableLiveData<String> responseLiveDate = new MutableLiveData<>();
+        MutableLiveData<String>  responseLiveDate = new MutableLiveData<>();
         Call<RemoteResponse<SaveEvent>> call = apiService.unfavorite(saveEvent);
         call.enqueue(new Callback<RemoteResponse<SaveEvent>>() {
             @EverythingIsNonNull
@@ -109,5 +85,28 @@ public class JobInfoRepository extends BaseRepository {
         });
         return responseLiveDate;
     }
-}
 
+    public MutableLiveData<String> comment(CommentEvent commentEvent) {
+        MutableLiveData<String> stringMutableLiveData = new MutableLiveData<>();
+        Call<RemoteResponse<CommentEvent>> call = apiService.sendComment(commentEvent);
+        call.enqueue(new Callback<RemoteResponse<CommentEvent>>() {
+            @EverythingIsNonNull
+            @Override
+            public void onResponse(Call<RemoteResponse<CommentEvent>> call,
+                                   Response<RemoteResponse<CommentEvent>> response) {
+                if (response.code() == 200) {
+                    stringMutableLiveData.postValue("Success!");
+                } else {
+                    stringMutableLiveData.postValue("Error! " + Integer.toString(response.code()));
+                }
+            }
+
+            @EverythingIsNonNull
+            @Override
+            public void onFailure(Call<RemoteResponse<CommentEvent>> call, Throwable t) {
+                stringMutableLiveData.postValue(t.getMessage());
+            }
+        });
+        return stringMutableLiveData;
+    }
+}
