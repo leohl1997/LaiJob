@@ -36,8 +36,8 @@
             android:layout_margin="16dp"
             android:layout_marginBottom="120dp"
             android:contentDescription="@string/bt_return"
-            android:src="@drawable/ic_arrow_left_black"
-            app:backgroundTint="@color/black"
+            android:src="@drawable/ic_arrow_left"
+            app:backgroundTint="@color/white"
             app:maxImageSize="50dp" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -49,8 +49,7 @@
             android:layout_marginBottom="120dp"
             android:src="@drawable/ic_center"
             android:contentDescription="@string/bt_center"
-            app:backgroundTint="@color/grey"
-            app:maxImageSize="59dp"
+            app:backgroundTint="@color/white"
             android:layout_margin="16dp" />
 
         <androidx.viewpager.widget.ViewPager

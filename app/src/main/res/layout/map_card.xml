@@ -5,19 +5,16 @@
     android:id="@+id/map_card_view"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@color/grey"
     android:layout_margin="8dp"
     android:layout_gravity="center">
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/grey">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/grey"
             android:orientation="horizontal"
             android:padding="15dp">
 
@@ -27,7 +24,7 @@
                 android:layout_height="70dp"
                 android:layout_margin="10dp"
                 android:layout_marginEnd="10dp"
-                android:src="@drawable/ic_center" />
+                android:src="@drawable/thumbnail" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -40,7 +37,6 @@
                     android:layout_height="wrap_content"
                     android:maxWidth="200dp"
                     android:singleLine="false"
-                    android:textColor="@color/white"
                     android:text="title"
                     android:textStyle="bold"/>
 
@@ -48,7 +44,6 @@
                     android:id="@+id/cv_company_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/white"
                     android:maxWidth="200dp"
                     android:text="company name"
                     android:singleLine="false" />
@@ -57,7 +52,6 @@
                     android:id="@+id/cv_location"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/white"
                     android:maxWidth="200dp"
                     android:text="location"
                     android:singleLine="false" />

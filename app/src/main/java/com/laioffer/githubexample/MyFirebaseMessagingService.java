@@ -103,7 +103,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Job job = gson.fromJson(jobStr, Job.class);
 
         Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         Bundle args = new Bundle();
         args.putSerializable("job", job);

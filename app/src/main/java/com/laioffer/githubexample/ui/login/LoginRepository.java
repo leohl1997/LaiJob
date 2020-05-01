@@ -15,6 +15,9 @@ import retrofit2.internal.EverythingIsNonNull;
 public class LoginRepository extends BaseRepository {
     public MutableLiveData<RemoteResponse<UserInfo>> login(LoginEvent loginEvent) {
         MutableLiveData<RemoteResponse<UserInfo>> responseMutableLiveData = new MutableLiveData<>();
+        if (loginEvent == null) {
+            return responseMutableLiveData;
+        }
         Call<RemoteResponse<UserInfo>> call = apiService.login(loginEvent);
         call.enqueue(new Callback<RemoteResponse<UserInfo>>() {
             @EverythingIsNonNull

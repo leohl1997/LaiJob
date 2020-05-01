@@ -88,6 +88,16 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
                 addJobToMap(list);
                 viewModel.getSavedJob().addAll(list);
             }
+            //this should happen for recommend item.
+//
+//            CardFragmentPagerAdapter pagerAdapter = new CardFragmentPagerAdapter(getChildFragmentManager(), Utils.dpToPixels(2, getContext()), list);
+//            ShadowTransformer shadowTransformer = new ShadowTransformer(binding.mapViewPager, pagerAdapter);
+//
+//            binding.mapViewPager.setAdapter(pagerAdapter);
+//            binding.mapViewPager.setPageMargin(120);
+//            binding.mapViewPager.setPageTransformer(false ,shadowTransformer);
+//            binding.mapViewPager.setOffscreenPageLimit(3);
+//            shadowTransformer.enableScaling(true);
 
         });
 
@@ -96,8 +106,8 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
                 Utils.constructToast(getContext(), "No recommendations. Please save job frist").show();
                 return;
             }
-            //this should happen for recommend item.
-
+//            //this should happen for recommend item.
+//
             CardFragmentPagerAdapter pagerAdapter = new CardFragmentPagerAdapter(getChildFragmentManager(), Utils.dpToPixels(2, getContext()), list);
             ShadowTransformer shadowTransformer = new ShadowTransformer(binding.mapViewPager, pagerAdapter);
 
@@ -275,7 +285,7 @@ public class MapFragment extends BaseFragment<MapViewModel, MapRepository>
         binding.tvLocation.setText(currJob.address);
         if (!currJob.imageUrl.isEmpty()) {
             Picasso.get().setLoggingEnabled(true);
-            Picasso.get().load(currJob.imageUrl).placeholder(R.drawable.ic_center)
+            Picasso.get().load(currJob.imageUrl).placeholder(R.drawable.thumbnail)
                     .resize(70,70)
                     .into(binding.imgInfo);
 
