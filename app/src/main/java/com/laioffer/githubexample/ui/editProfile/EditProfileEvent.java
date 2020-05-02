@@ -17,7 +17,7 @@ public class EditProfileEvent {
     @SerializedName("lastName")
     String LastName;
     @SerializedName("phone")
-    private String PhoneNumber;
+    public String PhoneNumber;
     @SerializedName("email")
     public String Email;
     @SerializedName("address")
@@ -25,19 +25,19 @@ public class EditProfileEvent {
     @SerializedName("dataOfBirth")
     public String DateOfBirth;
     @SerializedName("company")
-    public static String CompanyName;
+    public  String CompanyName;
     @SerializedName("job")
-    public static String JobTitle;
+    public  String JobTitle;
     @SerializedName("jobStartData")
-    public static String jobStartDate;
+    public  String jobStartDate;
     @SerializedName("jobEndData")
-    public static String jobEndDate;
+    public  String jobEndDate;
 
     EditProfileEvent(String firstName, String lastName, String phoneNumber,String email,String address,String dateOfBirth){
         this.userId = Config.userId;
-        this.schoolName = schoolName;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.schoolName = Config.schoolName;
+        this.startDate = Config.schoolStartData;
+        this.endDate = Config.schoolEndData;
         this.Address = address;
         this.DateOfBirth = dateOfBirth;
         this.Email = email;
