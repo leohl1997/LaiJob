@@ -53,7 +53,7 @@ public class EditProfileFragment extends BaseFragment<EditProfileViewModel, Edit
                              @Nullable Bundle savedInstanceState) {
         binding = EditProfileFragmentBinding.inflate(inflater, container, false);
         binding.back.setOnClickListener(v -> {
-            navigationManager.navigateWithFragmentDestroy(new UserInfoFragment(),EditProfileFragment.newInstance());
+            navigationManager.navigateTo(new UserInfoFragment());
         });
         TextInputEditText textInputEditText = binding.dateBirth;
         textInputEditText.setInputType(InputType.TYPE_NUMBER_VARIATION_NORMAL);
