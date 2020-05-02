@@ -63,7 +63,7 @@ public class FavoriteJobFragment extends BaseFragment<FavoriteJobViewModel, Favo
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.backFab.setOnClickListener(v -> navigationManager.goBack());
+        binding.backFab.setOnClickListener(v -> navigationManager.navigateTo(new HomeListFragment(new SearchEvent(0,""))));
         binding.FavInfo.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.FavInfo.setHasFixedSize(true);
         binding.FavInfo.setAdapter(adapter);
