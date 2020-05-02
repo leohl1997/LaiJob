@@ -40,7 +40,7 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class SearchFragment extends BaseFragment<SearchViewModel, SearchRepository> implements AdapterView.OnItemSelectedListener  {
-    SearchEvent searchEvent = new SearchEvent(0,"");
+    SearchEvent searchEvent = new SearchEvent(0,"developer");
     private SearchViewModel mViewModel;
     EditText t1;
     private ListView mListView;
@@ -90,7 +90,7 @@ public class SearchFragment extends BaseFragment<SearchViewModel, SearchReposito
             @Override
             public boolean onQueryTextSubmit(String query) {
                 if (searchEvent == null){
-                    searchEvent = new SearchEvent(0,"");
+                    searchEvent = new SearchEvent(0,"developer");
                 }
                 // Utils.constructToast(getContext(),searchEvent.getKeyWord()).show();
                 EditText mEdit = (SearchView.SearchAutoComplete)binding.searchView.findViewById(R.id.search_src_text);
