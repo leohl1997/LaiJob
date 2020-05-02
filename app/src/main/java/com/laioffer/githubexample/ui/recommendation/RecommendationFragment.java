@@ -17,9 +17,11 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.laioffer.githubexample.R;
 import com.laioffer.githubexample.base.BaseFragment;
 import com.laioffer.githubexample.remote.response.Job;
+import com.laioffer.githubexample.ui.HomeList.HomeListFragment;
 import com.laioffer.githubexample.ui.HomeList.ItemDataAdapter;
 import com.laioffer.githubexample.ui.NavigationManager;
 import com.laioffer.githubexample.ui.jobInfo.JobInfoFragment;
+import com.laioffer.githubexample.ui.search.SearchEvent;
 
 import java.util.ArrayList;
 
@@ -48,7 +50,7 @@ public class RecommendationFragment extends BaseFragment<RecommendationViewModel
         //you can set the title for your toolbar here for different fragments different titles
         RecyclerView rv = view.findViewById(R.id.FavInfo);
         FloatingActionButton backFab = view.findViewById(R.id.backFab);
-        backFab.setOnClickListener(v -> navigationManager.goBack());
+        backFab.setOnClickListener(v -> navigationManager.navigateTo(new HomeListFragment(new SearchEvent(0,""))));
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
         rv.setHasFixedSize(true);
         rv.setAdapter(adapter);
